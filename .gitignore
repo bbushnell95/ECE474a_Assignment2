@@ -1,0 +1,11 @@
+#Names: Brett Bushnell, Matt Dzurick
+#Description: Ignores files from verilog for easy transfer during git hub exchanges
+
+**/assignment1.cache/**
+**/assignment1.hw/**
+**/assignment1.ip_user_files/**
+**/assignment1.sim/**
+**/assignment1.xpr
+**/assignment1.runs/**
+**/vivado.jou
+**/vivado.log
