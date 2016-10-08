@@ -6,7 +6,13 @@ File: main.cpp
 Description: Main function for dpgen program
 */
 
+#include "Circuit.h"
+
 int main(int argc, char* argv[])
 {
+	Circuit newCircuit;
 
+	if (!newCircuit.readFile(argv[1])) {
+		return 0;
+	}
 }
