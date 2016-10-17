@@ -18,12 +18,18 @@ Description: Circuit Class for dpgen program
 #include<algorithm>
 
 #include "DatapathComponent.h"
+#include "Input.h"
+#include "Output.h"
+#include "Wire.h"
 
 
 class Circuit {
 
 private:
 	std::string outputCircuit;
+	std::vector<Input> inputs;
+	std::vector<Output> outputs;
+	std::vector<Wire> wires;
 	double criticalPath;
 
 public:
@@ -38,8 +44,6 @@ public:
 	bool readFile(char* fileName);
 	void writeToFile(char* fileName);
 	void determineCriticalPath();
-
-
 };
 
 
