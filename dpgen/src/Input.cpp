@@ -11,12 +11,14 @@ Description: input Class for dpgen program
 Input::Input()
 {
 	name = "Unknown";
+	signUnsigned = false;
 	dataWidth = 0;
 }
 
-Input::Input(std::string n, int dW)
+Input::Input(std::string n, bool sU, int dW)
 {
 	name = n;
+	signUnsigned = sU;
 	dataWidth = dW;
 }
 

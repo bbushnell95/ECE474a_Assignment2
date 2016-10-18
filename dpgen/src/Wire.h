@@ -19,11 +19,12 @@ class Wire {
 
 private:
 	std::string name;
+	bool sign;
 	int dataWidth;
 public:
 	/*construsctors*/
 	Wire();
-	Wire(std::string n, int dW);
+	Wire(std::string n, bool s, int dW);
 
 	/*Methods*/
 	std::string getName();

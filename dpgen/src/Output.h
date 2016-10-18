@@ -19,11 +19,12 @@ class Output {
 
 private:
 	std::string name;
+	bool sign;
 	int dataWidth;
 public:
 	/*construsctors*/
 	Output();
-	Output(std::string n, int dW);
+	Output(std::string n, bool s, int dW);
 
 	/*Methods*/
 	std::string getName();

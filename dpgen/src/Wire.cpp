@@ -14,7 +14,7 @@ Wire::Wire()
 	dataWidth = 0;
 }
 
-Wire::Wire(std::string n, int dW)
+Wire::Wire(std::string n, bool s, int dW)
 {
 	name = n;
 	dataWidth = dW;

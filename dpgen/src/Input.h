@@ -20,10 +20,12 @@ class Input {
 private:
 	std::string name;
 	int dataWidth;
+	bool signUnsigned; //used to see if variable is singed or unsigned (1 signed, 0 unsigned)
+
 public:
 	/*construsctors*/
 	Input();
-	Input(std::string n, int dW);
+	Input(std::string n, bool sU, int dW);
 
 	/*Methods*/
 	std::string getName();

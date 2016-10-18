@@ -14,9 +14,10 @@ Output::Output()
 	dataWidth = 0;
 }
 
-Output::Output(std::string n, int dW)
+Output::Output(std::string n, bool s, int dW)
 {
 	name = n;
+
 	dataWidth = dW;
 }
 

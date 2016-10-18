@@ -23,13 +23,21 @@ Description: Circuit Class for dpgen program
 #include "Wire.h"
 
 
+#define DATAWIDTH_1 1
+#define DATAWIDTH_2 2
+#define DATAWIDTH_8 8 
+#define DATAWIDTH_16 16 
+#define DATAWIDTH_32 32
+#define DATAWIDTH_64 64
+
+
 class Circuit {
 
 private:
 	std::string outputCircuit;
-	std::vector<Input> inputs;
-	std::vector<Output> outputs;
-	std::vector<Wire> wires;
+	std::vector<Input> _inputs;
+	std::vector<Output> _outputs;
+	std::vector<Wire> _wires;
 	double criticalPath;
 
 public:
@@ -44,6 +52,9 @@ public:
 	bool readFile(char* fileName);
 	void writeToFile(char* fileName);
 	void determineCriticalPath();
+	void createNewInput(std::string name, bool sign, int dataWidth);
+	void createNewOutput(std::string name, bool sign, int dataWidth);
+	void createNewWire(std::string name, bool sign, int dataWidth);
 };
 
 
