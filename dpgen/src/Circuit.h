@@ -52,6 +52,9 @@ public:
 	bool readFile(char* fileName);
 	void writeToFile(char* fileName);
 	void determineCriticalPath();
+	void createNewInputVariable(std::string checkString, int dataWidthIndex);
+	void createNewOutputVariable(std::string checkString, int dataWidthIndex);
+	void createNewWireVariable(std::string checkString, int dataWidthIndex);
 	void createNewInput(std::string name, bool sign, int dataWidth);
 	void createNewOutput(std::string name, bool sign, int dataWidth);
 	void createNewWire(std::string name, bool sign, int dataWidth);
