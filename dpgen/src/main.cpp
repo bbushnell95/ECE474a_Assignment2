@@ -15,4 +15,8 @@ int main(int argc, char* argv[])
 	if (!newCircuit.readFile(argv[1])) {
 		return 0;
 	}
+
+	newCircuit.writeToFile(argv[1]);
+
+	return 0;
 }
