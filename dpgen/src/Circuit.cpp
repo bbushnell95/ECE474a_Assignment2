@@ -158,7 +158,7 @@ void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex
 	for (j = 0; j < checkString.size()-1; ++j) {
 		if (checkString.at(j) != ' ' && checkString.at(j) != ',') {
 			if (j != checkString.size() - 2) {
-				if (checkString.at(j + 1) == ' ' || checkString.at(j + 1) == ',') {
+				if ((checkString.at(j + 1) == ' ' || checkString.at(j + 1) == ',') && !variableName.compare("")) {
 					checkChar = checkString.at(j);
 					//inputFile >> checkString;
 					switch (dataWidthIndex) {
@@ -216,13 +216,14 @@ void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex
 						case 11: createNewInput(variableName, 0, DATAWIDTH_64);
 							break;
 						}
+						variableName = "";
 					}
 					else {
 						variableName += checkString.at(j);
 					}
 				}
 			}
-			else if (j == checkString.size() - 2 && checkString.at(j - 1) == ' ') {
+			else if (j == checkString.size() - 2 && checkString.at(j - 1) == ' ' && checkString.at(j) != '\n') {
 				checkChar = checkString.at(j);
 				//inputFile >> checkString;
 				switch (dataWidthIndex) {
@@ -254,6 +255,7 @@ void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex
 			}
 			else {
 				if (variableName.compare("")) {
+					variableName += checkString.at(j);
 					switch (dataWidthIndex) {
 					case 0: createNewInput(variableName, 1, DATAWIDTH_1);
 						break;
@@ -280,6 +282,7 @@ void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex
 					case 11: createNewInput(variableName, 0, DATAWIDTH_64);
 						break;
 					}
+					variableName = "";
 				}
 			}
 		}
@@ -296,7 +299,7 @@ void Circuit::createNewOutputVariable(std::string checkString, int dataWidthInde
 	for (j = 0; j < checkString.size()-1; j++) {
 		if (checkString.at(j) != ' ' && checkString.at(j) != ',') {
 			if (j != checkString.size() - 2) {
-				if (checkString.at(j + 1) == ' ' || checkString.at(j + 1) == ',') {
+				if ((checkString.at(j + 1) == ' ' || checkString.at(j + 1) == ',') && !variableName.compare("")) {
 					checkChar = checkString.at(j);
 					switch (dataWidthIndex) {
 					case 0: createNewOutput(checkChar, 1, DATAWIDTH_1);
@@ -354,13 +357,14 @@ void Circuit::createNewOutputVariable(std::string checkString, int dataWidthInde
 						case 11: createNewOutput(variableName, 0, DATAWIDTH_64);
 							break;
 						}
+						variableName = "";
 					}
 					else {
 						variableName += checkString.at(j);
 					}
 				}
 			}
-			else if (j == checkString.size() - 2 && checkString.at(j - 1) == ' ' && checkString.at(j+1) != '\n') {
+			else if (j == checkString.size() - 2 && checkString.at(j - 1) == ' ' && checkString.at(j) != '\n') {
 				checkChar = checkString.at(j);
 				switch (dataWidthIndex) {
 				case 0: createNewOutput(checkChar, 1, DATAWIDTH_1);
@@ -418,6 +422,7 @@ void Circuit::createNewOutputVariable(std::string checkString, int dataWidthInde
 					case 11: createNewOutput(variableName, 0, DATAWIDTH_64);
 						break;
 					}
+					variableName = "";
 				}
 			}
 		}
@@ -435,7 +440,7 @@ void Circuit::createNewWireVariable(std::string checkString, int dataWidthIndex)
 	for (j = 0; j < checkString.size()-1; ++j) {
 		if (checkString.at(j) != ' ' && checkString.at(j) != ',') {
 			if (j != checkString.size() - 2) {
-				if (checkString.at(j + 1) == ' ' || checkString.at(j + 1) == ',') {
+				if ((checkString.at(j + 1) == ' ' || checkString.at(j + 1) == ',') && !variableName.compare("")) {
 					checkChar = checkString.at(j);
 					switch (dataWidthIndex) {
 					case 0: createNewWire(checkChar, 1, DATAWIDTH_1);
@@ -493,6 +498,7 @@ void Circuit::createNewWireVariable(std::string checkString, int dataWidthIndex)
 						case 11: createNewWire(variableName, 0, DATAWIDTH_64);
 							break;
 						}
+						variableName = "";
 					}
 					else {
 						variableName += checkString.at(j);
@@ -557,6 +563,7 @@ void Circuit::createNewWireVariable(std::string checkString, int dataWidthIndex)
 					case 11: createNewWire(variableName, 0, DATAWIDTH_64);
 						break;
 					}
+					variableName = "";
 				}
 			}
 			
