@@ -43,8 +43,8 @@ bool Circuit::readFile(char* fileName)
 
 	//checking if open
 	if (!inputFile.is_open()) {
-		cout << "Could not open " << fileName << endl;
-		return false;	
+		// cout << "Could not open " << fileName << endl;
+		return false;
 	}
 
 	//while there is something on the line
@@ -154,23 +154,99 @@ bool Circuit::readFile(char* fileName)
 
 }
 
-void Circuit::writeToFile(char* fileName)
+bool Circuit::writeToFile(char* fileName)
 {
+	/* Set up variables. */
+	ofstream outputFile;
 	int i = 0;
+	int j = 0;
 
-	cout << "Inputs" << endl;
-	for (i = 0; i < _inputs.size(); ++i) {
-		cout << _inputs.at(i).getName() << " " << _inputs.at(i).getDataWidth() << endl;
+	/* Open the output file. */
+	outputFile.open(fileName);
+	if ( !outputFile.is_open() ) {
+		return false;
 	}
-	cout << "Outputs" << endl;
-	for (i = 0; i < _outputs.size(); ++i) {
-		cout << _outputs.at(i).getName() << " " << _outputs.at(i).getDataWidth() << endl;
+
+	/* Check for empty netlist behavior files. */
+	if (_inputs.empty()) {
+		outputFile.close();
+		return false;
 	}
-	cout << "Wires" << endl;
-	for (i = 0; i < _wires.size(); ++i) {
-		cout << _wires.at(i).getName() << " " << _wires.at(i).getDataWidth() << endl;
+	if (_outputs.empty()) {
+		outputFile.close();
+		return false;
 	}
+	/* Note: There can be no wires if there is 
+	a netlist behavior file containing no
+	inter-connected datapath components. */
 	
+	/* Print Setup. */
+	outputFile << "`timescale 1ns / 1ps" << endl;
+	outputFile << "//////////////////////////////////////////////////////////////////////////////////" << endl;
+	outputFile << "//" << endl;
+	outputFile << "//Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)" << endl;
+	outputFile << "//Date Created: 9/15/2016" << endl;
+	outputFile << "//Assignment: " << "2" << endl;
+	outputFile << "//File: " << fileName << endl;
+	outputFile << "//Description: Netlist Behavior circuit implementation for "<< fileName << endl;
+	outputFile << "//" << endl;
+	outputFile << "//////////////////////////////////////////////////////////////////////////////////" << endl;
+	outputFile << endl << endl;
+
+	/* Start Module. */
+	outputFile << "module ";
+	/* TODO: FINISH START MODULE */
+
+	/* TODO: CHECK FOR NECESSARY CLK, RST. */
+	/* TODO: CHECK FOR NECESSARY N/A INPUTS TO DATAPATH
+			 COMPONENTS SUCH AS THE COMPARATOR. */
+	
+	/* Print Inputs. */
+	// cout << "Inputs" << endl;
+	for (i = 0; i < _inputs.size(); i++) {
+		// cout << _inputs.at(i).getName() << " " << _inputs.at(i).getDataWidth() << endl;
+		outputFile << "\t" << "input ";
+		if (_inputs.at(i).getDataWidth() != DATAWIDTH_1) {
+			outputFile << "[" << _inputs.at(i).getDataWidth() << ":0] ";
+		}
+		outputFile << _inputs.at(i).getName() << ";" << endl;
+	}
+	outputFile << endl;
+
+	/* Print Outputs. */
+	// cout << "Outputs" << endl;
+	for (i = 0; i < _outputs.size(); i++) {
+		// cout << _outputs.at(i).getName() << " " << _outputs.at(i).getDataWidth() << endl;
+		outputFile << "\t" << "output ";
+		if ( _outputs.at(i).getDataWidth() != DATAWIDTH_1 ) {
+			outputFile << "[" << _outputs.at(i).getDataWidth() << ":0] ";
+		}
+		outputFile << _outputs.at(i).getName() << ";" << endl;
+	}
+	outputFile << endl;
+
+	/* Print Wires. */
+	// cout << "Wires" << endl;
+	for (i = 0; i < _wires.size(); i++) {
+		// cout << _wires.at(i).getName() << " " << _wires.at(i).getDataWidth() << endl;
+		outputFile << "\t" << "wire ";
+		if ( _wires.at(i).getDataWidth() != DATAWIDTH_1 ) {
+			outputFile << "[" << _wires.at(i).getDataWidth() << ":0] ";
+		}
+		outputFile << _wires.at(i).getName() << ";" << endl;
+	}
+	outputFile << endl;
+
+	/* TODO: START WRITING THE DATAPATH COMPONENTS. */
+
+	/* End Module. */
+	outputFile << endl << "endmodule" << endl;
+	
+	/* Close the output file. */
+	outputFile.close();
+	
+	return true;
+
 }
 
 void Circuit::determineCriticalPath()
@@ -620,11 +696,4 @@ void Circuit::createNewWire(std::string name, bool sign, int dataWidth)
 	Wire* newWire = new Wire(name, sign, dataWidth);
 
 	_wires.push_back(*newWire);
-}
-
-bool checkDatapathInput(std::string name) 
-{
-
-
-
 }

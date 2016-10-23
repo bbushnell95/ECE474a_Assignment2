@@ -51,7 +51,7 @@ public:
 
 	/*Methods*/
 	bool readFile(char* fileName);
-	void writeToFile(char* fileName);
+	bool writeToFile(char* fileName);
 	void determineCriticalPath();
 	void createNewInputVariable(std::string checkString, int dataWidthIndex);
 	void createNewOutputVariable(std::string checkString, int dataWidthIndex);
@@ -59,9 +59,9 @@ public:
 	void createNewInput(std::string name, bool sign, int dataWidth);
 	void createNewOutput(std::string name, bool sign, int dataWidth);
 	void createNewWire(std::string name, bool sign, int dataWidth);
-	void createNewDatapathComponent(/* TODO */);
-	bool addNewDPIn(std::string name);
-	bool addNewDPout(/* TODO */);
+	// void createNewDatapathComponent(/* TODO */);
+	// bool addNewDPIn(std::string name);
+	// bool addNewDPout(/* TODO */);
 	// bool checkValidDPout(std::string name);
 
 };
