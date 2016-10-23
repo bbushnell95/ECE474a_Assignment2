@@ -22,7 +22,7 @@ private:
 	bool sign;
 	int dataWidth;
 public:
-	/*construsctors*/
+	/*Constructors*/
 	Output();
 	Output(std::string n, bool s, int dW);
 
@@ -32,7 +32,5 @@ public:
 	int getDataWidth();
 	void setDataWidth(int dW);
 };
-
-
 
 #endif //OUTPUT_H

@@ -22,7 +22,7 @@ private:
 	bool sign;
 	int dataWidth;
 public:
-	/*construsctors*/
+	/*constructors*/
 	Wire();
 	Wire(std::string n, bool s, int dW);
 
@@ -32,7 +32,5 @@ public:
 	int getDataWidth();
 	void setDataWidth(int dW);
 };
-
-
 
 #endif //WIRE_H

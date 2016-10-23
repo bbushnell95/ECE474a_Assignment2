@@ -23,7 +23,7 @@ private:
 	bool signUnsigned; //used to see if variable is singed or unsigned (1 signed, 0 unsigned)
 
 public:
-	/*construsctors*/
+	/*Constructors*/
 	Input();
 	Input(std::string n, bool sU, int dW);
 
@@ -33,7 +33,5 @@ public:
 	int getDataWidth();
 	void setDataWidth(int dW);
 };
-
-
 
 #endif //INPUT_H

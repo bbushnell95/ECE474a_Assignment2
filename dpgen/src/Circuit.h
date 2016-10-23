@@ -38,6 +38,7 @@ private:
 	std::vector<Input> _inputs;
 	std::vector<Output> _outputs;
 	std::vector<Wire> _wires;
+	std::vector<DatapathComponent> _datapathComponents;
 	double criticalPath;
 
 public:
@@ -58,15 +59,11 @@ public:
 	void createNewInput(std::string name, bool sign, int dataWidth);
 	void createNewOutput(std::string name, bool sign, int dataWidth);
 	void createNewWire(std::string name, bool sign, int dataWidth);
+	void createNewDatapathComponent(/* TODO */);
+	bool addNewDPIn(std::string name);
+	bool addNewDPout(/* TODO */);
+	// bool checkValidDPout(std::string name);
+
 };
-
-
-
-
-
-
-
-
-
 
 #endif //CIRCUIT_H

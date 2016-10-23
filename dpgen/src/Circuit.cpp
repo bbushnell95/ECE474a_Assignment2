@@ -32,8 +32,10 @@ bool Circuit::readFile(char* fileName)
 	string checkString;
 	string checkChar;
 	bool foundDataType;
+	bool foundSymbol;
 	const std::string validDataTypes[12] = { "Int1", "Int2", "Int8", "Int16", "Int32", "Int64",
 									  "UInt1", "UInt2", "UInt8", "UInt16", "UInt32","UInt64" };
+	const std::string validSymbols[13] = { "=","+" ,"-", "*", ">", "<","==", "?", ":", ">>", "<<", "/", "%"};
 	int i = 0;
 	int j = 0;
 
@@ -116,6 +118,34 @@ bool Circuit::readFile(char* fileName)
 		}
 		else {
 			//TODO: write commands for if there is no first word
+			
+			// TODO: CHECK FOR VALID OUTPUT/WIRE FIRST
+
+			// TODO: READ IN REST OF LINE AND PARSE
+
+			// TODO: SEE WHAT TYPE OF DATAPATH COMPONENT IS PRESENT.
+
+			inputFile >> checkString;
+
+			foundSymbol = false;
+
+			for (i = 0; i < 12; ++i) {
+				//go through valid data types and see which one it is
+				if (!checkString.compare(validSymbols[i])) {
+					foundSymbol = true;
+					break;
+				}
+			}
+
+			if (foundDataType) {
+				// TODO: HANDLE IF/ELSE TO MUX/REG/OTHERS IN HERE.
+				getline(inputFile, checkString);
+				createNewInputVariable(checkString, i);
+			}
+			else {
+				cout << "Error: Invalid Datapath Component: " << checkString << " Exiting Program." << endl;
+			}
+
 		}
 
 	}
@@ -590,4 +620,11 @@ void Circuit::createNewWire(std::string name, bool sign, int dataWidth)
 	Wire* newWire = new Wire(name, sign, dataWidth);
 
 	_wires.push_back(*newWire);
+}
+
+bool checkDatapathInput(std::string name) 
+{
+
+
+
 }
