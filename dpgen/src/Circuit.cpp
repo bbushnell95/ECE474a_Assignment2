@@ -125,6 +125,7 @@ bool Circuit::readFile(char* fileName)
 
 			// TODO: SEE WHAT TYPE OF DATAPATH COMPONENT IS PRESENT.
 
+			/*
 			inputFile >> checkString;
 
 			foundSymbol = false;
@@ -145,6 +146,7 @@ bool Circuit::readFile(char* fileName)
 			else {
 				cout << "Error: Invalid Datapath Component: " << checkString << " Exiting Program." << endl;
 			}
+			*/
 
 		}
 
@@ -251,6 +253,7 @@ bool Circuit::writeToFile(char* fileName)
 
 void Circuit::determineCriticalPath()
 {
+
 }
 
 void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex)
@@ -697,3 +700,5 @@ void Circuit::createNewWire(std::string name, bool sign, int dataWidth)
 
 	_wires.push_back(*newWire);
 }
+
+//void Circuit::createNewDatapathComponent(std::string name, etc.)
