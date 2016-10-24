@@ -26,12 +26,12 @@ int main(int argc, char *argv[])
 	Circuit newCircuit;
 
 	/* Check for the correct number of arguments */
-	if (argc != 3) {
+	/*if (argc != 3) {
 		cout << endl;
-		cout << "Usage: " << argv[0] << "netlistFile outputFile"''
+		cout << "Usage: " << argv[0] << "netlistFile outputFile";
 		cout << endl << endl;
 		return EXIT_FAILURE;
-	}
+	}*/
 
 	/* Read in the netlist file */
 	if (!newCircuit.readFile(argv[1])) {

@@ -18,10 +18,10 @@ Description: output Class for dpgen program
 
 class Output: public DataType {
 
-private:
-	std::string name;
-	bool sign;
-	int dataWidth;
+//private:
+//	std::string name;
+//	bool sign;
+//	int dataWidth;
 public:
 	/*Constructors*/
 	Output();
