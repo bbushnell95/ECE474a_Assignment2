@@ -10,8 +10,16 @@ Description: output Class for dpgen program
 
 DatapathComponent::DatapathComponent()
 {
-	//name = "Unknown";
+	name = "Unknown";
+	dataWidth = 0;
 	/* TODO: FINISH THIS */
+}
+
+DatapathComponent::DatapathComponent(std::string n, int dW, int d)
+{
+	name = n;
+	dataWidth = dW;
+	delay = d;
 }
 
 std::string DatapathComponent::getName()
@@ -52,6 +60,16 @@ int DatapathComponent::getDataWidth()
 void DatapathComponent::setDataWidth(int dW)
 {
 	dataWidth = dW;
+}
+
+int DatapathComponent::getDelay()
+{
+	return delay;
+}
+
+void DatapathComponent::setDelay(int d)
+{
+	delay = d;
 }
 
 void DatapathComponent::addInput(DataType newInput)

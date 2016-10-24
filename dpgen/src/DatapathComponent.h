@@ -24,6 +24,7 @@ private:
 	std::vector<DataType> _componentInputs;
 	std::vector<DataType> _componentOutputs;
 	int dataWidth;
+	double delay;
 	
 	///* Datapath Component inputs */
 	
@@ -57,6 +58,7 @@ private:
 public:
 	/*Constructors*/
 	DatapathComponent();
+	DatapathComponent(std::string n, int dW, int d);
 	/*Methods*/
 	std::string getName();
 	void setName(std::string n);
@@ -66,8 +68,11 @@ public:
 	void setOutputs(std::vector<DataType> _outputs);
 	int getDataWidth();
 	void setDataWidth(int dW);
+	int getDelay();
+	void setDelay(int d);
 	void addInput(DataType newInput);
 	void addOutput(DataType newOutput);
+
 };
 
 #endif
