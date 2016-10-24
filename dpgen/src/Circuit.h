@@ -9,7 +9,7 @@ Description: Circuit Class for dpgen program
 #ifndef CIRCUIT_H
 #define CIRCUIT_H
 
-
+#include <ctime>
 #include<iostream>
 #include<fstream>
 #include<string>

@@ -160,6 +160,7 @@ bool Circuit::writeToFile(char* fileName)
 {
 	/* Set up variables. */
 	ofstream outputFile;
+	time_t timeNow = time(0);
 	int i = 0;
 	int j = 0;
 
@@ -187,7 +188,8 @@ bool Circuit::writeToFile(char* fileName)
 	outputFile << "//////////////////////////////////////////////////////////////////////////////////" << endl;
 	outputFile << "//" << endl;
 	outputFile << "//Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)" << endl;
-	outputFile << "//Date Created: 9/15/2016" << endl;
+	outputFile << "//Date Created: " << asctime(localtime(&timeNow)) << endl;;
+	outputFile << endl;
 	outputFile << "//Assignment: " << "2" << endl;
 	outputFile << "//File: " << fileName << endl;
 	outputFile << "//Description: Netlist Behavior circuit implementation for "<< fileName << endl;
@@ -209,7 +211,7 @@ bool Circuit::writeToFile(char* fileName)
 		// cout << _inputs.at(i).getName() << " " << _inputs.at(i).getDataWidth() << endl;
 		outputFile << "\t" << "input ";
 		if (_inputs.at(i).getDataWidth() != DATAWIDTH_1) {
-			outputFile << "[" << _inputs.at(i).getDataWidth() << ":0] ";
+			outputFile << "[" << _inputs.at(i).getDataWidth() - 1 << ":0] ";
 		}
 		outputFile << _inputs.at(i).getName() << ";" << endl;
 	}
@@ -221,7 +223,7 @@ bool Circuit::writeToFile(char* fileName)
 		// cout << _outputs.at(i).getName() << " " << _outputs.at(i).getDataWidth() << endl;
 		outputFile << "\t" << "output ";
 		if ( _outputs.at(i).getDataWidth() != DATAWIDTH_1 ) {
-			outputFile << "[" << _outputs.at(i).getDataWidth() << ":0] ";
+			outputFile << "[" << _outputs.at(i).getDataWidth() - 1 << ":0] ";
 		}
 		outputFile << _outputs.at(i).getName() << ";" << endl;
 	}
@@ -233,13 +235,13 @@ bool Circuit::writeToFile(char* fileName)
 		// cout << _wires.at(i).getName() << " " << _wires.at(i).getDataWidth() << endl;
 		outputFile << "\t" << "wire ";
 		if ( _wires.at(i).getDataWidth() != DATAWIDTH_1 ) {
-			outputFile << "[" << _wires.at(i).getDataWidth() << ":0] ";
+			outputFile << "[" << _wires.at(i).getDataWidth() - 1 << ":0] ";
 		}
 		outputFile << _wires.at(i).getName() << ";" << endl;
 	}
 	outputFile << endl;
 
-	/* TODO: START WRITING THE DATAPATH COMPONENTS. */
+	/* TODO: WRITE THE DATAPATH COMPONENTS. */
 
 	/* End Module. */
 	outputFile << endl << "endmodule" << endl;
