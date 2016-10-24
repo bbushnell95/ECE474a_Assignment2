@@ -793,7 +793,7 @@ bool Circuit::determineComponent(std::string line, DataType output)
 	std::vector<DataType> componentOutputs;
 	std::istringstream iss(line);
 
-	line += '\n';
+	//line += '\n';
 
 	while (!iss.fail()) {
 		iss >> checkString;
@@ -803,7 +803,7 @@ bool Circuit::determineComponent(std::string line, DataType output)
 		}
 		else {
 			if (!checkValidSymbol(checkString, &componentType)) {
-				if (checkVariable(checkString, &inputIndex, &outputIndex, &wireIndex)) {
+				if (checkVariable(checkString, &outputIndex, &inputIndex, &wireIndex)) {
 					if (inputIndex != -1) {
 						componentInputs.push_back(_inputs.at(inputIndex));
 
@@ -845,6 +845,9 @@ bool Circuit::determineComponent(std::string line, DataType output)
 
 void Circuit::createNewDatapathComponent(std::string name, std::vector<DataType> _inputs, std::vector<DataType> _outputs) 
 {
+	DatapathComponent* newComponent = new DatapathComponent(name, _inputs, _outputs);
+
+	_datapathComponents.push_back(*newComponent);
 
 }
 
@@ -872,32 +875,32 @@ bool Circuit::checkValidSymbol(std::string checkSymbol, std::string* dPType)
 	}
 
 	switch (i) {
-	case 1:
+	case 0:
 		// Do nothing.
 		break;
-	case 2: *dPType = "ADD";
+	case 1: *dPType = "ADD";
 		break;
-	case 3: *dPType = "SUB";
+	case 2: *dPType = "SUB";
 		break;
-	case 4: *dPType = "MUL";
+	case 3: *dPType = "MUL";
 		break;
-	case 5: *dPType = "COMP_gt";
+	case 4: *dPType = "COMP_gt";
 		break;
-	case 6: *dPType = "COMP_lt";
+	case 5: *dPType = "COMP_lt";
 		break;
-	case 7: *dPType = "COMP_eq";
+	case 6: *dPType = "COMP_eq";
+		break;
+	case 7: *dPType = "MUX2x1";
 		break;
 	case 8: *dPType = "MUX2x1";
 		break;
-	case 9: *dPType = "MUX2x1";
+	case 9: *dPType = "SHR";
 		break;
-	case 10: *dPType = "SHR";
+	case 10: *dPType = "SHL";
 		break;
-	case 11: *dPType = "SHL";
+	case 11: *dPType = "DIV";
 		break;
-	case 12: *dPType = "DIV";
-		break;
-	case 13: *dPType = "MOD";
+	case 12: *dPType = "MOD";
 		break;
 	}
 

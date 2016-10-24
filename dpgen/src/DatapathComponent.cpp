@@ -15,11 +15,12 @@ DatapathComponent::DatapathComponent()
 	/* TODO: FINISH THIS */
 }
 
-DatapathComponent::DatapathComponent(std::string n, int dW, int d)
+DatapathComponent::DatapathComponent(std::string n, std::vector<DataType> _inputs, std::vector<DataType> _outputs)
 {
 	name = n;
-	dataWidth = dW;
-	delay = d;
+	_componentInputs = _inputs;
+	_componentOutputs = _outputs;
+
 }
 
 std::string DatapathComponent::getName()
