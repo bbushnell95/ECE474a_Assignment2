@@ -122,7 +122,7 @@ bool Circuit::readFile(char* fileName)
 		else {
 			if (!checkVariable(checkString, &componentOutputIndex, &componentInputIndex, &componentWireIndex)) {
 				cout << "Variable '" << checkString << "' not found, please correct Netlist Behavior File." << endl;
-				break;
+				return false;
 			}
 			else {
 				getline(inputFile, checkString);
@@ -166,6 +166,7 @@ bool Circuit::readFile(char* fileName)
 	}
 		
 	inputFile.close();
+	return true;
 
 }
 
@@ -777,10 +778,81 @@ bool Circuit::checkVariable(std::string checkName, int* outputIndex, int* inputI
 	}
 	return variableFound;
 }
-void Circuit::determineComponent(std::string line, DataType output)
+bool Circuit::determineComponent(std::string line, DataType output)
 {
+	int i = 0;
+	int equalCount = 0;
+	int inputIndex = -1;
+	int wireIndex = -1;
+	int outputIndex = -1;
+	bool result = true;
+	std::string checkString = ""; 
+	std::string componentType = "";
+	std::string tempVariableName = "";
+	std::vector<DataType> componentInputs;
+	std::vector<DataType> componentOutputs;
+	std::istringstream iss(line);
+
+	line += '\n';
+
+	while (!iss.fail()) {
+		iss >> checkString;
+
+		if (!checkString.compare("=")) {
+			++equalCount;
+		}
+		else {
+			if (!checkValidSymbol(checkString, &componentType)) {
+				if (checkVariable(checkString, &inputIndex, &outputIndex, &wireIndex)) {
+					if (inputIndex != -1) {
+						componentInputs.push_back(_inputs.at(inputIndex));
+
+					}
+					else if (wireIndex != -1) {
+						componentInputs.push_back(_wires.at(wireIndex));
+					}
+				}
+				else {
+					cout << checkString << " is not a valid variable or symbol" << endl;
+					result = false;
+				}
+			}
+
+		}
+	}
+
+	createNewDatapathComponent(componentType, componentInputs, componentOutputs);
+	return result;
+
+	//for (i = 0; i < line.size() - 1; ++i) {
+	//	if (line.at(i) != ' ') {
+	//		if (line.at(i) == '=') {
+	//			if (equalCount == 0) {
+	//				++equalCount;
+	//			}
+	//			else {
+	//				if (line.at(i+1) == '=') {
+	//					componentType = "COMP_eq";
+	//				}
+	//			}
+	//		}
+	//		else {
+	//			if () {
+
+	//			}
+	//		}
+		}
+
+void Circuit::createNewDatapathComponent(std::string name, std::vector<DataType> _inputs, std::vector<DataType> _outputs) {
 
 }
 
 
-//void Circuit::createNewDatapathComponent(std::string name, etc.)
+bool Circuit::checkValidSymbol(std::string checkSymbol, std::string* dPType) {
+	bool result = false;
+
+
+	return result;
+
+}
+
