@@ -13,14 +13,15 @@ Description: input Class for dpgen program
 #include<vector>
 #include<cstring>
 #include<algorithm>
+#include "DataType.h"
 
 
-class Input {
+class Input: public DataType{
 
-private:
-	std::string name;
-	int dataWidth;
-	bool signUnsigned; //used to see if variable is singed or unsigned (1 signed, 0 unsigned)
+//private:
+	//std::string name;
+	//int dataWidth;
+	//bool signUnsigned; //used to see if variable is singed or unsigned (1 signed, 0 unsigned)
 
 public:
 	/*Constructors*/
@@ -28,10 +29,10 @@ public:
 	Input(std::string n, bool sU, int dW);
 
 	/*Methods*/
-	std::string getName();
-	void setName(std::string n);
-	int getDataWidth();
-	void setDataWidth(int dW);
+	//std::string getName();
+	//void setName(std::string n);
+	//int getDataWidth();
+	//void setDataWidth(int dW);
 };
 
 #endif //INPUT_H

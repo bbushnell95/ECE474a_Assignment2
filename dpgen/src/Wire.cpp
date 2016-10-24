@@ -20,22 +20,22 @@ Wire::Wire(std::string n, bool s, int dW)
 	dataWidth = dW;
 }
 
-std::string Wire::getName()
-{
-	return name;
-}
-
-void Wire::setName(std::string n)
-{
-	name = n;
-}
-
-int Wire::getDataWidth()
-{
-	return dataWidth;
-}
-
-void Wire::setDataWidth(int dW)
-{
-	dataWidth = dW;
-}
+//std::string Wire::getName()
+//{
+//	return name;
+//}
+//
+//void Wire::setName(std::string n)
+//{
+//	name = n;
+//}
+//
+//int Wire::getDataWidth()
+//{
+//	return dataWidth;
+//}
+//
+//void Wire::setDataWidth(int dW)
+//{
+//	dataWidth = dW;
+//}

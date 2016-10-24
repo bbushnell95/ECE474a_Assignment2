@@ -22,22 +22,22 @@ Input::Input(std::string n, bool sU, int dW)
 	dataWidth = dW;
 }
 
-std::string Input::getName()
-{
-	return name;
-}
-
-void Input::setName(std::string n)
-{
-	name = n;
-}
-
-int Input::getDataWidth()
-{
-	return dataWidth;
-}
-
-void Input::setDataWidth(int dW)
-{
-	dataWidth = dW;
-}
+//std::string Input::getName()
+//{
+//	return name;
+//}
+//
+//void Input::setName(std::string n)
+//{
+//	name = n;
+//}
+//
+//int Input::getDataWidth()
+//{
+//	return dataWidth;
+//}
+//
+//void Input::setDataWidth(int dW)
+//{
+//	dataWidth = dW;
+//}

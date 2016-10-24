@@ -13,9 +13,10 @@ Description: output Class for dpgen program
 #include<vector>
 #include<cstring>
 #include<algorithm>
+#include"DataType.h"
 
 
-class Wire {
+class Wire: public DataType{
 
 private:
 	std::string name;
@@ -27,10 +28,10 @@ public:
 	Wire(std::string n, bool s, int dW);
 
 	/*Methods*/
-	std::string getName();
+	/*std::string getName();
 	void setName(std::string n);
 	int getDataWidth();
-	void setDataWidth(int dW);
+	void setDataWidth(int dW);*/
 };
 
 #endif //WIRE_H

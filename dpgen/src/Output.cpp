@@ -21,22 +21,22 @@ Output::Output(std::string n, bool s, int dW)
 	dataWidth = dW;
 }
 
-std::string Output::getName()
-{
-	return name;
-}
-
-void Output::setName(std::string n)
-{
-	name = n;
-}
-
-int Output::getDataWidth()
-{
-	return dataWidth;
-}
-
-void Output::setDataWidth(int dW)
-{
-	dataWidth = dW;
-}
+//std::string Output::getName()
+//{
+//	return name;
+//}
+//
+//void Output::setName(std::string n)
+//{
+//	name = n;
+//}
+//
+//int Output::getDataWidth()
+//{
+//	return dataWidth;
+//}
+//
+//void Output::setDataWidth(int dW)
+//{
+//	dataWidth = dW;
+//}
