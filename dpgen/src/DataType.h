@@ -1,3 +1,6 @@
+#ifndef DATATYPE_H
+#define DATATYPE_H
+
 #include<string>
 #include<vector>
 #include<cstring>
@@ -16,3 +19,4 @@ public:
 	int getDataWidth();
 	void setDataWidth(int dW);
 };
+#endif 

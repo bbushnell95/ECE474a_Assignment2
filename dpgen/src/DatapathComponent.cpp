@@ -10,6 +10,6 @@ Description: output Class for dpgen program
 
 DatapathComponent::DatapathComponent()
 {
-	name = "Unknown";
+	//name = "Unknown";
 	/* TODO: FINISH THIS */
 }
