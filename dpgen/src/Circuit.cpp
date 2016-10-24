@@ -218,6 +218,12 @@ bool Circuit::writeToFile(char* fileName)
 			outputFile << ", ";
 		}
 	}
+	for (i = 0; i < _outputs.size(); i++) {
+		outputFile << _outputs.at(i).getName();
+		if (i != _outputs.size() - 1) {
+			outputFile << ", ";
+		}
+	}
 	outputFile << ");" << endl;
 
 	/* TODO: CHECK FOR NECESSARY CLK, RST. */
