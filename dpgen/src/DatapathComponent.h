@@ -16,15 +16,17 @@ Description: Datapath Component Class for dpgen program
 #include<cstring>
 #include<algorithm>
 
-#include "Input.h"
-#include "Output.h"
-#include "Wire.h"
+#include "DataType.h"
 
 class DatapathComponent {
 private:
 	std::string name;
-
+	std::vector<DataType> _componentInputs;
+	std::vector<DataType> _componentOutputs;
+	int dataWidth;
+	
 	///* Datapath Component inputs */
+	
 
 	///* Datapath Component outputs */
 	//Wire outWire;
@@ -55,9 +57,17 @@ private:
 public:
 	/*Constructors*/
 	DatapathComponent();
-
 	/*Methods*/
-	
+	std::string getName();
+	void setName(std::string n);
+	std::vector<DataType> getInputs();
+	void setInputs(std::vector<DataType> _inputs);
+	std::vector<DataType> getOutputs();
+	void setOutputs(std::vector<DataType> _outputs);
+	int getDataWidth();
+	void setDataWidth(int dW);
+	void addInput(DataType newInput);
+	void addOutput(DataType newOutput);
 };
 
 #endif
