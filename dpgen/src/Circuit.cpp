@@ -161,8 +161,24 @@ bool Circuit::writeToFile(char* fileName)
 	/* Set up variables. */
 	ofstream outputFile;
 	time_t timeNow = time(0);
+	string tempFileName = "";
+	string moduleName = "";
 	int i = 0;
 	int j = 0;
+
+	/* Staging file name. */
+	tempFileName = fileName;
+	for (i = tempFileName.size() - 1; i > 0; i--) {
+		if (tempFileName.at(i) == '\\') {
+			break;
+		}
+	}
+	for (i = i + 1; i < tempFileName.size() - 1; i++) {
+		if (tempFileName.at(i) == '.') {
+			break;
+		}
+		moduleName += tempFileName.at(i);
+	}
 
 	/* Open the output file. */
 	outputFile.open(fileName);
@@ -191,15 +207,21 @@ bool Circuit::writeToFile(char* fileName)
 	outputFile << "//Date Created: " << asctime(localtime(&timeNow)) << endl;;
 	outputFile << endl;
 	outputFile << "//Assignment: " << "2" << endl;
-	outputFile << "//File: " << fileName << endl;
+	outputFile << "//File: " << moduleName << ".v" << endl;
 	outputFile << "//Description: Netlist Behavior circuit implementation for "<< fileName << endl;
 	outputFile << "//" << endl;
 	outputFile << "//////////////////////////////////////////////////////////////////////////////////" << endl;
 	outputFile << endl << endl;
 
-	/* Start Module. */
-	outputFile << "module ";
-	/* TODO: FINISH START MODULE */
+	/* Start of Module. */
+	outputFile << "module " << moduleName << "(Clk, Rst, ";
+	for (i = 0; i < _inputs.size(); i++) {
+		outputFile << _inputs.at(i).getName();
+		if (i != _inputs.size() - 1) {
+			outputFile << ", ";
+		}
+	}
+	outputFile << ");" << endl;
 
 	/* TODO: CHECK FOR NECESSARY CLK, RST. */
 	/* TODO: CHECK FOR NECESSARY N/A INPUTS TO DATAPATH
