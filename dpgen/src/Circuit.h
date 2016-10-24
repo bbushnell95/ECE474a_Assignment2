@@ -59,6 +59,8 @@ public:
 	void createNewInput(std::string name, bool sign, int dataWidth);
 	void createNewOutput(std::string name, bool sign, int dataWidth);
 	void createNewWire(std::string name, bool sign, int dataWidth);
+	bool checkVariable(std::string checkName, int* outputIndex, int* inputIndex, int* wireIndex);
+	void determineComponent(std::string line, DataType output);
 	// void createNewDatapathComponent(/* TODO */);
 	// bool addNewDPIn(std::string name);
 	// bool addNewDPout(/* TODO */);

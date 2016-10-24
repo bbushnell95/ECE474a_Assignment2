@@ -38,6 +38,9 @@ bool Circuit::readFile(char* fileName)
 	const std::string validSymbols[13] = { "=","+" ,"-", "*", ">", "<","==", "?", ":", ">>", "<<", "/", "%"};
 	int i = 0;
 	int j = 0;
+	int componentOutputIndex = -1;
+	int componentInputIndex = -1;
+	int componentWireIndex = -1;
 
 	inputFile.open(fileName);
 
@@ -117,33 +120,46 @@ bool Circuit::readFile(char* fileName)
 			}
 		}
 		else {
-			//TODO: write commands for if there is no first word
-			
-			// TODO: CHECK FOR VALID OUTPUT/WIRE FIRST
-
-			// TODO: READ IN REST OF LINE AND PARSE
-
-			// TODO: SEE WHAT TYPE OF DATAPATH COMPONENT IS PRESENT.
-
-			/*
-			inputFile >> checkString;
-			foundSymbol = false;
-			for (i = 0; i < 12; ++i) {
-				//go through valid data types and see which one it is
-				if (!checkString.compare(validSymbols[i])) {
-					foundSymbol = true;
-					break;
-				}
-			}
-			if (foundDataType) {
-				// TODO: HANDLE IF/ELSE TO MUX/REG/OTHERS IN HERE.
-				getline(inputFile, checkString);
-				createNewInputVariable(checkString, i);
+			if (!checkVariable(checkString, &componentOutputIndex, &componentInputIndex, &componentWireIndex)) {
+				cout << "Variable '" << checkString << "' not found, please correct Netlist Behavior File." << endl;
+				break;
 			}
 			else {
-				cout << "Error: Invalid Datapath Component: " << checkString << " Exiting Program." << endl;
+				getline(inputFile, checkString);
+				if (componentOutputIndex != -1) {
+					determineComponent(checkString, _outputs.at(componentOutputIndex));
+				}
+				else if (componentWireIndex != -1) {
+					determineComponent(checkString, _wires.at(componentWireIndex));
+				}
+				//TODO: write commands for if there is no first word
+
+				// TODO: CHECK FOR VALID OUTPUT/WIRE FIRST
+
+				// TODO: READ IN REST OF LINE AND PARSE
+
+				// TODO: SEE WHAT TYPE OF DATAPATH COMPONENT IS PRESENT.
+
+				/*
+				inputFile >> checkString;
+				foundSymbol = false;
+				for (i = 0; i < 12; ++i) {
+					//go through valid data types and see which one it is
+					if (!checkString.compare(validSymbols[i])) {
+						foundSymbol = true;
+						break;
+					}
+				}
+				if (foundDataType) {
+					// TODO: HANDLE IF/ELSE TO MUX/REG/OTHERS IN HERE.
+					getline(inputFile, checkString);
+					createNewInputVariable(checkString, i);
+				}
+				else {
+					cout << "Error: Invalid Datapath Component: " << checkString << " Exiting Program." << endl;
+				}
+				*/
 			}
-			*/
 
 		}
 
@@ -727,5 +743,44 @@ void Circuit::createNewWire(std::string name, bool sign, int dataWidth)
 
 	_wires.push_back(*newWire);
 }
+
+bool Circuit::checkVariable(std::string checkName, int* outputIndex, int* inputIndex, int* wireIndex)
+{
+	bool variableFound = false;
+	int i = 0;
+
+	/*check if in inputs*/
+	for (i = 0; i < _inputs.size(); ++i) {
+		if (!_inputs.at(i).getName().compare(checkName)) {
+			variableFound = true;
+			*inputIndex = i;
+			break;
+		}
+	}
+
+	/*check if in wires*/
+	for (i = 0; i < _wires.size(); ++i) {
+		if (!_wires.at(i).getName().compare(checkName)) {
+			variableFound = true;
+			*wireIndex = i;
+			break;
+		}
+	}
+
+	/*check if in outputs*/
+	for (i = 0; i < _outputs.size(); ++i) {
+		if (!_outputs.at(i).getName().compare(checkName)) {
+			variableFound = true;
+			*outputIndex = i;
+			break;
+		}
+	}
+	return variableFound;
+}
+void Circuit::determineComponent(std::string line, DataType output)
+{
+
+}
+
 
 //void Circuit::createNewDatapathComponent(std::string name, etc.)
