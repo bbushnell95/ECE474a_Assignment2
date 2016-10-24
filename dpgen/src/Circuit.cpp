@@ -127,9 +127,7 @@ bool Circuit::readFile(char* fileName)
 
 			/*
 			inputFile >> checkString;
-
 			foundSymbol = false;
-
 			for (i = 0; i < 12; ++i) {
 				//go through valid data types and see which one it is
 				if (!checkString.compare(validSymbols[i])) {
@@ -137,7 +135,6 @@ bool Circuit::readFile(char* fileName)
 					break;
 				}
 			}
-
 			if (foundDataType) {
 				// TODO: HANDLE IF/ELSE TO MUX/REG/OTHERS IN HERE.
 				getline(inputFile, checkString);

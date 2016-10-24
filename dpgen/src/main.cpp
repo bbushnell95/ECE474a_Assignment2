@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}*/
 
+
 	/* Read in the netlist file */
 	if (!newCircuit.readFile(argv[1])) {
 		cout << endl;

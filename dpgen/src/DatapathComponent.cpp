@@ -13,3 +13,53 @@ DatapathComponent::DatapathComponent()
 	//name = "Unknown";
 	/* TODO: FINISH THIS */
 }
+
+std::string DatapathComponent::getName()
+{
+	return name;
+}
+
+void DatapathComponent::setName(std::string n)
+{
+	name = n;
+}
+
+std::vector<DataType> DatapathComponent::getInputs()
+{
+	return _componentInputs;
+}
+
+void DatapathComponent::setInputs(std::vector<DataType> _inputs)
+{
+	_componentInputs = _inputs;
+}
+
+std::vector<DataType> DatapathComponent::getOutputs()
+{
+	return _componentOutputs;
+}
+
+void DatapathComponent::setOutputs(std::vector<DataType> _outputs)
+{
+	_componentOutputs = _outputs;
+}
+
+int DatapathComponent::getDataWidth()
+{
+	return dataWidth;
+}
+
+void DatapathComponent::setDataWidth(int dW)
+{
+	dataWidth = dW;
+}
+
+void DatapathComponent::addInput(DataType newInput)
+{
+	_componentInputs.push_back(newInput);
+}
+
+void DatapathComponent::addOutput(DataType newOutput)
+{
+	_componentOutputs.push_back(newOutput);
+}
