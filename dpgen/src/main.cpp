@@ -7,6 +7,7 @@ Description: Main function for dpgen program
 */
 
 #include <stdlib.h>
+#include <ctime>
 #include "Circuit.h"
 
 using namespace std;
@@ -16,6 +17,12 @@ dpgen netlistFile verilogFile
 */
 int main(int argc, char *argv[])
 {
+
+	time_t timeNow = time(0);
+	struct tm *now = localtime(&timeNow);
+	cout << (now->tm_year + 1900) << endl;
+
+
 	Circuit newCircuit;
 
 	/* Check for the correct number of arguments */
