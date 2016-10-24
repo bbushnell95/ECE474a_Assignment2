@@ -843,16 +843,64 @@ bool Circuit::determineComponent(std::string line, DataType output)
 	//		}
 		}
 
-void Circuit::createNewDatapathComponent(std::string name, std::vector<DataType> _inputs, std::vector<DataType> _outputs) {
+void Circuit::createNewDatapathComponent(std::string name, std::vector<DataType> _inputs, std::vector<DataType> _outputs) 
+{
 
 }
 
 
-bool Circuit::checkValidSymbol(std::string checkSymbol, std::string* dPType) {
-	bool result = false;
+bool Circuit::checkValidSymbol(std::string checkSymbol, std::string* dPType) 
+{
+	const std::string validSymbols[13] = { "=","+" ,"-", "*", ">", "<","==", "?", ":", ">>", "<<", "/", "%" };
+	int i = 0;
+	bool foundValidSymbol = false;
+
+	for (i = 0; i < 13; i++) {
 
 
-	return result;
+	}
 
+	for (i = 0; i < 13; i++) {
+		if (!checkSymbol.compare(validSymbols[i])) {
+			foundValidSymbol = true;
+			break;
+		}
+	}
+
+	if (!foundValidSymbol) {
+		return false;
+	}
+
+	switch (i) {
+	case 1:
+		// Do nothing.
+		break;
+	case 2: *dPType = "ADD";
+		break;
+	case 3: *dPType = "SUB";
+		break;
+	case 4: *dPType = "MUL";
+		break;
+	case 5: *dPType = "COMP_gt";
+		break;
+	case 6: *dPType = "COMP_lt";
+		break;
+	case 7: *dPType = "COMP_eq";
+		break;
+	case 8: *dPType = "MUX2x1";
+		break;
+	case 9: *dPType = "MUX2x1";
+		break;
+	case 10: *dPType = "SHR";
+		break;
+	case 11: *dPType = "SHL";
+		break;
+	case 12: *dPType = "DIV";
+		break;
+	case 13: *dPType = "MOD";
+		break;
+	}
+
+	return true;
 }
 
