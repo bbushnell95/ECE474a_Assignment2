@@ -19,6 +19,7 @@ Description: Circuit Class for dpgen program
 #include<algorithm>
 
 #include "DatapathComponent.h"
+#include "DataType.h"
 #include "Input.h"
 #include "Output.h"
 #include "Wire.h"

@@ -18,7 +18,7 @@ Description: output Class for dpgen program
 
 class Wire: public DataType{
 
-private:
+//private:
 //	std::string name;
 //	bool sign;
 //	int dataWidth;
