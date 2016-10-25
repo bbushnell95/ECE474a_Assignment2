@@ -1070,4 +1070,3 @@ bool Circuit::checkValidSymbol(std::string checkSymbol, std::string* dPType)
 
 	return true;
 }
-

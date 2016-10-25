@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
-//Date Created: Tue Oct 25 12:46:06 2016
+//Date Created: Tue Oct 25 13:16:35 2016
 //Assignment: 2
 //File: circuit1.v
 //Description: A netlist behavior circuit implementation
@@ -32,3 +32,6 @@ module circuit1(clk, rst, a, b, c, z, x);
 	SMUX2x1 #(8) SMUX2x1_3(d, e, g, z);
 	SMUL #(8) SMUL_4(a, c, z);
 	SSUB #(8) SSUB_5(f, d, d, z);
+	SREG #(16) SREG_6(xwire, clk, rst, x);
+
+endmodule
