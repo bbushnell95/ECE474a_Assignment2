@@ -77,4 +77,4 @@ public:
 
 };
 
-#endif
+#endif //DATAPATHCOMPONENT_H
