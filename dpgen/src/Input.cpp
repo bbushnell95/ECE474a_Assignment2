@@ -22,6 +22,7 @@ Input::Input(std::string n, bool sU, int dW)
 	dataWidth = dW;
 }
 
+
 //std::string Input::getName()
 //{
 //	return name;

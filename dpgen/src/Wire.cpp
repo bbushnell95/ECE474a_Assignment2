@@ -20,6 +20,7 @@ Wire::Wire(std::string n, bool s, int dW)
 	dataWidth = dW;
 }
 
+
 //std::string Wire::getName()
 //{
 //	return name;
