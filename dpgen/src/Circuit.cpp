@@ -820,28 +820,17 @@ bool Circuit::determineComponent(std::string line, DataType output)
 
 		}
 	}
-
-	createNewDatapathComponent(componentType, componentInputs, componentOutputs);
+	if (result) {
+		if (componentInputs.size() == 1) {
+			createNewDatapathComponent("REG", componentInputs, componentOutputs);
+		}
+		else {
+			createNewDatapathComponent(componentType, componentInputs, componentOutputs);
+		}
+	}
 	return result;
 
-	//for (i = 0; i < line.size() - 1; ++i) {
-	//	if (line.at(i) != ' ') {
-	//		if (line.at(i) == '=') {
-	//			if (equalCount == 0) {
-	//				++equalCount;
-	//			}
-	//			else {
-	//				if (line.at(i+1) == '=') {
-	//					componentType = "COMP_eq";
-	//				}
-	//			}
-	//		}
-	//		else {
-	//			if () {
-
-	//			}
-	//		}
-		}
+}
 
 void Circuit::createNewDatapathComponent(std::string name, std::vector<DataType> _inputs, std::vector<DataType> _outputs) 
 {
