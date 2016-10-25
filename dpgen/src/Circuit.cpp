@@ -165,6 +165,8 @@ bool Circuit::readFile(char* fileName)
 
 	}
 	for (i = 0; i < _datapathComponents.size(); ++i) {
+		_datapathComponents.at(i).determineDataWidth();
+		_datapathComponents.at(i).assignDelay();
 		_datapathComponents.at(i).checkIfSigned();
 	}
 
