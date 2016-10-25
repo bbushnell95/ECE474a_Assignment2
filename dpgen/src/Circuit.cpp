@@ -849,11 +849,6 @@ bool Circuit::checkValidSymbol(std::string checkSymbol, std::string* dPType)
 	bool foundValidSymbol = false;
 
 	for (i = 0; i < 13; i++) {
-
-
-	}
-
-	for (i = 0; i < 13; i++) {
 		if (!checkSymbol.compare(validSymbols[i])) {
 			foundValidSymbol = true;
 			break;
