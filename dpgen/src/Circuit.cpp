@@ -211,7 +211,7 @@ bool Circuit::writeToFile(char* fileName)
 
 	/* Open the output file. */
 	outputFile.open(fileName);
-	if ( !outputFile.is_open() ) {
+	if (!outputFile.is_open()) {
 		return false;
 	}
 
@@ -224,10 +224,10 @@ bool Circuit::writeToFile(char* fileName)
 		outputFile.close();
 		return false;
 	}
-	/* Note: There can be no wires if there is 
+	/* Note: There can be no wires if there is
 	a netlist behavior file containing no
 	inter-connected datapath components. */
-	
+
 	/* Print Setup. */
 	outputFile << "`timescale 1ns / 1ps" << endl;
 	outputFile << "//////////////////////////////////////////////////////////////////////////////////" << endl;
@@ -254,7 +254,7 @@ bool Circuit::writeToFile(char* fileName)
 		}
 	}
 	outputFile << ");" << endl;
-	
+
 	/* Print Inputs. */
 	// cout << "Inputs" << endl;
 	for (i = 0; i < _inputs.size(); i++) {
@@ -272,7 +272,7 @@ bool Circuit::writeToFile(char* fileName)
 	for (i = 0; i < _outputs.size(); i++) {
 		// cout << _outputs.at(i).getName() << " " << _outputs.at(i).getDataWidth() << endl;
 		outputFile << "\t" << "output ";
-		if ( _outputs.at(i).getDataWidth() != DATAWIDTH_1 ) {
+		if (_outputs.at(i).getDataWidth() != DATAWIDTH_1) {
 			outputFile << "[" << _outputs.at(i).getDataWidth() - 1 << ":0] ";
 		}
 		outputFile << _outputs.at(i).getName() << ";" << endl;
@@ -284,7 +284,7 @@ bool Circuit::writeToFile(char* fileName)
 	for (i = 0; i < _wires.size(); i++) {
 		// cout << _wires.at(i).getName() << " " << _wires.at(i).getDataWidth() << endl;
 		outputFile << "\t" << "wire ";
-		if ( _wires.at(i).getDataWidth() != DATAWIDTH_1 ) {
+		if (_wires.at(i).getDataWidth() != DATAWIDTH_1) {
 			outputFile << "[" << _wires.at(i).getDataWidth() - 1 << ":0] ";
 		}
 		outputFile << _wires.at(i).getName() << ";" << endl;
@@ -319,7 +319,7 @@ bool Circuit::writeToFile(char* fileName)
 		}
 		else if (!_datapathComponents.at(i).getName().compare("SCOMP_gt")) {
 			outputFile << "\t" << "wire ";
-			outputFile << "na" << k << " ";
+			outputFile << "na" << k << ", ";
 			k++;
 			outputFile << "na" << k << ";" << endl;
 			k++;
@@ -327,34 +327,140 @@ bool Circuit::writeToFile(char* fileName)
 	}
 	outputFile << endl;
 
-	/* TODO: WRITE THE DATAPATH COMPONENTS. */
+	/* WRITE THE DATAPATH COMPONENTS. */
 	k = 0;
 	for (i = 0; i < _datapathComponents.size(); i++) {
 		outputFile << "\t";
-		if (!_datapathComponents.at(i).getName().compare("COMP_lt")) {
-			outputFile << "SCOMP";
-		}
-		else if (!_datapathComponents.at(i).getName().compare("SCOMP_lt")) {
-			outputFile << "SCOMP";
-		}
-		else if (!_datapathComponents.at(i).getName().compare("COMP_gt")) {
-			outputFile << "SCOMP";
-		}
-		else if (!_datapathComponents.at(i).getName().compare("SCOMP_gt")) {
+		/* Which module is it? */
+		if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))
+			|| (!_datapathComponents.at(i).getName().compare("COMP_gt"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))
+			|| (!_datapathComponents.at(i).getName().compare("COMP_eq"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_eq"))) {
 			outputFile << "SCOMP";
 		}
 		else {
 			outputFile << _datapathComponents.at(i).getName();
 		}
+
+		/* What is the Datawidth? */
 		outputFile << " #(";
-		outputFile << "TODO";
+		outputFile << _datapathComponents.at(i).getDataWidth();
 		outputFile << ") ";
-		outputFile << _datapathComponents.at(i).getName();
-		outputFile << "_" << i << "(";
-		for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
-			outputFile << _datapathComponents.at(i).getInputs().at(j).getName() << ", "; // TODO
+
+		/* Name the module. */
+		if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))
+			|| (!_datapathComponents.at(i).getName().compare("COMP_gt"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))
+			|| (!_datapathComponents.at(i).getName().compare("COMP_eq"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_eq"))) {
+			outputFile << "SCOMP";
 		}
-		outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+		else {
+			outputFile << _datapathComponents.at(i).getName();
+		}
+
+		/* REG */
+		outputFile << "_" << i << "(";
+		if ((!_datapathComponents.at(i).getName().compare("REG"))
+			|| (!_datapathComponents.at(i).getName().compare("SREG"))) {
+			outputFile << _datapathComponents.at(i).getInputs().at(0).getName() << ", ";
+			outputFile << "clk, rst, ";
+			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+		}
+		/* ADD, SUB, MUL, DIV, MOD, SHL, SHR, INC, DEC */
+		else if ((!_datapathComponents.at(i).getName().compare("ADD"))
+			|| (!_datapathComponents.at(i).getName().compare("SADD"))
+			|| (!_datapathComponents.at(i).getName().compare("SUB"))
+			|| (!_datapathComponents.at(i).getName().compare("SSUB"))
+			|| (!_datapathComponents.at(i).getName().compare("MUL"))
+			|| (!_datapathComponents.at(i).getName().compare("SMUL"))
+			|| (!_datapathComponents.at(i).getName().compare("DIV"))
+			|| (!_datapathComponents.at(i).getName().compare("SDIV"))
+			|| (!_datapathComponents.at(i).getName().compare("MOD"))
+			|| (!_datapathComponents.at(i).getName().compare("SMOD"))
+			|| (!_datapathComponents.at(i).getName().compare("SHR"))
+			|| (!_datapathComponents.at(i).getName().compare("SSHR"))
+			|| (!_datapathComponents.at(i).getName().compare("SHL"))
+			|| (!_datapathComponents.at(i).getName().compare("SSHL"))
+			|| (!_datapathComponents.at(i).getName().compare("INC"))
+			|| (!_datapathComponents.at(i).getName().compare("SINC"))
+			|| (!_datapathComponents.at(i).getName().compare("DEC"))
+			|| (!_datapathComponents.at(i).getName().compare("SDEC"))) {
+			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+				outputFile << _datapathComponents.at(i).getInputs().at(j).getName() << ", ";
+			}
+			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+		}
+		/* SHR, SHL */
+		/* DON'T NEED. PLEASE LEAVE FOR NOW
+		else if ((!_datapathComponents.at(i).getName().compare("SHL"))
+			|| (!_datapathComponents.at(i).getName().compare("SSHL"))
+			|| (!_datapathComponents.at(i).getName().compare("SHR"))
+			|| (!_datapathComponents.at(i).getName().compare("SSHR"))) {
+			// SHR (a, sh_amt, d);
+			outputFile << _datapathComponents.at(i).getInputs().at()
+			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+
+		}
+		*/
+		/* MUL2x1 */
+		else if ((!_datapathComponents.at(i).getName().compare("MUX2x1"))
+			|| (!_datapathComponents.at(i).getName().compare("SMUX2x1"))) {
+			// MUX2x1(a, b, sel, d);
+			outputFile << _datapathComponents.at(i).getInputs().at(1).getName() << ", ";
+			outputFile << _datapathComponents.at(i).getInputs().at(2).getName() << ", ";
+			outputFile << _datapathComponents.at(i).getInputs().at(0).getName() << ", ";
+			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+		}
+		/* INC, DEC */
+		/* DON'T NEED. PLEASE LEAVE FOR NOW.
+		else if ((!_datapathComponents.at(i).getName().compare("INC"))
+			|| (!_datapathComponents.at(i).getName().compare("SINC"))
+			|| (!_datapathComponents.at(i).getName().compare("DEC"))
+			|| (!_datapathComponents.at(i).getName().compare("SDEC"))) {
+			outputFile << _datapathComponents.at(i).getInputs().at(0).getName();
+			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+		}
+		*/
+		/* COMP_gt */
+		else if ((!_datapathComponents.at(i).getName().compare("COMP_gt"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))) {
+			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+				outputFile << _datapathComponents.at(i).getInputs().at(j).getName() << ", ";
+			}
+			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName() << ", ";
+			outputFile << "na" << k << ", ";
+			k++;
+			outputFile << "na" << k;
+			k++;
+		}
+		/* COMP_lt */
+		else if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))) {
+			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+				outputFile << _datapathComponents.at(i).getInputs().at(j).getName() << ", ";
+			}
+			outputFile << "na" << k << ", ";
+			k++;
+			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName() << ", ";
+			outputFile << "na" << k;
+			k++;
+		}
+		/* COMP_eq */
+		else if ((!_datapathComponents.at(i).getName().compare("COMP_eq"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_eq"))) {
+			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+				outputFile << _datapathComponents.at(i).getInputs().at(j).getName() << ", ";
+			}
+			outputFile << "na" << k << ", ";
+			k++;
+			outputFile << "na" << k << ", ";
+			k++;
+			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+		}
 		outputFile << ");" << endl;
 	}
 
