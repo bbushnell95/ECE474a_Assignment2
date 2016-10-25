@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
-//Date Created: Tue Oct 25 13:49:04 2016
+//Date Created: Tue Oct 25 15:27:37 2016
 //Assignment: 2
 //File: circuit8_output.v
 //Description: A netlist behavior circuit implementation
@@ -27,7 +27,7 @@ module circuit8_output(clk, rst, a, b, c, zero, z);
 
 	SDEC #(64) SDEC_0(a, e);
 	SINC #(64) SINC_1(c, f);
-	SMOD #(64) SMOD_2(a, c, c, g);
+	SMOD #(64) SMOD_2(a, c, g);
 	SCOMP #(1) SCOMP_3(g, zero, na0, na1, gEQz);
 	SMUX2x1 #(64) SMUX2x1_4(e, f, gEQz, zwire);
 	SREG #(64) SREG_5(zwire, clk, rst, z);

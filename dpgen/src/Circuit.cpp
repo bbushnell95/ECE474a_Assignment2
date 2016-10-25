@@ -483,10 +483,55 @@ bool Circuit::writeToFile(char* fileName)
 	return true;
 
 }
+/*
+Topological Sort (Graph ?G?, List ?L?)
+	1. for each vertex u ? G.vertices
+		a. u­>color = white
+	2. for each vertex u ? G.vertices
+		a. if u­>color == white
+			i. TSVisit(G, L, u)
 
+TSVisit (Graph ?G?, List ?L?, Vertex* ?u?)
+	1. u­>color = gray
+	2. for each edge e ? u.edges
+		a. v = e­>adjVertex
+		b. if v­>color == white
+			i. TSVisit(G, L, v)
+	3. u­>color = black
+	4. L.insert_front(u)
+
+LongestPathDAG (Graph ?G?)
+	1. TopologicalSort(G, L)
+	2. for each vertex u ? G.vertices
+		a. u­>dist = 0
+	3. for each vertex u ? L
+		a. for each edge e ? u.edges
+			i. v = e­>adjVertex
+			ii. if (u­>dist + e­>weight) > v­>dist
+				1. v­>dist = u­>dist + e­>weight
+				2. v­>pred = u
+	4. max = 0
+	5. for each vertex u ? G.vertices
+		a. if u­>dist > max
+			i. max = u­>dist
+*/
 void Circuit::determineCriticalPath()
 {
+	int i = 0;
+	int j = 0;
+	double tempCP = 0.0;
+	double criticalPath;
+	DatapathComponent* tempComp = NULL;
+	std::vector<DatapathComponent*> queue;
 
+	for (i = 0; i < _inputs.size(); ++i) {
+		for (j = 0; j < (*_inputs.at(i)).getGoingTo().size(); ++j) {
+			if ((*(*_inputs.at(i)).getGoingTo().at(j)).getVisted() == 'w') {
+				(*(*_inputs.at(i)).getGoingTo().at(j)).setVisted('g');
+				queue.push_back((*_inputs.at(i)).getGoingTo().at(j));
+			}
+		}
+	}
 }
 
 void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex)

@@ -24,6 +24,7 @@ private:
 	std::vector<DataType*> _componentOutputs;
 	int dataWidth;
 	double delay;
+	char visited;
 	
 	///* Datapath Component inputs */
 	
@@ -69,6 +70,8 @@ public:
 	void setDataWidth(int dW);
 	int getDelay();
 	void setDelay(int d);
+	char getVisted();
+	void setVisted(char v);
 	void addInput(DataType* newInput);
 	void addOutput(DataType* newOutput);
 	void checkIfSigned();

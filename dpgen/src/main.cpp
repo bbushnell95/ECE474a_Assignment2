@@ -37,6 +37,8 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
+	newCircuit.determineCriticalPath();
+
 	/* Write to the verilog file */
 	if (!newCircuit.writeToFile(argv[2])) {
 		cout << endl;

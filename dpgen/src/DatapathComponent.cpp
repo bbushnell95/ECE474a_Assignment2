@@ -12,6 +12,7 @@ DatapathComponent::DatapathComponent()
 {
 	name = "Unknown";
 	dataWidth = 0;
+	visited = 'w';
 	/* TODO: FINISH THIS */
 }
 
@@ -22,6 +23,7 @@ DatapathComponent::DatapathComponent(std::string n, std::vector<DataType*> _inpu
 	_componentOutputs = _outputs;
 	dataWidth = 0;
 	delay = 0;
+	visited = 'w';
 
 }
 
@@ -73,6 +75,16 @@ int DatapathComponent::getDelay()
 void DatapathComponent::setDelay(int d)
 {
 	delay = d;
+}
+
+char DatapathComponent::getVisted()
+{
+	return visited;
+}
+
+void DatapathComponent::setVisted(char v)
+{
+	visited = v;
 }
 
 void DatapathComponent::addInput(DataType* newInput)
