@@ -169,13 +169,13 @@ bool Circuit::readFile(char* fileName)
 		_datapathComponents.at(i).assignDelay();
 		_datapathComponents.at(i).checkIfSigned();
 		//set going to for inputs
-		//for (j = 0; j < _datapathComponents.at(i).getInputs().size(); ++j) {
-		//	_datapathComponents.at(i).getInputs().at(j).addToGoingTo(_datapathComponents.at(i));
-		//}
-		////sets coming from for outputs
-		//for (j = 0; j < _datapathComponents.at(i).getOutputs().size(); ++j) {
-		//	_datapathComponents.at(i).getOutputs().at(j).addToComingFrom(_datapathComponents.at(i));
-		//}
+		for (j = 0; j < _datapathComponents.at(i).getInputs().size(); ++j) {
+			_datapathComponents.at(i).getInputs().at(j).addToGoingTo(&_datapathComponents.at(i));
+		}
+		//sets coming from for outputs
+		for (j = 0; j < _datapathComponents.at(i).getOutputs().size(); ++j) {
+			_datapathComponents.at(i).getOutputs().at(j).addToComingFrom(&_datapathComponents.at(i));
+		}
 	}
 
 	inputFile.close();
