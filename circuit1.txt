@@ -2,10 +2,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
-//Date Created: Mon Oct 24 20:42:40 2016
+//Date Created: Mon Oct 24 20:41:11 2016
+
+
 //Assignment: 2
 //File: circuit1.v
-//Description: Netlist Behavior circuit implementation for C:\Users\MDzur\Dropbox\School\Senior\Fall2016\ECE574A\assignment2\ECE474a_Assignment2\circuit1.v
+//Description: Netlist Behavior circuit implementation for C:\Users\MDzur\Dropbox\School\Senior\Fall2016\ECE574A\assignment2\ECE474a_Assignment2\circuit1.txt
 //
 //////////////////////////////////////////////////////////////////////////////////
 

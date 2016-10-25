@@ -218,22 +218,19 @@ bool Circuit::writeToFile(char* fileName)
 	outputFile << "//////////////////////////////////////////////////////////////////////////////////" << endl;
 	outputFile << "//" << endl;
 	outputFile << "//Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)" << endl;
-	outputFile << "//Date Created: " << asctime(localtime(&timeNow)) << endl;;
-	outputFile << endl;
+	outputFile << "//Date Created: " << asctime(localtime(&timeNow));
 	outputFile << "//Assignment: " << "2" << endl;
 	outputFile << "//File: " << moduleName << ".v" << endl;
-	outputFile << "//Description: Netlist Behavior circuit implementation for "<< fileName << endl;
+	outputFile << "//Description: A netlist Behavior circuit implementation" << endl;
 	outputFile << "//" << endl;
 	outputFile << "//////////////////////////////////////////////////////////////////////////////////" << endl;
 	outputFile << endl << endl;
 
 	/* Start of Module. */
-	outputFile << "module " << moduleName << "(Clk, Rst, ";
+	outputFile << "module " << moduleName << "(clk, rst, ";
 	for (i = 0; i < _inputs.size(); i++) {
 		outputFile << _inputs.at(i).getName();
-		if (i != _inputs.size() - 1) {
-			outputFile << ", ";
-		}
+		outputFile << ", ";
 	}
 	for (i = 0; i < _outputs.size(); i++) {
 		outputFile << _outputs.at(i).getName();
