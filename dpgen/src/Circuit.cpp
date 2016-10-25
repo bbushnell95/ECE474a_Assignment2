@@ -461,6 +461,16 @@ bool Circuit::writeToFile(char* fileName)
 			k++;
 			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName();
 		}
+		/* INC, DEC */
+		/* DON'T NEED. PLEASE LEAVE FOR NOW.
+		else if ((!_datapathComponents.at(i).getName().compare("INC"))
+			|| (!_datapathComponents.at(i).getName().compare("SINC"))
+			|| (!_datapathComponents.at(i).getName().compare("DEC"))
+			|| (!_datapathComponents.at(i).getName().compare("SDEC"))) {
+			outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+		}
+		*/
+
 		outputFile << ");" << endl;
 	}
 
