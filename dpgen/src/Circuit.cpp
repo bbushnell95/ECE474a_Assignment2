@@ -51,7 +51,7 @@ bool Circuit::readFile(char* fileName)
 	}
 
 	//while there is something on the line
-	while (!inputFile.fail()) {
+	while (!inputFile.eof()) {
 		inputFile >> checkString;
 		
 		//first check if input or output or wire
@@ -794,8 +794,9 @@ bool Circuit::determineComponent(std::string line, DataType output)
 	std::istringstream iss(line);
 
 	//line += '\n';
+	componentOutputs.push_back(output);
 
-	while (!iss.fail()) {
+	while (!iss.eof()) {
 		iss >> checkString;
 
 		if (!checkString.compare("=")) {
