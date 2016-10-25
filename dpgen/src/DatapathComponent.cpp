@@ -82,3 +82,26 @@ void DatapathComponent::addOutput(DataType newOutput)
 {
 	_componentOutputs.push_back(newOutput);
 }
+
+void DatapathComponent::checkIfSigned()
+{
+	int countSigned = 0;
+	int i = 0;
+
+	for (i = 0; i < _componentInputs.size(); ++i) {
+		if (_componentInputs.at(i).getSignUnsigned()) {
+			++countSigned;
+		}
+	}
+
+	if (_componentInputs.size() == 3) {
+		if (countSigned == 2) {
+			name.insert(0, "S");
+		}
+	}
+	else {
+		if (countSigned == _componentInputs.size()) {
+			name.insert(0, "S");
+		}
+	}
+}

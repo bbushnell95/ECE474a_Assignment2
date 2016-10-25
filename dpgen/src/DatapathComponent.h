@@ -72,6 +72,7 @@ public:
 	void setDelay(int d);
 	void addInput(DataType newInput);
 	void addOutput(DataType newOutput);
+	void checkIfSigned();
 
 };
 

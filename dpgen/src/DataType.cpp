@@ -19,3 +19,13 @@ void DataType::setDataWidth(int dW)
 {
 	dataWidth = dW;
 }
+
+bool DataType::getSignUnsigned()
+{
+	return signUnsigned;
+}
+
+void DataType::setSignUnsiged(bool sU)
+{
+	signUnsigned = sU;
+}

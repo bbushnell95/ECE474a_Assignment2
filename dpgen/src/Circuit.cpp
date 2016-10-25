@@ -164,7 +164,10 @@ bool Circuit::readFile(char* fileName)
 		}
 
 	}
-		
+	for (i = 0; i < _datapathComponents.size(); ++i) {
+		_datapathComponents.at(i).checkIfSigned();
+	}
+
 	inputFile.close();
 	return true;
 

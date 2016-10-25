@@ -18,5 +18,7 @@ public:
 	void setName(std::string n);
 	int getDataWidth();
 	void setDataWidth(int dW);
+	bool getSignUnsigned();
+	void setSignUnsiged(bool sU);
 };
 #endif 
