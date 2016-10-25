@@ -484,6 +484,16 @@ void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex
 	string checkChar = "";
 	string variableName = "";
 	int j = 0;
+	int i = 0;
+
+	for (i = checkString.size() - 1; i >= 0; --i) {
+		if (checkString.at(i) == ' ') {
+			checkString.pop_back();
+		}
+		else {
+			break;
+		}
+	}
 
 	checkString += '\n';
 
@@ -626,8 +636,19 @@ void Circuit::createNewOutputVariable(std::string checkString, int dataWidthInde
 	string checkChar = "";
 	string variableName = "";
 	int j = 0;
+	int i = 0;
+
+	for (i = checkString.size() - 1; i >= 0; --i) {
+		if (checkString.at(i) == ' ') {
+			checkString.pop_back();
+		}
+		else {
+			break;
+		}
+	}
 
 	checkString += '\n';
+
 	for (j = 0; j < checkString.size()-1; j++) {
 		if (checkString.at(j) != ' ' && checkString.at(j) != ',') {
 			if (j != checkString.size() - 2) {
@@ -766,6 +787,16 @@ void Circuit::createNewWireVariable(std::string checkString, int dataWidthIndex)
 	string checkChar = "";
 	string variableName = "";
 	int j = 0;
+	int i = 0;
+
+	for (i = checkString.size() - 1; i >= 0; --i) {
+		if (checkString.at(i) == ' ') {
+			checkString.pop_back();
+		}
+		else {
+			break;
+		}
+	}
 
 	checkString += '\n';
 
@@ -971,10 +1002,21 @@ bool Circuit::determineComponent(std::string line, DataType* output)
 	std::string tempVariableName = "";
 	std::vector<DataType*> componentInputs;
 	std::vector<DataType*> componentOutputs;
+
+	for (i = line.size() - 1; i >= 0; --i) {
+		if (line.at(i) == ' ') {
+			line.pop_back();
+		}
+		else {
+			break;
+		}
+	}
+
 	std::istringstream iss(line);
 
 	//line += '\n';
 	componentOutputs.push_back(output);
+
 
 	while (!iss.eof()) {
 		iss >> checkString;
