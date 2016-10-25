@@ -15,7 +15,7 @@ DatapathComponent::DatapathComponent()
 	/* TODO: FINISH THIS */
 }
 
-DatapathComponent::DatapathComponent(std::string n, std::vector<DataType> _inputs, std::vector<DataType> _outputs)
+DatapathComponent::DatapathComponent(std::string n, std::vector<DataType*> _inputs, std::vector<DataType*> _outputs)
 {
 	name = n;
 	_componentInputs = _inputs;
@@ -35,22 +35,22 @@ void DatapathComponent::setName(std::string n)
 	name = n;
 }
 
-std::vector<DataType> DatapathComponent::getInputs()
+std::vector<DataType*> DatapathComponent::getInputs()
 {
 	return _componentInputs;
 }
 
-void DatapathComponent::setInputs(std::vector<DataType> _inputs)
+void DatapathComponent::setInputs(std::vector<DataType*> _inputs)
 {
 	_componentInputs = _inputs;
 }
 
-std::vector<DataType> DatapathComponent::getOutputs()
+std::vector<DataType*> DatapathComponent::getOutputs()
 {
 	return _componentOutputs;
 }
 
-void DatapathComponent::setOutputs(std::vector<DataType> _outputs)
+void DatapathComponent::setOutputs(std::vector<DataType*> _outputs)
 {
 	_componentOutputs = _outputs;
 }
@@ -75,12 +75,12 @@ void DatapathComponent::setDelay(int d)
 	delay = d;
 }
 
-void DatapathComponent::addInput(DataType newInput)
+void DatapathComponent::addInput(DataType* newInput)
 {
 	_componentInputs.push_back(newInput);
 }
 
-void DatapathComponent::addOutput(DataType newOutput)
+void DatapathComponent::addOutput(DataType* newOutput)
 {
 	_componentOutputs.push_back(newOutput);
 }
@@ -91,7 +91,7 @@ void DatapathComponent::checkIfSigned()
 	int i = 0;
 
 	for (i = 0; i < _componentInputs.size(); ++i) {
-		if (_componentInputs.at(i).getSignUnsigned()) {
+		if ((*_componentInputs.at(i)).getSignUnsigned()) {
 			++countSigned;
 		}
 	}
@@ -114,7 +114,7 @@ void DatapathComponent::checkIfSigned()
 
 void DatapathComponent::determineDataWidth()
 {
-	dataWidth = _componentOutputs.at(0).getDataWidth();
+	dataWidth = (*_componentOutputs.at(0)).getDataWidth();
 }
 
 void DatapathComponent::assignDelay()

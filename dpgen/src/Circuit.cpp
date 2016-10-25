@@ -170,11 +170,11 @@ bool Circuit::readFile(char* fileName)
 		_datapathComponents.at(i).checkIfSigned();
 		//set going to for inputs
 		for (j = 0; j < _datapathComponents.at(i).getInputs().size(); ++j) {
-			_datapathComponents.at(i).getInputs().at(j).addToGoingTo(&_datapathComponents.at(i));
+			(*_datapathComponents.at(i).getInputs().at(j)).addToGoingTo(&_datapathComponents.at(i));
 		}
 		//sets coming from for outputs
 		for (j = 0; j < _datapathComponents.at(i).getOutputs().size(); ++j) {
-			_datapathComponents.at(i).getOutputs().at(j).addToComingFrom(&_datapathComponents.at(i));
+			(*_datapathComponents.at(i).getOutputs().at(j)).addToComingFrom(&_datapathComponents.at(i));
 		}
 	}
 
@@ -244,11 +244,11 @@ bool Circuit::writeToFile(char* fileName)
 	/* Start of Module. */
 	outputFile << "module " << moduleName << "(clk, rst, ";
 	for (i = 0; i < _inputs.size(); i++) {
-		outputFile << _inputs.at(i).getName();
+		outputFile << (*_inputs.at(i)).getName();
 		outputFile << ", ";
 	}
 	for (i = 0; i < _outputs.size(); i++) {
-		outputFile << _outputs.at(i).getName();
+		outputFile << (*_outputs.at(i)).getName();
 		if (i != _outputs.size() - 1) {
 			outputFile << ", ";
 		}
@@ -260,10 +260,10 @@ bool Circuit::writeToFile(char* fileName)
 	for (i = 0; i < _inputs.size(); i++) {
 		// cout << _inputs.at(i).getName() << " " << _inputs.at(i).getDataWidth() << endl;
 		outputFile << "\t" << "input ";
-		if (_inputs.at(i).getDataWidth() != DATAWIDTH_1) {
-			outputFile << "[" << _inputs.at(i).getDataWidth() - 1 << ":0] ";
+		if ((*_inputs.at(i)).getDataWidth() != DATAWIDTH_1) {
+			outputFile << "[" << (*_inputs.at(i)).getDataWidth() - 1 << ":0] ";
 		}
-		outputFile << _inputs.at(i).getName() << ";" << endl;
+		outputFile << (*_inputs.at(i)).getName() << ";" << endl;
 	}
 	outputFile << endl;
 
@@ -272,10 +272,10 @@ bool Circuit::writeToFile(char* fileName)
 	for (i = 0; i < _outputs.size(); i++) {
 		// cout << _outputs.at(i).getName() << " " << _outputs.at(i).getDataWidth() << endl;
 		outputFile << "\t" << "output ";
-		if (_outputs.at(i).getDataWidth() != DATAWIDTH_1) {
-			outputFile << "[" << _outputs.at(i).getDataWidth() - 1 << ":0] ";
+		if ((*_outputs.at(i)).getDataWidth() != DATAWIDTH_1) {
+			outputFile << "[" << (*_outputs.at(i)).getDataWidth() - 1 << ":0] ";
 		}
-		outputFile << _outputs.at(i).getName() << ";" << endl;
+		outputFile << (*_outputs.at(i)).getName() << ";" << endl;
 	}
 	outputFile << endl;
 
@@ -284,10 +284,10 @@ bool Circuit::writeToFile(char* fileName)
 	for (i = 0; i < _wires.size(); i++) {
 		// cout << _wires.at(i).getName() << " " << _wires.at(i).getDataWidth() << endl;
 		outputFile << "\t" << "wire ";
-		if (_wires.at(i).getDataWidth() != DATAWIDTH_1) {
-			outputFile << "[" << _wires.at(i).getDataWidth() - 1 << ":0] ";
+		if ((*_wires.at(i)).getDataWidth() != DATAWIDTH_1) {
+			outputFile << "[" << (*_wires.at(i)).getDataWidth() - 1 << ":0] ";
 		}
-		outputFile << _wires.at(i).getName() << ";" << endl;
+		outputFile << (*_wires.at(i)).getName() << ";" << endl;
 	}
 	outputFile << endl;
 
@@ -366,9 +366,9 @@ bool Circuit::writeToFile(char* fileName)
 		outputFile << "_" << i << "(";
 		if ((!_datapathComponents.at(i).getName().compare("REG"))
 			|| (!_datapathComponents.at(i).getName().compare("SREG"))) {
-			outputFile << _datapathComponents.at(i).getInputs().at(0).getName() << ", ";
+			outputFile << (*_datapathComponents.at(i).getInputs().at(0)).getName() << ", ";
 			outputFile << "clk, rst, ";
-			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName();
 		}
 		/* ADD, SUB, MUL, DIV, MOD, SHL, SHR, INC, DEC */
 		else if ((!_datapathComponents.at(i).getName().compare("ADD"))
@@ -390,9 +390,9 @@ bool Circuit::writeToFile(char* fileName)
 			|| (!_datapathComponents.at(i).getName().compare("DEC"))
 			|| (!_datapathComponents.at(i).getName().compare("SDEC"))) {
 			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
-				outputFile << _datapathComponents.at(i).getInputs().at(j).getName() << ", ";
+				outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
 			}
-			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName();
 		}
 		/* SHR, SHL */
 		/* DON'T NEED. PLEASE LEAVE FOR NOW
@@ -410,10 +410,10 @@ bool Circuit::writeToFile(char* fileName)
 		else if ((!_datapathComponents.at(i).getName().compare("MUX2x1"))
 			|| (!_datapathComponents.at(i).getName().compare("SMUX2x1"))) {
 			// MUX2x1(a, b, sel, d);
-			outputFile << _datapathComponents.at(i).getInputs().at(1).getName() << ", ";
-			outputFile << _datapathComponents.at(i).getInputs().at(2).getName() << ", ";
-			outputFile << _datapathComponents.at(i).getInputs().at(0).getName() << ", ";
-			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+			outputFile << (*_datapathComponents.at(i).getInputs().at(1)).getName() << ", ";
+			outputFile << (*_datapathComponents.at(i).getInputs().at(2)).getName() << ", ";
+			outputFile << (*_datapathComponents.at(i).getInputs().at(0)).getName() << ", ";
+			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName();
 		}
 		/* INC, DEC */
 		/* DON'T NEED. PLEASE LEAVE FOR NOW.
@@ -429,9 +429,9 @@ bool Circuit::writeToFile(char* fileName)
 		else if ((!_datapathComponents.at(i).getName().compare("COMP_gt"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))) {
 			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
-				outputFile << _datapathComponents.at(i).getInputs().at(j).getName() << ", ";
+				outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
 			}
-			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName() << ", ";
+			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName() << ", ";
 			outputFile << "na" << k << ", ";
 			k++;
 			outputFile << "na" << k;
@@ -441,11 +441,11 @@ bool Circuit::writeToFile(char* fileName)
 		else if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))) {
 			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
-				outputFile << _datapathComponents.at(i).getInputs().at(j).getName() << ", ";
+				outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
 			}
 			outputFile << "na" << k << ", ";
 			k++;
-			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName() << ", ";
+			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName() << ", ";
 			outputFile << "na" << k;
 			k++;
 		}
@@ -453,13 +453,13 @@ bool Circuit::writeToFile(char* fileName)
 		else if ((!_datapathComponents.at(i).getName().compare("COMP_eq"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_eq"))) {
 			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
-				outputFile << _datapathComponents.at(i).getInputs().at(j).getName() << ", ";
+				outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
 			}
 			outputFile << "na" << k << ", ";
 			k++;
 			outputFile << "na" << k << ", ";
 			k++;
-			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName();
 		}
 		outputFile << ");" << endl;
 	}
@@ -907,21 +907,21 @@ void Circuit::createNewInput(std::string name, bool sign, int dataWidth)
 {
 	Input* newInput = new Input(name, sign, dataWidth);
 
-	_inputs.push_back(*newInput);
+	_inputs.push_back(newInput);
 }
 
 void Circuit::createNewOutput(std::string name, bool sign, int dataWidth)
 {
 	Output* newOutput = new Output(name, sign, dataWidth);
 
-	_outputs.push_back(*newOutput);
+	_outputs.push_back(newOutput);
 }
 
 void Circuit::createNewWire(std::string name, bool sign, int dataWidth)
 {
 	Wire* newWire = new Wire(name, sign, dataWidth);
 
-	_wires.push_back(*newWire);
+	_wires.push_back(newWire);
 }
 
 bool Circuit::checkVariable(std::string checkName, int* outputIndex, int* inputIndex, int* wireIndex)
@@ -931,7 +931,7 @@ bool Circuit::checkVariable(std::string checkName, int* outputIndex, int* inputI
 
 	/*check if in inputs*/
 	for (i = 0; i < _inputs.size(); ++i) {
-		if (!_inputs.at(i).getName().compare(checkName)) {
+		if (!(*_inputs.at(i)).getName().compare(checkName)) {
 			variableFound = true;
 			*inputIndex = i;
 			break;
@@ -940,7 +940,7 @@ bool Circuit::checkVariable(std::string checkName, int* outputIndex, int* inputI
 
 	/*check if in wires*/
 	for (i = 0; i < _wires.size(); ++i) {
-		if (!_wires.at(i).getName().compare(checkName)) {
+		if (!(*_wires.at(i)).getName().compare(checkName)) {
 			variableFound = true;
 			*wireIndex = i;
 			break;
@@ -949,7 +949,7 @@ bool Circuit::checkVariable(std::string checkName, int* outputIndex, int* inputI
 
 	/*check if in outputs*/
 	for (i = 0; i < _outputs.size(); ++i) {
-		if (!_outputs.at(i).getName().compare(checkName)) {
+		if (!(*_outputs.at(i)).getName().compare(checkName)) {
 			variableFound = true;
 			*outputIndex = i;
 			break;
@@ -957,7 +957,7 @@ bool Circuit::checkVariable(std::string checkName, int* outputIndex, int* inputI
 	}
 	return variableFound;
 }
-bool Circuit::determineComponent(std::string line, DataType output)
+bool Circuit::determineComponent(std::string line, DataType* output)
 {
 	int i = 0;
 	int equalCount = 0;
@@ -968,8 +968,8 @@ bool Circuit::determineComponent(std::string line, DataType output)
 	std::string checkString = ""; 
 	std::string componentType = "";
 	std::string tempVariableName = "";
-	std::vector<DataType> componentInputs;
-	std::vector<DataType> componentOutputs;
+	std::vector<DataType*> componentInputs;
+	std::vector<DataType*> componentOutputs;
 	std::istringstream iss(line);
 
 	//line += '\n';
@@ -1012,7 +1012,7 @@ bool Circuit::determineComponent(std::string line, DataType output)
 
 }
 
-void Circuit::createNewDatapathComponent(std::string name, std::vector<DataType> _inputs, std::vector<DataType> _outputs) 
+void Circuit::createNewDatapathComponent(std::string name, std::vector<DataType*> _inputs, std::vector<DataType*> _outputs) 
 {
 	DatapathComponent* newComponent = new DatapathComponent(name, _inputs, _outputs);
 

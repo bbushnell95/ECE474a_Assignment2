@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
-//Date Created: Tue Oct 25 08:06:31 2016
+//Date Created: Tue Oct 25 13:09:41 2016
 //Assignment: 2
 //File: circuit1_output.v
 //Description: A netlist behavior circuit implementation
@@ -24,14 +24,14 @@ module circuit1_output(clk, rst, a, b, c, z, x);
 	wire [15:0] g;
 	wire [15:0] xwire;
 
-	wire na0 na1;
+	wire na0, na1;
 
-	SADD #(TODO) SADD_0(a, b, d);
-	SADD #(TODO) SADD_1(a, c, e);
-	SCOMP_gt #(TODO) SCOMP_gt_2(d, e, g);
-	SMUX2x1 #(TODO) SMUX2x1_3(g, d, e, z);
-	SMUL #(TODO) SMUL_4(a, c, z);
-	SSUB #(TODO) SSUB_5(f, d, d, z);
-	SREG #(TODO) SREG_6(xwire, x);
+	SADD #(8) SADD_0(a, b, d);
+	SADD #(8) SADD_1(a, c, e);
+	SCOMP #(16) SCOMP_2(d, e, g, na0, na1);
+	SMUX2x1 #(8) SMUX2x1_3(d, e, g, z);
+	SMUL #(8) SMUL_4(a, c, z);
+	SSUB #(8) SSUB_5(f, d, d, z);
+	SREG #(16) SREG_6(xwire, clk, rst, x);
 
 endmodule

@@ -20,8 +20,8 @@ Description: Datapath Component Class for dpgen program
 class DatapathComponent {
 private:
 	std::string name;
-	std::vector<DataType> _componentInputs;
-	std::vector<DataType> _componentOutputs;
+	std::vector<DataType*> _componentInputs;
+	std::vector<DataType*> _componentOutputs;
 	int dataWidth;
 	double delay;
 	
@@ -57,20 +57,20 @@ private:
 public:
 	/*Constructors*/
 	DatapathComponent();
-	DatapathComponent(std::string n, std::vector<DataType> _inputs, std::vector<DataType> _outputs);
+	DatapathComponent(std::string n, std::vector<DataType*> _inputs, std::vector<DataType*> _outputs);
 	/*Methods*/
 	std::string getName();
 	void setName(std::string n);
-	std::vector<DataType> getInputs();
-	void setInputs(std::vector<DataType> _inputs);
-	std::vector<DataType> getOutputs();
-	void setOutputs(std::vector<DataType> _outputs);
+	std::vector<DataType*> getInputs();
+	void setInputs(std::vector<DataType*> _inputs);
+	std::vector<DataType*> getOutputs();
+	void setOutputs(std::vector<DataType*> _outputs);
 	int getDataWidth();
 	void setDataWidth(int dW);
 	int getDelay();
 	void setDelay(int d);
-	void addInput(DataType newInput);
-	void addOutput(DataType newOutput);
+	void addInput(DataType* newInput);
+	void addOutput(DataType* newOutput);
 	void checkIfSigned();
 	void determineDataWidth();
 	void assignDelay();
