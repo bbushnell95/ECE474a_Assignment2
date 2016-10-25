@@ -73,6 +73,8 @@ public:
 	void addInput(DataType newInput);
 	void addOutput(DataType newOutput);
 	void checkIfSigned();
+	void determineDataWidth();
+	void assignDelay();
 
 };
 
