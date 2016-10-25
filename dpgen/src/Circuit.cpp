@@ -975,6 +975,7 @@ bool Circuit::determineComponent(std::string line, DataType* output)
 	int wireIndex = -1;
 	int outputIndex = -1;
 	bool result = true;
+	bool isDecInc = false;
 	std::string checkString = ""; 
 	std::string componentType = "";
 	std::string tempVariableName = "";
@@ -992,11 +993,13 @@ bool Circuit::determineComponent(std::string line, DataType* output)
 			++equalCount;
 		}
 		else if (!checkString.compare("1")) {
-			if (componentType.compare("ADD")) {
+			if (!componentType.compare("ADD")) {
 				componentType = "INC";
+				isDecInc = true;
 			}
-			if (componentType.compare("SUB")) {
+			if (!componentType.compare("SUB")) {
 				componentType = "DEC";
+				isDecInc = true;
 			}
 		}
 		else {
@@ -1019,7 +1022,7 @@ bool Circuit::determineComponent(std::string line, DataType* output)
 		}
 	}
 	if (result) {
-		if (componentInputs.size() == 1) {
+		if (componentInputs.size() == 1 && !isDecInc) {
 			createNewDatapathComponent("REG", componentInputs, componentOutputs);
 		}
 		else {
