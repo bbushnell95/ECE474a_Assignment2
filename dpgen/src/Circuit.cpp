@@ -182,6 +182,8 @@ bool Circuit::writeToFile(char* fileName)
 	string moduleName = "";
 	int i = 0;
 	int j = 0;
+	int k = 0;
+	int naCount = 0;
 
 	/* Staging file name. */
 	tempFileName = fileName;
@@ -224,7 +226,7 @@ bool Circuit::writeToFile(char* fileName)
 	outputFile << "//Date Created: " << asctime(localtime(&timeNow));
 	outputFile << "//Assignment: " << "2" << endl;
 	outputFile << "//File: " << moduleName << ".v" << endl;
-	outputFile << "//Description: A netlist Behavior circuit implementation" << endl;
+	outputFile << "//Description: A netlist behavior circuit implementation" << endl;
 	outputFile << "//" << endl;
 	outputFile << "//////////////////////////////////////////////////////////////////////////////////" << endl;
 	outputFile << endl << endl;
@@ -242,10 +244,6 @@ bool Circuit::writeToFile(char* fileName)
 		}
 	}
 	outputFile << ");" << endl;
-
-	/* TODO: CHECK FOR NECESSARY CLK, RST. */
-	/* TODO: CHECK FOR NECESSARY N/A INPUTS TO DATAPATH
-			 COMPONENTS SUCH AS THE COMPARATOR. */
 	
 	/* Print Inputs. */
 	// cout << "Inputs" << endl;
@@ -283,14 +281,65 @@ bool Circuit::writeToFile(char* fileName)
 	}
 	outputFile << endl;
 
+	/* TODO: CHECK FOR NECESSARY N/A INPUTS TO DATAPATH
+	COMPONENTS SUCH AS THE COMPARATOR. */
+	/* Check for all N/A wires are necessary. */
+	k = 0;
+	for (i = 0; i < _datapathComponents.size(); i++) {
+		if (!_datapathComponents.at(i).getName().compare("COMP_lt")) {
+			outputFile << "\t" << "wire ";
+			outputFile << "na" << k << " ";
+			k++;
+			outputFile << "na" << k << ";" << endl;
+			k++;
+		}
+		else if (!_datapathComponents.at(i).getName().compare("SCOMP_lt")) {
+			outputFile << "\t" << "wire ";
+			outputFile << "na" << k << " ";
+			k++;
+			outputFile << "na" << k << ";" << endl;
+			k++;
+		}
+		else if (!_datapathComponents.at(i).getName().compare("COMP_gt")) {
+			outputFile << "\t" << "wire ";
+			outputFile << "na" << k << " ";
+			k++;
+			outputFile << "na" << k << ";" << endl;
+			k++;
+		}
+		else if (!_datapathComponents.at(i).getName().compare("SCOMP_gt")) {
+			outputFile << "\t" << "wire ";
+			outputFile << "na" << k << " ";
+			k++;
+			outputFile << "na" << k << ";" << endl;
+			k++;
+		}
+	}
+	outputFile << endl;
+
 	/* TODO: WRITE THE DATAPATH COMPONENTS. */
+	k = 0;
+	for (i = 0; i < _datapathComponents.size(); i++) {
+		outputFile << "\t";
+		outputFile << _datapathComponents.at(i).getName();
+		outputFile << " #(";
+		outputFile << "TODO";
+		outputFile << ") ";
+		outputFile << _datapathComponents.at(i).getName();
+		outputFile << "_" << i << "(";
+		for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+			outputFile << _datapathComponents.at(i).getInputs().at(j).getName() << ", "; // TODO
+		}
+		outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
+		outputFile << ");" << endl;
+	}
 
 	/* End Module. */
 	outputFile << endl << "endmodule" << endl;
 	
 	/* Close the output file. */
 	outputFile.close();
-	
+
 	return true;
 
 }
