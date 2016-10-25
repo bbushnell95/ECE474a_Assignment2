@@ -331,7 +331,21 @@ bool Circuit::writeToFile(char* fileName)
 	k = 0;
 	for (i = 0; i < _datapathComponents.size(); i++) {
 		outputFile << "\t";
-		outputFile << _datapathComponents.at(i).getName();
+		if (!_datapathComponents.at(i).getName().compare("COMP_lt")) {
+			outputFile << "SCOMP";
+		}
+		else if (!_datapathComponents.at(i).getName().compare("SCOMP_lt")) {
+			outputFile << "SCOMP";
+		}
+		else if (!_datapathComponents.at(i).getName().compare("COMP_gt")) {
+			outputFile << "SCOMP";
+		}
+		else if (!_datapathComponents.at(i).getName().compare("SCOMP_gt")) {
+			outputFile << "SCOMP";
+		}
+		else {
+			outputFile << _datapathComponents.at(i).getName();
+		}
 		outputFile << " #(";
 		outputFile << "TODO";
 		outputFile << ") ";
