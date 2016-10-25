@@ -15,8 +15,7 @@ Description: Datapath Component Class for dpgen program
 #include<vector>
 #include<cstring>
 #include<algorithm>
-
-#include "DataType.h"
+#include"DataType.h"
 
 class DatapathComponent {
 private:
