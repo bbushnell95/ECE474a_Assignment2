@@ -981,6 +981,14 @@ bool Circuit::determineComponent(std::string line, DataType* output)
 		if (!checkString.compare("=")) {
 			++equalCount;
 		}
+		else if (!checkString.compare("1")) {
+			if (componentType.compare("ADD")) {
+				componentType = "INC";
+			}
+			if (componentType.compare("SUB")) {
+				componentType = "DEC";
+			}
+		}
 		else {
 			if (!checkValidSymbol(checkString, &componentType)) {
 				if (checkVariable(checkString, &outputIndex, &inputIndex, &wireIndex)) {
