@@ -193,6 +193,12 @@ bool Circuit::writeToFile(char* fileName)
 	int i = 0;
 	int j = 0;
 	int k = 0;
+	bool ind1 = false;
+	bool ind2 = false;
+	bool ind8 = false;
+	bool ind16 = false;
+	bool ind32 = false;
+	bool ind64 = false;
 	int naCount = 0;
 
 	/* Staging file name. */
@@ -255,10 +261,140 @@ bool Circuit::writeToFile(char* fileName)
 	}
 	outputFile << ");" << endl;
 
+	/* Print clk, rst. */
+	outputFile << "\t" << "input clk, rst;" << endl;
+
 	/* Print Inputs. */
-	// cout << "Inputs" << endl;
+	ind1 = false;
+	ind2 = false;
+	ind8 = false;
+	ind16 = false;
+	ind32 = false;
+	ind64 = false;
+		/* Categorize if there are certain datawidths. */
 	for (i = 0; i < _inputs.size(); i++) {
-		// cout << _inputs.at(i).getName() << " " << _inputs.at(i).getDataWidth() << endl;
+		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+			ind1 = true;
+		}
+		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+			ind2 = true;
+		}
+		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+			ind8 = true;
+		}
+		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+			ind16 = true;
+		}
+		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+			ind32 = true;
+		}
+		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+			ind64 = true;
+		}
+	}
+		/* Check for each datawidth. */
+	if (ind1) {
+		k = 0;
+		outputFile << "\t" << "input ";
+		for (i = 0; i < _inputs.size(); i++) {
+			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+				if (k) {
+					outputFile << ", ";
+				}
+				outputFile << (*_inputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind2) {
+		k = 0;
+		outputFile << "\t" << "input ";
+		for (i = 0; i < _inputs.size(); i++) {
+			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[1:0] ";
+				}
+				outputFile << (*_inputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind8) {
+		k = 0;
+		outputFile << "\t" << "input ";
+		for (i = 0; i < _inputs.size(); i++) {
+			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[7:0] ";
+				}
+				outputFile << (*_inputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind16) {
+		k = 0;
+		outputFile << "\t" << "input ";
+		for (i = 0; i < _inputs.size(); i++) {
+			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[15:0] ";
+				}
+				outputFile << (*_inputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind32) {
+		k = 0;
+		outputFile << "\t" << "input ";
+		for (i = 0; i < _inputs.size(); i++) {
+			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[31:0] ";
+				}
+				outputFile << (*_inputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind64) {
+		k = 0;
+		outputFile << "\t" << "input ";
+		for (i = 0; i < _inputs.size(); i++) {
+			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[63:0] ";
+				}
+				outputFile << (*_inputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	outputFile << endl;
+	/* OLD METHOD:
+	for (i = 0; i < _inputs.size(); i++) {
 		outputFile << "\t" << "input ";
 		if ((*_inputs.at(i)).getDataWidth() != DATAWIDTH_1) {
 			outputFile << "[" << (*_inputs.at(i)).getDataWidth() - 1 << ":0] ";
@@ -266,11 +402,139 @@ bool Circuit::writeToFile(char* fileName)
 		outputFile << (*_inputs.at(i)).getName() << ";" << endl;
 	}
 	outputFile << endl;
+	*/
 
 	/* Print Outputs. */
-	// cout << "Outputs" << endl;
+	ind1 = false;
+	ind2 = false;
+	ind8 = false;
+	ind16 = false;
+	ind32 = false;
+	ind64 = false;
+		/* Categorize if there are certain datawidths. */
 	for (i = 0; i < _outputs.size(); i++) {
-		// cout << _outputs.at(i).getName() << " " << _outputs.at(i).getDataWidth() << endl;
+		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+			ind1 = true;
+		}
+		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+			ind2 = true;
+		}
+		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+			ind8 = true;
+		}
+		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+			ind16 = true;
+		}
+		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+			ind32 = true;
+		}
+		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+			ind64 = true;
+		}
+	}
+		/* Check for each datawidth. */
+	if (ind1) {
+		k = 0;
+		outputFile << "\t" << "output ";
+		for (i = 0; i < _outputs.size(); i++) {
+			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+				if (k) {
+					outputFile << ", ";
+				}
+				outputFile << (*_outputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind2) {
+		k = 0;
+		outputFile << "\t" << "output ";
+		for (i = 0; i < _outputs.size(); i++) {
+			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[1:0] ";
+				}
+				outputFile << (*_outputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind8) {
+		k = 0;
+		outputFile << "\t" << "output ";
+		for (i = 0; i < _outputs.size(); i++) {
+			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[7:0] ";
+				}
+				outputFile << (*_outputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind16) {
+		k = 0;
+		outputFile << "\t" << "output ";
+		for (i = 0; i < _outputs.size(); i++) {
+			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[15:0] ";
+				}
+				outputFile << (*_outputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind32) {
+		k = 0;
+		outputFile << "\t" << "output ";
+		for (i = 0; i < _outputs.size(); i++) {
+			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[31:0] ";
+				}
+				outputFile << (*_outputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind64) {
+		k = 0;
+		outputFile << "\t" << "output ";
+		for (i = 0; i < _outputs.size(); i++) {
+			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[63:0] ";
+				}
+				outputFile << (*_outputs.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	outputFile << endl;
+	/* OLD METHOD:
+	for (i = 0; i < _outputs.size(); i++) {
 		outputFile << "\t" << "output ";
 		if ((*_outputs.at(i)).getDataWidth() != DATAWIDTH_1) {
 			outputFile << "[" << (*_outputs.at(i)).getDataWidth() - 1 << ":0] ";
@@ -278,11 +542,139 @@ bool Circuit::writeToFile(char* fileName)
 		outputFile << (*_outputs.at(i)).getName() << ";" << endl;
 	}
 	outputFile << endl;
+	*/
 
 	/* Print Wires. */
-	// cout << "Wires" << endl;
+	ind1 = false;
+	ind2 = false;
+	ind8 = false;
+	ind16 = false;
+	ind32 = false;
+	ind64 = false;
+		/* Categorize if there are certain datawidths. */
 	for (i = 0; i < _wires.size(); i++) {
-		// cout << _wires.at(i).getName() << " " << _wires.at(i).getDataWidth() << endl;
+		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_1) {
+			ind1 = true;
+		}
+		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_2) {
+			ind2 = true;
+		}
+		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_8) {
+			ind8 = true;
+		}
+		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_16) {
+			ind16 = true;
+		}
+		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_32) {
+			ind32 = true;
+		}
+		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_64) {
+			ind64 = true;
+		}
+	}
+		/* Check for each datawidth. */
+	if (ind1) {
+		k = 0;
+		outputFile << "\t" << "wire ";
+		for (i = 0; i < _wires.size(); i++) {
+			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_1) {
+				if (k) {
+					outputFile << ", ";
+				}
+				outputFile << (*_wires.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind2) {
+		k = 0;
+		outputFile << "\t" << "wire ";
+		for (i = 0; i < _wires.size(); i++) {
+			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_2) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[1:0] ";
+				}
+				outputFile << (*_wires.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind8) {
+		k = 0;
+		outputFile << "\t" << "wire ";
+		for (i = 0; i < _wires.size(); i++) {
+			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_8) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[7:0] ";
+				}
+				outputFile << (*_wires.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind16) {
+		k = 0;
+		outputFile << "\t" << "wire ";
+		for (i = 0; i < _wires.size(); i++) {
+			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_16) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[15:0] ";
+				}
+				outputFile << (*_wires.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind32) {
+		k = 0;
+		outputFile << "\t" << "wire ";
+		for (i = 0; i < _wires.size(); i++) {
+			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_32) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[31:0] ";
+				}
+				outputFile << (*_wires.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	if (ind64) {
+		k = 0;
+		outputFile << "\t" << "wire ";
+		for (i = 0; i < _wires.size(); i++) {
+			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_64) {
+				if (k) {
+					outputFile << ", ";
+				}
+				else {
+					outputFile << "[63:0] ";
+				}
+				outputFile << (*_wires.at(i)).getName();
+				k = 1;
+			}
+		}
+		outputFile << ";" << endl;
+	}
+	outputFile << endl;
+	/* Old Method:
+	for (i = 0; i < _wires.size(); i++) {
 		outputFile << "\t" << "wire ";
 		if ((*_wires.at(i)).getDataWidth() != DATAWIDTH_1) {
 			outputFile << "[" << (*_wires.at(i)).getDataWidth() - 1 << ":0] ";
@@ -290,34 +682,19 @@ bool Circuit::writeToFile(char* fileName)
 		outputFile << (*_wires.at(i)).getName() << ";" << endl;
 	}
 	outputFile << endl;
+	*/
 
-	/* TODO: CHECK FOR NECESSARY N/A INPUTS TO DATAPATH
-	COMPONENTS SUCH AS THE COMPARATOR. */
 	/* Check for all N/A wires are necessary. */
 	k = 0;
+	j = 0;
 	for (i = 0; i < _datapathComponents.size(); i++) {
-		if (!_datapathComponents.at(i).getName().compare("COMP_lt")) {
-			outputFile << "\t" << "wire ";
-			outputFile << "na" << k << " ";
-			k++;
-			outputFile << "na" << k << ";" << endl;
-			k++;
-		}
-		else if (!_datapathComponents.at(i).getName().compare("SCOMP_lt")) {
-			outputFile << "\t" << "wire ";
-			outputFile << "na" << k << " ";
-			k++;
-			outputFile << "na" << k << ";" << endl;
-			k++;
-		}
-		else if (!_datapathComponents.at(i).getName().compare("COMP_gt")) {
-			outputFile << "\t" << "wire ";
-			outputFile << "na" << k << " ";
-			k++;
-			outputFile << "na" << k << ";" << endl;
-			k++;
-		}
-		else if (!_datapathComponents.at(i).getName().compare("SCOMP_gt")) {
+		if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))
+			|| (!_datapathComponents.at(i).getName().compare("COMP_gt"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))
+			|| (!_datapathComponents.at(i).getName().compare("COMP_eq"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_eq"))) {
+			j = 1;
 			outputFile << "\t" << "wire ";
 			outputFile << "na" << k << ", ";
 			k++;
@@ -325,7 +702,10 @@ bool Circuit::writeToFile(char* fileName)
 			k++;
 		}
 	}
-	outputFile << endl;
+	/* Spacing */
+	if (j == 1) {
+		outputFile << endl;
+	}
 
 	/* WRITE THE DATAPATH COMPONENTS. */
 	k = 0;
@@ -394,18 +774,6 @@ bool Circuit::writeToFile(char* fileName)
 			}
 			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName();
 		}
-		/* SHR, SHL */
-		/* DON'T NEED. PLEASE LEAVE FOR NOW
-		else if ((!_datapathComponents.at(i).getName().compare("SHL"))
-			|| (!_datapathComponents.at(i).getName().compare("SSHL"))
-			|| (!_datapathComponents.at(i).getName().compare("SHR"))
-			|| (!_datapathComponents.at(i).getName().compare("SSHR"))) {
-			// SHR (a, sh_amt, d);
-			outputFile << _datapathComponents.at(i).getInputs().at()
-			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
-
-		}
-		*/
 		/* MUL2x1 */
 		else if ((!_datapathComponents.at(i).getName().compare("MUX2x1"))
 			|| (!_datapathComponents.at(i).getName().compare("SMUX2x1"))) {
@@ -415,16 +783,6 @@ bool Circuit::writeToFile(char* fileName)
 			outputFile << (*_datapathComponents.at(i).getInputs().at(0)).getName() << ", ";
 			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName();
 		}
-		/* INC, DEC */
-		/* DON'T NEED. PLEASE LEAVE FOR NOW.
-		else if ((!_datapathComponents.at(i).getName().compare("INC"))
-			|| (!_datapathComponents.at(i).getName().compare("SINC"))
-			|| (!_datapathComponents.at(i).getName().compare("DEC"))
-			|| (!_datapathComponents.at(i).getName().compare("SDEC"))) {
-			outputFile << _datapathComponents.at(i).getInputs().at(0).getName();
-			outputFile << _datapathComponents.at(i).getOutputs().at(0).getName();
-		}
-		*/
 		/* COMP_gt */
 		else if ((!_datapathComponents.at(i).getName().compare("COMP_gt"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))) {
@@ -461,16 +819,6 @@ bool Circuit::writeToFile(char* fileName)
 			k++;
 			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName();
 		}
-		/* INC, DEC */
-		/* DON'T NEED. PLEASE LEAVE FOR NOW.
-		else if ((!_datapathComponents.at(i).getName().compare("INC"))
-			|| (!_datapathComponents.at(i).getName().compare("SINC"))
-			|| (!_datapathComponents.at(i).getName().compare("DEC"))
-			|| (!_datapathComponents.at(i).getName().compare("SDEC"))) {
-			outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
-		}
-		*/
-
 		outputFile << ");" << endl;
 	}
 

@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
-//Date Created: Wed Oct 26 02:18:56 2016
+//Date Created: Wed Oct 26 03:22:58 2016
 //Assignment: 2
 //File: circuit8.v
 //Description: A netlist behavior circuit implementation
@@ -11,19 +11,15 @@
 
 
 module circuit8(clk, rst, a, b, c, zero, z);
-	input [63:0] a;
-	input [63:0] b;
-	input [63:0] c;
-	input [63:0] zero;
+	input clk, rst;
+	input [63:0] a, b, c, zero;
 
 	output [63:0] z;
 
-	wire [63:0] e;
-	wire [63:0] f;
-	wire [63:0] g;
-	wire [63:0] zwire;
 	wire gEQz;
+	wire [63:0] e, f, g, zwire;
 
+	wire na0, na1;
 
 	SDEC #(64) SDEC_0(a, e);
 	SINC #(64) SINC_1(c, f);
