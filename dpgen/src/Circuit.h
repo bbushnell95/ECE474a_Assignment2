@@ -56,6 +56,7 @@ public:
 	bool readFile(char* fileName);
 	bool writeToFile(char* fileName);
 	void determineCriticalPath();
+	void visitComponent(DatapathComponent * compoenent, std::vector<double>* pathDelays);
 	void createNewInputVariable(std::string checkString, int dataWidthIndex);
 	void createNewOutputVariable(std::string checkString, int dataWidthIndex);
 	void createNewWireVariable(std::string checkString, int dataWidthIndex);

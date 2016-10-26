@@ -517,11 +517,12 @@ LongestPathDAG (Graph ?G?)
 */
 void Circuit::determineCriticalPath()
 {
-	int i = 0;
+	/*int i = 0;
 	int j = 0;
 	double tempCP = 0.0;
 	double criticalPath;
 	DatapathComponent* tempComp = NULL;
+	std::vector<double> pathDelays;
 	std::vector<DatapathComponent*> queue;
 
 	for (i = 0; i < _inputs.size(); ++i) {
@@ -532,6 +533,19 @@ void Circuit::determineCriticalPath()
 			}
 		}
 	}
+
+	while (queue.size() != 0) {
+		if ((*queue.at(0)).getVisted() == 'g') {
+			visitComponent(queue.at(0), &pathDelays);
+		}
+		else
+		{
+			queue.erase(queue.begin());
+		}
+	}*/
+}
+void Circuit::visitComponent(DatapathComponent* compoenent, std::vector<double>* pathDelays) {
+	
 }
 
 void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex)
