@@ -126,7 +126,25 @@ void DatapathComponent::checkIfSigned()
 
 void DatapathComponent::determineDataWidth()
 {
-	dataWidth = (*_componentOutputs.at(0)).getDataWidth();
+	int i = 0;
+	int largestDW = -99;
+
+	if ((name == "COMP_lt")
+		|| (name == "SCOMP_lt")
+		|| (name == "COMP_gt")
+		|| (name == "SCOMP_gt")
+		|| (name == "COMP_eq")
+		|| (name == "SCOMP_eq")) {
+		for (i = 0; i < 2; i++) {
+			if ((*_componentInputs.at(i)).getDataWidth() > largestDW) {
+				largestDW = (*_componentInputs.at(i)).getDataWidth();
+			}
+		}
+		dataWidth = largestDW;
+	}
+	else {
+		dataWidth = (*_componentOutputs.at(0)).getDataWidth();
+	}
 }
 
 void DatapathComponent::assignDelay()
