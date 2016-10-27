@@ -393,16 +393,6 @@ bool Circuit::writeToFile(char* fileName)
 		outputFile << ";" << endl;
 	}
 	outputFile << endl;
-	/* OLD METHOD:
-	for (i = 0; i < _inputs.size(); i++) {
-		outputFile << "\t" << "input ";
-		if ((*_inputs.at(i)).getDataWidth() != DATAWIDTH_1) {
-			outputFile << "[" << (*_inputs.at(i)).getDataWidth() - 1 << ":0] ";
-		}
-		outputFile << (*_inputs.at(i)).getName() << ";" << endl;
-	}
-	outputFile << endl;
-	*/
 
 	/* Print Outputs. */
 	ind1 = false;
@@ -533,16 +523,6 @@ bool Circuit::writeToFile(char* fileName)
 		outputFile << ";" << endl;
 	}
 	outputFile << endl;
-	/* OLD METHOD:
-	for (i = 0; i < _outputs.size(); i++) {
-		outputFile << "\t" << "output ";
-		if ((*_outputs.at(i)).getDataWidth() != DATAWIDTH_1) {
-			outputFile << "[" << (*_outputs.at(i)).getDataWidth() - 1 << ":0] ";
-		}
-		outputFile << (*_outputs.at(i)).getName() << ";" << endl;
-	}
-	outputFile << endl;
-	*/
 
 	/* Print Wires. */
 	ind1 = false;
@@ -673,16 +653,6 @@ bool Circuit::writeToFile(char* fileName)
 		outputFile << ";" << endl;
 	}
 	outputFile << endl;
-	/* Old Method:
-	for (i = 0; i < _wires.size(); i++) {
-		outputFile << "\t" << "wire ";
-		if ((*_wires.at(i)).getDataWidth() != DATAWIDTH_1) {
-			outputFile << "[" << (*_wires.at(i)).getDataWidth() - 1 << ":0] ";
-		}
-		outputFile << (*_wires.at(i)).getName() << ";" << endl;
-	}
-	outputFile << endl;
-	*/
 
 	/* Check for all N/A wires are necessary. */
 	k = 0;
@@ -713,10 +683,12 @@ bool Circuit::writeToFile(char* fileName)
 		outputFile << "\t";
 		/* Which module is it? */
 		if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
-			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))
 			|| (!_datapathComponents.at(i).getName().compare("COMP_gt"))
+			|| (!_datapathComponents.at(i).getName().compare("COMP_eq"))) {
+			outputFile << "COMP";
+		}
+		else if ((!_datapathComponents.at(i).getName().compare("SCOMP_lt"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))
-			|| (!_datapathComponents.at(i).getName().compare("COMP_eq"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_eq"))) {
 			outputFile << "SCOMP";
 		}
@@ -731,10 +703,12 @@ bool Circuit::writeToFile(char* fileName)
 
 		/* Name the module. */
 		if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
-			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))
 			|| (!_datapathComponents.at(i).getName().compare("COMP_gt"))
+			|| (!_datapathComponents.at(i).getName().compare("COMP_eq"))) {
+			outputFile << "COMP";
+		}
+		else if ((!_datapathComponents.at(i).getName().compare("SCOMP_lt"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))
-			|| (!_datapathComponents.at(i).getName().compare("COMP_eq"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_eq"))) {
 			outputFile << "SCOMP";
 		}

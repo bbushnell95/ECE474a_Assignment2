@@ -17,7 +17,6 @@ dpgen netlistFile verilogFile
 int main(int argc, char *argv[])
 {
 
-
 	Circuit newCircuit;
 
 	/* Check for the correct number of arguments */
@@ -37,6 +36,7 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
+	/* Determine the critical path time. */
 	//newCircuit.determineCriticalPath();
 
 	/* Write to the verilog file */
@@ -45,6 +45,9 @@ int main(int argc, char *argv[])
 		cout << "Could not write to output file " << argv[2] << ".";
 		return EXIT_FAILURE;
 	}
+
+	/* Print out the critical path time. */
+	cout << "Critical Path : " << newCircuit.getCriticalPath() << " ns" << endl;
 
 	return EXIT_SUCCESS;
 }
