@@ -68,7 +68,7 @@ public:
 	void setOutputs(std::vector<DataType*> _outputs);
 	int getDataWidth();
 	void setDataWidth(int dW);
-	int getDelay();
+	double getDelay();
 	void setDelay(int d);
 	char getVisted();
 	void setVisted(char v);

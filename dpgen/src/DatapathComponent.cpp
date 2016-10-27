@@ -67,7 +67,7 @@ void DatapathComponent::setDataWidth(int dW)
 	dataWidth = dW;
 }
 
-int DatapathComponent::getDelay()
+double DatapathComponent::getDelay()
 {
 	return delay;
 }

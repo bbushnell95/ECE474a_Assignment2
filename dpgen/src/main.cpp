@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* Determine the critical path time. */
-	//newCircuit.determineCriticalPath();
+	newCircuit.determineCriticalPath();
 
 	/* Write to the verilog file */
 	if (!newCircuit.writeToFile(argv[2])) {

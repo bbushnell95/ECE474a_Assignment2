@@ -997,10 +997,9 @@ LongestPathDAG (Graph ?G?)
 */
 void Circuit::determineCriticalPath()
 {
-	/*int i = 0;
+	int i = 0;
 	int j = 0;
-	double tempCP = 0.0;
-	double criticalPath;
+	double currTime = 0.0;
 	DatapathComponent* tempComp = NULL;
 	std::vector<double> pathDelays;
 	std::vector<DatapathComponent*> queue;
@@ -1014,18 +1013,33 @@ void Circuit::determineCriticalPath()
 		}
 	}
 
-	while (queue.size() != 0) {
-		if ((*queue.at(0)).getVisted() == 'g') {
-			visitComponent(queue.at(0), &pathDelays);
-		}
-		else
-		{
-			queue.erase(queue.begin());
-		}
-	}*/
+	for (i = 0; i < queue.size(); ++i) {
+		visitComponent(queue.at(i), currTime, &criticalPath);
+	}
+
 }
-void Circuit::visitComponent(DatapathComponent* compoenent, std::vector<double>* pathDelays) {
+void Circuit::visitComponent(DatapathComponent* compoenent, double currTime, double* cP ) {
+	double leaveTime = currTime + (*compoenent).getDelay();
+	int i = 0; 
+	int j = 0;
 	
+	for (i = 0; i < (*compoenent).getOutputs().size(); ++i) {
+		if ((*compoenent).getOutputs().at(i)->getGoingTo().size() == 0) {
+			if (leaveTime > *cP) {
+				*cP = leaveTime;
+				return;
+			}
+			else {
+				return;
+			}
+		}
+		else {
+			for (j = 0; j < (*compoenent).getOutputs().at(i)->getGoingTo().size(); ++j) {
+				visitComponent((*compoenent).getOutputs().at(i)->getGoingTo().at(j), leaveTime, cP);
+			}
+		}
+	}
+	return;
 }
 
 void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex)
