@@ -2,16 +2,16 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
-//Date Created: Thu Oct 27 13:43:55 2016
+//Date Created: Thu Oct 27 13:34:02 2016
 //Assignment: 2
-//File: circuit8_output.v
+//File: circuit7_output.v
 //Description: A netlist behavior circuit implementation
 //
 //////////////////////////////////////////////////////////////////////////////////
 
-module circuit8_output(clk, rst, a, b, c, zero, z);
+module circuit7_output(clk, rst, a, b, c, d, zero, z);
 	input clk, rst;
-	input [63:0] a, b, c, zero;
+	input [63:0] a, b, c, d, zero;
 
 	output [63:0] z;
 
@@ -20,9 +20,9 @@ module circuit8_output(clk, rst, a, b, c, zero, z);
 
 	wire na0, na1;
 
-	SDEC #(64) SDEC_0(a, e);
-	SINC #(64) SINC_1(c, f);
-	SMOD #(64) SMOD_2(a, c, g);
+	SDIV #(64) SDIV_0(a, b, e);
+	SDIV #(64) SDIV_1(c, d, f);
+	SMOD #(64) SMOD_2(a, b, g);
 	SCOMP #(64) SCOMP_3(g, zero, na0, na1, gEQz);
 	SMUX2x1 #(64) SMUX2x1_4(e, f, gEQz, zwire);
 	SREG #(64) SREG_5(zwire, clk, rst, z);

@@ -55,6 +55,9 @@ bool Circuit::readFile(char* fileName)
 		inputFile >> checkString;
 		
 		//first check if input or output or wire
+		if (!checkString.compare("")) {
+			break;
+		}
 		if (!checkString.compare("input")) {
 			//getline(inputFile, checkString);
 			inputFile >> checkString;
@@ -148,7 +151,7 @@ bool Circuit::readFile(char* fileName)
 			}
 
 		}
-
+		checkString = "";
 	}
 	for (i = 0; i < _datapathComponents.size(); ++i) {
 		_datapathComponents.at(i).determineDataWidth();

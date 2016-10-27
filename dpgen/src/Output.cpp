@@ -17,7 +17,7 @@ Output::Output()
 Output::Output(std::string n, bool s, int dW)
 {
 	name = n;
-
+	signUnsigned = s;
 	dataWidth = dW;
 }
 
