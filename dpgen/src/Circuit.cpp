@@ -799,7 +799,7 @@ bool Circuit::writeToFile(char* fileName)
 			outputFile << (*_datapathComponents.at(i).getInputs().at(2)).getName() << ", ";
 			*/
 			/* Select bit. */
-			if ((*_datapathComponents.at(i).getInputs().at(0)).getDataWidth() != 0) {
+			if ((*_datapathComponents.at(i).getInputs().at(0)).getDataWidth() != 1) {
 				outputFile << (*_datapathComponents.at(i).getInputs().at(0)).getName() << "[0], ";
 			}
 			else {
