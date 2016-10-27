@@ -67,6 +67,7 @@ public:
 	bool determineComponent(std::string line, DataType* output);
 	void createNewDatapathComponent(std::string name, std::vector<DataType*> _inputs, std::vector<DataType*> _outputs);
 	bool checkValidSymbol(std::string checkSymbol, std::string* dPType);
+	bool writeInputsToFile(std::ofstream *outputFile, int i, int j);
 	// bool addNewDPIn(std::string name);
 	// bool addNewDPout(/* TODO */);
 	// bool checkValidDPout(std::string name);
