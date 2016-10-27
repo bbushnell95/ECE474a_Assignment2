@@ -766,8 +766,39 @@ bool Circuit::writeToFile(char* fileName)
 		else if ((!_datapathComponents.at(i).getName().compare("MUX2x1"))
 			|| (!_datapathComponents.at(i).getName().compare("SMUX2x1"))) {
 			// MUX2x1(a, b, sel, d);
+			for (j = 1; j <= 2; j++) {
+				if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == _datapathComponents.at(i).getDataWidth()) {
+					outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+				}
+				else if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() < _datapathComponents.at(i).getDataWidth()) { // Datapath width is larger than input.
+					if ((*_datapathComponents.at(i).getInputs().at(j)).getSignUnsigned()) { // Signed
+																							// outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+						outputFile << "{";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << "[";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 1;
+						outputFile << "],";
+						outputFile << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+						outputFile << "'b0,";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+						outputFile << "[" << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 2 << ":0]}, ";
+					}
+					else { // Unsigned
+						outputFile << "{";
+						outputFile << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+						outputFile << "'b0,";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+						outputFile << "}, ";
+					}
+				}
+				else { // Datapath width is smaller than input.
+					   // This shouldn't really happen...  Will add if found necessary.
+				}
+			}
+			/* Ye olde way:
 			outputFile << (*_datapathComponents.at(i).getInputs().at(1)).getName() << ", ";
 			outputFile << (*_datapathComponents.at(i).getInputs().at(2)).getName() << ", ";
+			*/
+			/* Select bit. */
 			if ((*_datapathComponents.at(i).getInputs().at(0)).getDataWidth() != 0) {
 				outputFile << (*_datapathComponents.at(i).getInputs().at(0)).getName() << "[0], ";
 			}
@@ -780,9 +811,45 @@ bool Circuit::writeToFile(char* fileName)
 		else if ((!_datapathComponents.at(i).getName().compare("COMP_gt"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))) {
 			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+				/* The old way:
 				outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+				*/
+				if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == _datapathComponents.at(i).getDataWidth()) {
+					outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+				}
+				else if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() < _datapathComponents.at(i).getDataWidth()) { // Datapath width is larger than input.
+					if ((*_datapathComponents.at(i).getInputs().at(j)).getSignUnsigned()) { // Signed
+																							// outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+						outputFile << "{";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << "[";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 1;
+						outputFile << "],";
+						outputFile << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+						outputFile << "'b0,";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+						outputFile << "[" << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 2 << ":0]}, ";
+					}
+					else { // Unsigned
+						outputFile << "{";
+						outputFile << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+						outputFile << "'b0,";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+						outputFile << "}, ";
+					}
+				}
+				else { // Datapath width is smaller than input.
+					   // This shouldn't really happen...  Will add if found necessary.
+				}
 			}
+			if ((*_datapathComponents.at(i).getOutputs().at(0)).getDataWidth() != 1) {
+				outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName() << "[0], ";
+			}
+			else {
+				outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName() << ", ";
+			}
+			/* Old way:
 			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName() << ", ";
+			*/
 			outputFile << "na" << k << ", ";
 			k++;
 			outputFile << "na" << k;
@@ -792,11 +859,47 @@ bool Circuit::writeToFile(char* fileName)
 		else if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))) {
 			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+				if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == _datapathComponents.at(i).getDataWidth()) {
+					outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+				}
+				else if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() < _datapathComponents.at(i).getDataWidth()) { // Datapath width is larger than input.
+					if ((*_datapathComponents.at(i).getInputs().at(j)).getSignUnsigned()) { // Signed
+																							// outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+						outputFile << "{";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << "[";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 1;
+						outputFile << "],";
+						outputFile << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+						outputFile << "'b0,";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+						outputFile << "[" << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 2 << ":0]}, ";
+					}
+					else { // Unsigned
+						outputFile << "{";
+						outputFile << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+						outputFile << "'b0,";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+						outputFile << "}, ";
+					}
+				}
+				else { // Datapath width is smaller than input.
+					   // This shouldn't really happen...  Will add if found necessary.
+				}
+				/* Old way:
 				outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+				*/
 			}
 			outputFile << "na" << k << ", ";
 			k++;
+			if ((*_datapathComponents.at(i).getOutputs().at(0)).getDataWidth() != 1) {
+				outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName() << "[0], ";
+			}
+			else {
+				outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName() << ", ";
+			}
+			/* Old way:
 			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName() << ", ";
+			*/
 			outputFile << "na" << k;
 			k++;
 		}
@@ -804,13 +907,49 @@ bool Circuit::writeToFile(char* fileName)
 		else if ((!_datapathComponents.at(i).getName().compare("COMP_eq"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_eq"))) {
 			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+				if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == _datapathComponents.at(i).getDataWidth()) {
+					outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+				}
+				else if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() < _datapathComponents.at(i).getDataWidth()) { // Datapath width is larger than input.
+					if ((*_datapathComponents.at(i).getInputs().at(j)).getSignUnsigned()) { // Signed
+																							// outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+						outputFile << "{";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << "[";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 1;
+						outputFile << "],";
+						outputFile << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+						outputFile << "'b0,";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+						outputFile << "[" << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 2 << ":0]}, ";
+					}
+					else { // Unsigned
+						outputFile << "{";
+						outputFile << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+						outputFile << "'b0,";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+						outputFile << "}, ";
+					}
+				}
+				else { // Datapath width is smaller than input.
+					   // This shouldn't really happen...  Will add if found necessary.
+				}
+				/* The old way:
 				outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+				*/
 			}
 			outputFile << "na" << k << ", ";
 			k++;
 			outputFile << "na" << k << ", ";
 			k++;
+			if ((*_datapathComponents.at(i).getOutputs().at(0)).getDataWidth() != 1) {
+				outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName() << "[0]";
+			}
+			else {
+				outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName();
+			}
+			/* Old way:
 			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName();
+			*/
 		}
 		outputFile << ");" << endl;
 	}
