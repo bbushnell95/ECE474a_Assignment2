@@ -2,13 +2,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
-//Date Created: Wed Oct 26 20:01:42 2016
+//Date Created: Wed Oct 26 20:25:43 2016
 //Assignment: 2
 //File: circuit1.v
 //Description: A netlist behavior circuit implementation
 //
 //////////////////////////////////////////////////////////////////////////////////
-
 
 module circuit1(clk, rst, a, b, c, z, x);
 	input clk, rst;
@@ -25,9 +24,9 @@ module circuit1(clk, rst, a, b, c, z, x);
 	SADD #(8) SADD_0(a, b, d);
 	SADD #(8) SADD_1(a, c, e);
 	SCOMP #(8) SCOMP_2(d, e, g, na0, na1);
-	SMUX2x1 #(8) SMUX2x1_3(d, e, g, z);
-	SMUL #(16) SMUL_4(a, c, f);
-	SSUB #(16) SSUB_5(f, d, xwire);
+	SMUX2x1 #(8) SMUX2x1_3(d, e, g[0], z);
+	SMUL #(16) SMUL_4({a[7],8'b0,a[6:0]}, {c[7],8'b0,c[6:0]}, f);
+	SSUB #(16) SSUB_5(f, {d[7],8'b0,d[6:0]}, xwire);
 	SREG #(16) SREG_6(xwire, clk, rst, x);
 
 endmodule
