@@ -58,6 +58,52 @@ bool Circuit::readFile(char* fileName)
 		if (!checkString.compare("")) {
 			break;
 		}
+		if (!checkString.compare("register")) {
+			inputFile >> checkString;
+
+			foundDataType = false;
+
+			for (i = 0; i < 12; ++i) {
+				//go through valid data types and see which one it is
+				if (!checkString.compare(validDataTypes[i])) {
+					foundDataType = true;
+					break;
+				}
+			}
+
+			if (foundDataType) {
+				getline(inputFile, checkString);
+				createNewInputVariable(checkString, i);
+			}
+			else {
+				cout << "Error: Invalid Data type: " << checkString << " Exiting Program." << endl;
+				inputFile.close();
+				return false;
+			}
+		}
+		else if (!checkString.compare("output")) {
+			inputFile >> checkString;
+
+			foundDataType = false;
+
+			for (i = 0; i < 12; ++i) {
+				//go through valid data types and see which one it is
+				if (!checkString.compare(validDataTypes[i])) {
+					foundDataType = true;
+					break;
+				}
+			}
+
+			if (foundDataType) {
+				getline(inputFile, checkString);
+				createNewOutputVariable(checkString, i);
+			}
+			else {
+				cout << "Error: Invalid Data type: " << checkString << " Exiting Program." << endl;
+				inputFile.close();
+				return false;
+			}
+		}
 		if (!checkString.compare("input")) {
 			//getline(inputFile, checkString);
 			inputFile >> checkString;
@@ -105,7 +151,7 @@ bool Circuit::readFile(char* fileName)
 				return false;
 			}
 		}
-		else if (!checkString.compare("wire")) {
+		else if (!checkString.compare("wire") || !checkString.compare("register")) {
 			inputFile >> checkString;
 
 			foundDataType = false;
@@ -1357,6 +1403,7 @@ void Circuit::createNewWireVariable(std::string checkString, int dataWidthIndex)
 	}
 }
 
+
 void Circuit::createNewInput(std::string name, bool sign, int dataWidth)
 {
 	Input* newInput = new Input(name, sign, dataWidth);
@@ -1377,6 +1424,7 @@ void Circuit::createNewWire(std::string name, bool sign, int dataWidth)
 
 	_wires.push_back(newWire);
 }
+
 
 bool Circuit::checkVariable(std::string checkName, int* outputIndex, int* inputIndex, int* wireIndex)
 {
