@@ -55,7 +55,7 @@ bool Circuit::readFile(char* fileName)
 		inputFile >> checkString;
 		
 		//first check if input or output or wire
-		if (checkString.compare("input") == 0) {
+		if (!checkString.compare("input")) {
 			//getline(inputFile, checkString);
 			inputFile >> checkString;
 
@@ -75,9 +75,11 @@ bool Circuit::readFile(char* fileName)
 			}
 			else {
 				cout << "Error: Invalid Data type: " << checkString << " Exiting Program." << endl;
+				inputFile.close();
+				return false;
 			}
 		}
-		else if (checkString.compare("output") == 0) {
+		else if (!checkString.compare("output")) {
 			inputFile >> checkString;
 
 			foundDataType = false;
@@ -96,6 +98,8 @@ bool Circuit::readFile(char* fileName)
 			}
 			else {
 				cout << "Error: Invalid Data type: " << checkString << " Exiting Program." << endl;
+				inputFile.close();
+				return false;
 			}
 		}
 		else if (!checkString.compare("wire")) {
@@ -117,14 +121,23 @@ bool Circuit::readFile(char* fileName)
 			}
 			else {
 				cout << "Error: Invalid Data type: " << checkString << " Exiting Program." << endl;
+				inputFile.close();
+				return false;
 			}
 		}
 		else {
+			/* To always have a fresh set of eyes... */
+			componentOutputIndex = -1;
+			componentInputIndex = -1;
+			componentWireIndex = -1;
+			/* Check where the inputs/outputs/wires are for this datapath component. */
 			if (!checkVariable(checkString, &componentOutputIndex, &componentInputIndex, &componentWireIndex)) {
 				cout << "Variable '" << checkString << "' not found, please correct Netlist Behavior File." << endl;
+				inputFile.close();
 				return false;
 			}
 			else {
+				/* Create some datapath components. */
 				getline(inputFile, checkString);
 				if (componentOutputIndex != -1) {
 					determineComponent(checkString, _outputs.at(componentOutputIndex));
@@ -132,33 +145,6 @@ bool Circuit::readFile(char* fileName)
 				else if (componentWireIndex != -1) {
 					determineComponent(checkString, _wires.at(componentWireIndex));
 				}
-				//TODO: write commands for if there is no first word
-
-				// TODO: CHECK FOR VALID OUTPUT/WIRE FIRST
-
-				// TODO: READ IN REST OF LINE AND PARSE
-
-				// TODO: SEE WHAT TYPE OF DATAPATH COMPONENT IS PRESENT.
-
-				/*
-				inputFile >> checkString;
-				foundSymbol = false;
-				for (i = 0; i < 12; ++i) {
-					//go through valid data types and see which one it is
-					if (!checkString.compare(validSymbols[i])) {
-						foundSymbol = true;
-						break;
-					}
-				}
-				if (foundDataType) {
-					// TODO: HANDLE IF/ELSE TO MUX/REG/OTHERS IN HERE.
-					getline(inputFile, checkString);
-					createNewInputVariable(checkString, i);
-				}
-				else {
-					cout << "Error: Invalid Datapath Component: " << checkString << " Exiting Program." << endl;
-				}
-				*/
 			}
 
 		}
@@ -743,8 +729,34 @@ bool Circuit::writeToFile(char* fileName)
 			|| (!_datapathComponents.at(i).getName().compare("SINC"))
 			|| (!_datapathComponents.at(i).getName().compare("DEC"))
 			|| (!_datapathComponents.at(i).getName().compare("SDEC"))) {
-			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) { 
 				outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+				/*
+				if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == _datapathComponents.at(i).getDataWidth()) {
+					outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+				}
+				else if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() < _datapathComponents.at(i).getDataWidth()) { // Datapath width is larger than input.
+					if ((*_datapathComponents.at(i).getInputs().at(j)).getSignUnsigned()) { // Signed
+						// outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+						outputFile << "{[";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 1 << "],";
+						outputFile << _datapathComponents.at(i).getDataWidth(); - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+						outputFile << "'b0,";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 2 << ":0]}, ";
+					}
+					else { // Unsigned
+						outputFile << "{";
+						outputFile << _datapathComponents.at(i).getDataWidth(); - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+						outputFile << "'b0,";
+						outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+						outputFile << "}, ";
+					}
+				}
+				else { // Datapath width is smaller than input.
+
+				}
+				*/
 			}
 			outputFile << (*_datapathComponents.at(i).getOutputs().at(0)).getName();
 		}
