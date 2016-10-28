@@ -911,146 +911,49 @@ void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex
 
 	for (i = checkString.size() - 1; i >= 0; --i) {
 		if (checkString.at(i) == ' ') {
-			checkString.pop_back();
+			checkString.erase(checkString.end());
 		}
 		else {
 			break;
 		}
 	}
 
-	checkString += '\n';
+	std::istringstream iss(checkString);
+	//checkString += '\n';
 
-	for (j = 0; j < checkString.size()-1; ++j) {
-		if (checkString.at(j) != ' ' && checkString.at(j) != ',') {
-			if (j != checkString.size() - 2) {
-				if ((checkString.at(j + 1) == ' ' || checkString.at(j + 1) == ',') && !variableName.compare("")) {
-					checkChar = checkString.at(j);
-					//inputFile >> checkString;
-					switch (dataWidthIndex) {
-					case 0: createNewInput(checkChar, 1, DATAWIDTH_1);
-						break;
-					case 1: createNewInput(checkChar, 1, DATAWIDTH_2);
-						break;
-					case 2: createNewInput(checkChar, 1, DATAWIDTH_8);
-						break;
-					case 3: createNewInput(checkChar, 1, DATAWIDTH_16);
-						break;
-					case 4: createNewInput(checkChar, 1, DATAWIDTH_32);
-						break;
-					case 5: createNewInput(checkChar, 1, DATAWIDTH_64);
-						break;
-					case 6: createNewInput(checkChar, 0, DATAWIDTH_1);
-						break;
-					case 7: createNewInput(checkChar, 0, DATAWIDTH_2);
-						break;
-					case 8: createNewInput(checkChar, 0, DATAWIDTH_8);
-						break;
-					case 9: createNewInput(checkChar, 0, DATAWIDTH_16);
-						break;
-					case 10: createNewInput(checkChar, 0, DATAWIDTH_32);
-						break;
-					case 11: createNewInput(checkChar, 0, DATAWIDTH_64);
-						break;
-					}
-				}
-				else {
-					if (checkString.at(j + 1) == ',' || checkString.at(j + 1) == '\n') {
-						switch (dataWidthIndex) {
-						case 0: createNewInput(variableName, 1, DATAWIDTH_1);
-							break;
-						case 1: createNewInput(variableName, 1, DATAWIDTH_2);
-							break;
-						case 2: createNewInput(variableName, 1, DATAWIDTH_8);
-							break;
-						case 3: createNewInput(variableName, 1, DATAWIDTH_16);
-							break;
-						case 4: createNewInput(variableName, 1, DATAWIDTH_32);
-							break;
-						case 5: createNewInput(variableName, 1, DATAWIDTH_64);
-							break;
-						case 6: createNewInput(variableName, 0, DATAWIDTH_1);
-							break;
-						case 7: createNewInput(variableName, 0, DATAWIDTH_2);
-							break;
-						case 8: createNewInput(variableName, 0, DATAWIDTH_8);
-							break;
-						case 9: createNewInput(variableName, 0, DATAWIDTH_16);
-							break;
-						case 10: createNewInput(variableName, 0, DATAWIDTH_32);
-							break;
-						case 11: createNewInput(variableName, 0, DATAWIDTH_64);
-							break;
-						}
-						variableName = "";
-					}
-					else {
-						variableName += checkString.at(j);
-					}
-				}
-			}
-			else if (j == checkString.size() - 2 && checkString.at(j - 1) == ' ' && checkString.at(j) != '\n') {
-				checkChar = checkString.at(j);
-				//inputFile >> checkString;
-				switch (dataWidthIndex) {
-				case 0: createNewInput(checkChar, 1, DATAWIDTH_1);
-					break;
-				case 1: createNewInput(checkChar, 1, DATAWIDTH_2);
-					break;
-				case 2: createNewInput(checkChar, 1, DATAWIDTH_8);
-					break;
-				case 3: createNewInput(checkChar, 1, DATAWIDTH_16);
-					break;
-				case 4: createNewInput(checkChar, 1, DATAWIDTH_32);
-					break;
-				case 5: createNewInput(checkChar, 1, DATAWIDTH_64);
-					break;
-				case 6: createNewInput(checkChar, 0, DATAWIDTH_1);
-					break;
-				case 7: createNewInput(checkChar, 0, DATAWIDTH_2);
-					break;
-				case 8: createNewInput(checkChar, 0, DATAWIDTH_8);
-					break;
-				case 9: createNewInput(checkChar, 0, DATAWIDTH_16);
-					break;
-				case 10: createNewInput(checkChar, 0, DATAWIDTH_32);
-					break;
-				case 11: createNewInput(checkChar, 0, DATAWIDTH_64);
-					break;
-				}
-			}
-			else {
-				if (variableName.compare("")) {
-					variableName += checkString.at(j);
-					switch (dataWidthIndex) {
-					case 0: createNewInput(variableName, 1, DATAWIDTH_1);
-						break;
-					case 1: createNewInput(variableName, 1, DATAWIDTH_2);
-						break;
-					case 2: createNewInput(variableName, 1, DATAWIDTH_8);
-						break;
-					case 3: createNewInput(variableName, 1, DATAWIDTH_16);
-						break;
-					case 4: createNewInput(variableName, 1, DATAWIDTH_32);
-						break;
-					case 5: createNewInput(variableName, 1, DATAWIDTH_64);
-						break;
-					case 6: createNewInput(variableName, 0, DATAWIDTH_1);
-						break;
-					case 7: createNewInput(variableName, 0, DATAWIDTH_2);
-						break;
-					case 8: createNewInput(variableName, 0, DATAWIDTH_8);
-						break;
-					case 9: createNewInput(variableName, 0, DATAWIDTH_16);
-						break;
-					case 10: createNewInput(variableName, 0, DATAWIDTH_32);
-						break;
-					case 11: createNewInput(variableName, 0, DATAWIDTH_64);
-						break;
-					}
-					variableName = "";
-				}
-			}
+	while (!iss.eof()) {
+		iss >> variableName;
+		if (variableName.at(variableName.size() - 1) == ',') {
+			variableName.erase(variableName.size() - 1);
 		}
+
+		switch (dataWidthIndex) {
+		case 0: createNewInput(variableName, 1, DATAWIDTH_1);
+			break;
+		case 1: createNewInput(variableName, 1, DATAWIDTH_2);
+			break;
+		case 2: createNewInput(variableName, 1, DATAWIDTH_8);
+			break;
+		case 3: createNewInput(variableName, 1, DATAWIDTH_16);
+			break;
+		case 4: createNewInput(variableName, 1, DATAWIDTH_32);
+			break;
+		case 5: createNewInput(variableName, 1, DATAWIDTH_64);
+			break;
+		case 6: createNewInput(variableName, 0, DATAWIDTH_1);
+			break;
+		case 7: createNewInput(variableName, 0, DATAWIDTH_2);
+			break;
+		case 8: createNewInput(variableName, 0, DATAWIDTH_8);
+			break;
+		case 9: createNewInput(variableName, 0, DATAWIDTH_16);
+			break;
+		case 10: createNewInput(variableName, 0, DATAWIDTH_32);
+			break;
+		case 11: createNewInput(variableName, 0, DATAWIDTH_64);
+			break;
+		}
+
 	}
 }
 
@@ -1063,144 +966,48 @@ void Circuit::createNewOutputVariable(std::string checkString, int dataWidthInde
 
 	for (i = checkString.size() - 1; i >= 0; --i) {
 		if (checkString.at(i) == ' ') {
-			checkString.pop_back();
+			checkString.erase(checkString.end());
 		}
 		else {
 			break;
 		}
 	}
 
-	checkString += '\n';
+	std::istringstream iss(checkString);
+	//checkString += '\n';
 
-	for (j = 0; j < checkString.size()-1; j++) {
-		if (checkString.at(j) != ' ' && checkString.at(j) != ',') {
-			if (j != checkString.size() - 2) {
-				if ((checkString.at(j + 1) == ' ' || checkString.at(j + 1) == ',') && !variableName.compare("")) {
-					checkChar = checkString.at(j);
-					switch (dataWidthIndex) {
-					case 0: createNewOutput(checkChar, 1, DATAWIDTH_1);
-						break;
-					case 1: createNewOutput(checkChar, 1, DATAWIDTH_2);
-						break;
-					case 2: createNewOutput(checkChar, 1, DATAWIDTH_8);
-						break;
-					case 3: createNewOutput(checkChar, 1, DATAWIDTH_16);
-						break;
-					case 4: createNewOutput(checkChar, 1, DATAWIDTH_32);
-						break;
-					case 5: createNewOutput(checkChar, 1, DATAWIDTH_64);
-						break;
-					case 6: createNewOutput(checkChar, 0, DATAWIDTH_1);
-						break;
-					case 7: createNewOutput(checkChar, 0, DATAWIDTH_2);
-						break;
-					case 8: createNewOutput(checkChar, 0, DATAWIDTH_8);
-						break;
-					case 9: createNewOutput(checkChar, 0, DATAWIDTH_16);
-						break;
-					case 10: createNewOutput(checkChar, 0, DATAWIDTH_32);
-						break;
-					case 11: createNewOutput(checkChar, 0, DATAWIDTH_64);
-						break;
-					}
-				}
-				else {
-					if (checkString.at(j + 1) == ',' || checkString.at(j + 1) == '\n') {
-						variableName += checkString.at(j);
-						switch (dataWidthIndex) {
-						case 0: createNewOutput(variableName, 1, DATAWIDTH_1);
-							break;
-						case 1: createNewOutput(variableName, 1, DATAWIDTH_2);
-							break;
-						case 2: createNewOutput(variableName, 1, DATAWIDTH_8);
-							break;
-						case 3: createNewOutput(variableName, 1, DATAWIDTH_16);
-							break;
-						case 4: createNewOutput(variableName, 1, DATAWIDTH_32);
-							break;
-						case 5: createNewOutput(variableName, 1, DATAWIDTH_64);
-							break;
-						case 6: createNewOutput(variableName, 0, DATAWIDTH_1);
-							break;
-						case 7: createNewOutput(variableName, 0, DATAWIDTH_2);
-							break;
-						case 8: createNewOutput(variableName, 0, DATAWIDTH_8);
-							break;
-						case 9: createNewOutput(variableName, 0, DATAWIDTH_16);
-							break;
-						case 10: createNewOutput(variableName, 0, DATAWIDTH_32);
-							break;
-						case 11: createNewOutput(variableName, 0, DATAWIDTH_64);
-							break;
-						}
-						variableName = "";
-					}
-					else {
-						variableName += checkString.at(j);
-					}
-				}
-			}
-			else if (j == checkString.size() - 2 && checkString.at(j - 1) == ' ' && checkString.at(j) != '\n') {
-				checkChar = checkString.at(j);
-				switch (dataWidthIndex) {
-				case 0: createNewOutput(checkChar, 1, DATAWIDTH_1);
-					break;
-				case 1: createNewOutput(checkChar, 1, DATAWIDTH_2);
-					break;
-				case 2: createNewOutput(checkChar, 1, DATAWIDTH_8);
-					break;
-				case 3: createNewOutput(checkChar, 1, DATAWIDTH_16);
-					break;
-				case 4: createNewOutput(checkChar, 1, DATAWIDTH_32);
-					break;
-				case 5: createNewOutput(checkChar, 1, DATAWIDTH_64);
-					break;
-				case 6: createNewOutput(checkChar, 0, DATAWIDTH_1);
-					break;
-				case 7: createNewOutput(checkChar, 0, DATAWIDTH_2);
-					break;
-				case 8: createNewOutput(checkChar, 0, DATAWIDTH_8);
-					break;
-				case 9: createNewOutput(checkChar, 0, DATAWIDTH_16);
-					break;
-				case 10: createNewOutput(checkChar, 0, DATAWIDTH_32);
-					break;
-				case 11: createNewOutput(checkChar, 0, DATAWIDTH_64);
-					break;
-				}
-			}
-			else {
-				if (variableName.compare("")) {
-					variableName += checkString.at(j);
-					switch (dataWidthIndex) {
-					case 0: createNewOutput(variableName, 1, DATAWIDTH_1);
-						break;
-					case 1: createNewOutput(variableName, 1, DATAWIDTH_2);
-						break;
-					case 2: createNewOutput(variableName, 1, DATAWIDTH_8);
-						break;
-					case 3: createNewOutput(variableName, 1, DATAWIDTH_16);
-						break;
-					case 4: createNewOutput(variableName, 1, DATAWIDTH_32);
-						break;
-					case 5: createNewOutput(variableName, 1, DATAWIDTH_64);
-						break;
-					case 6: createNewOutput(variableName, 0, DATAWIDTH_1);
-						break;
-					case 7: createNewOutput(variableName, 0, DATAWIDTH_2);
-						break;
-					case 8: createNewOutput(variableName, 0, DATAWIDTH_8);
-						break;
-					case 9: createNewOutput(variableName, 0, DATAWIDTH_16);
-						break;
-					case 10: createNewOutput(variableName, 0, DATAWIDTH_32);
-						break;
-					case 11: createNewOutput(variableName, 0, DATAWIDTH_64);
-						break;
-					}
-					variableName = "";
-				}
-			}
+	while (!iss.eof()) {
+		iss >> variableName;
+
+		if (variableName.at(variableName.size() - 1) == ',') {
+			variableName.erase(variableName.size() - 1);
+		}
+
+		switch (dataWidthIndex) {
+		case 0: createNewOutput(variableName, 1, DATAWIDTH_1);
+			break;
+		case 1: createNewOutput(variableName, 1, DATAWIDTH_2);
+			break;
+		case 2: createNewOutput(variableName, 1, DATAWIDTH_8);
+			break;
+		case 3: createNewOutput(variableName, 1, DATAWIDTH_16);
+			break;
+		case 4: createNewOutput(variableName, 1, DATAWIDTH_32);
+			break;
+		case 5: createNewOutput(variableName, 1, DATAWIDTH_64);
+			break;
+		case 6: createNewOutput(variableName, 0, DATAWIDTH_1);
+			break;
+		case 7: createNewOutput(variableName, 0, DATAWIDTH_2);
+			break;
+		case 8: createNewOutput(variableName, 0, DATAWIDTH_8);
+			break;
+		case 9: createNewOutput(variableName, 0, DATAWIDTH_16);
+			break;
+		case 10: createNewOutput(variableName, 0, DATAWIDTH_32);
+			break;
+		case 11: createNewOutput(variableName, 0, DATAWIDTH_64);
+			break;
 		}
 	}
 }
@@ -1214,145 +1021,47 @@ void Circuit::createNewWireVariable(std::string checkString, int dataWidthIndex)
 
 	for (i = checkString.size() - 1; i >= 0; --i) {
 		if (checkString.at(i) == ' ') {
-			checkString.pop_back();
+			checkString.erase(checkString.end());
 		}
 		else {
 			break;
 		}
 	}
+	std::istringstream iss(checkString);
 
-	checkString += '\n';
+	//checkString += '\n';
+	while (!iss.eof()) {
+		iss >> variableName;
 
-	for (j = 0; j < checkString.size()-1; ++j) {
-		if (checkString.at(j) != ' ' && checkString.at(j) != ',') {
-			if (j != checkString.size() - 2) {
-				if ((checkString.at(j + 1) == ' ' || checkString.at(j + 1) == ',') && !variableName.compare("")) {
-					checkChar = checkString.at(j);
-					switch (dataWidthIndex) {
-					case 0: createNewWire(checkChar, 1, DATAWIDTH_1);
-						break;
-					case 1: createNewWire(checkChar, 1, DATAWIDTH_2);
-						break;
-					case 2: createNewWire(checkChar, 1, DATAWIDTH_8);
-						break;
-					case 3: createNewWire(checkChar, 1, DATAWIDTH_16);
-						break;
-					case 4: createNewWire(checkChar, 1, DATAWIDTH_32);
-						break;
-					case 5: createNewWire(checkChar, 1, DATAWIDTH_64);
-						break;
-					case 6: createNewWire(checkChar, 0, DATAWIDTH_1);
-						break;
-					case 7: createNewWire(checkChar, 0, DATAWIDTH_2);
-						break;
-					case 8: createNewWire(checkChar, 0, DATAWIDTH_8);
-						break;
-					case 9: createNewWire(checkChar, 0, DATAWIDTH_16);
-						break;
-					case 10: createNewWire(checkChar, 0, DATAWIDTH_32);
-						break;
-					case 11: createNewWire(checkChar, 0, DATAWIDTH_64);
-						break;
-					}
-				}
-				else {
-					if (checkString.at(j + 1) == ',' || checkString.at(j + 1) == '\n') {
-						variableName += checkString.at(j);
-						switch (dataWidthIndex) {
-						case 0: createNewWire(variableName, 1, DATAWIDTH_1);
-							break;
-						case 1: createNewWire(variableName, 1, DATAWIDTH_2);
-							break;
-						case 2: createNewWire(variableName, 1, DATAWIDTH_8);
-							break;
-						case 3: createNewWire(variableName, 1, DATAWIDTH_16);
-							break;
-						case 4: createNewWire(variableName, 1, DATAWIDTH_32);
-							break;
-						case 5: createNewWire(variableName, 1, DATAWIDTH_64);
-							break;
-						case 6: createNewWire(variableName, 0, DATAWIDTH_1);
-							break;
-						case 7: createNewWire(variableName, 0, DATAWIDTH_2);
-							break;
-						case 8: createNewWire(variableName, 0, DATAWIDTH_8);
-							break;
-						case 9: createNewWire(variableName, 0, DATAWIDTH_16);
-							break;
-						case 10: createNewWire(variableName, 0, DATAWIDTH_32);
-							break;
-						case 11: createNewWire(variableName, 0, DATAWIDTH_64);
-							break;
-						}
-						variableName = "";
-					}
-					else {
-						variableName += checkString.at(j);
-					}
-				}
-			}
-			else if (j == checkString.size() - 2 && checkString.at(j - 1) == ' ' && checkString.at(j) != '\n') {
-				checkChar = checkString.at(j);
-				switch (dataWidthIndex) {
-				case 0: createNewWire(checkChar, 1, DATAWIDTH_1);
-					break;
-				case 1: createNewWire(checkChar, 1, DATAWIDTH_2);
-					break;
-				case 2: createNewWire(checkChar, 1, DATAWIDTH_8);
-					break;
-				case 3: createNewWire(checkChar, 1, DATAWIDTH_16);
-					break;
-				case 4: createNewWire(checkChar, 1, DATAWIDTH_32);
-					break;
-				case 5: createNewWire(checkChar, 1, DATAWIDTH_64);
-					break;
-				case 6: createNewWire(checkChar, 0, DATAWIDTH_1);
-					break;
-				case 7: createNewWire(checkChar, 0, DATAWIDTH_2);
-					break;
-				case 8: createNewWire(checkChar, 0, DATAWIDTH_8);
-					break;
-				case 9: createNewWire(checkChar, 0, DATAWIDTH_16);
-					break;
-				case 10: createNewWire(checkChar, 0, DATAWIDTH_32);
-					break;
-				case 11: createNewWire(checkChar, 0, DATAWIDTH_64);
-					break;
-				}
-			}
-			else {
-				if (variableName.compare("")) {
-					variableName += checkString.at(j);
-					switch (dataWidthIndex) {
-					case 0: createNewWire(variableName, 1, DATAWIDTH_1);
-						break;
-					case 1: createNewWire(variableName, 1, DATAWIDTH_2);
-						break;
-					case 2: createNewWire(variableName, 1, DATAWIDTH_8);
-						break;
-					case 3: createNewWire(variableName, 1, DATAWIDTH_16);
-						break;
-					case 4: createNewWire(variableName, 1, DATAWIDTH_32);
-						break;
-					case 5: createNewWire(variableName, 1, DATAWIDTH_64);
-						break;
-					case 6: createNewWire(variableName, 0, DATAWIDTH_1);
-						break;
-					case 7: createNewWire(variableName, 0, DATAWIDTH_2);
-						break;
-					case 8: createNewWire(variableName, 0, DATAWIDTH_8);
-						break;
-					case 9: createNewWire(variableName, 0, DATAWIDTH_16);
-						break;
-					case 10: createNewWire(variableName, 0, DATAWIDTH_32);
-						break;
-					case 11: createNewWire(variableName, 0, DATAWIDTH_64);
-						break;
-					}
-					variableName = "";
-				}
-			}
-			
+		if (variableName.at(variableName.size() - 1) == ',') {
+			variableName.erase(variableName.size()-1);
+		}
+
+		switch (dataWidthIndex) {
+		case 0: createNewWire(variableName, 1, DATAWIDTH_1);
+			break;
+		case 1: createNewWire(variableName, 1, DATAWIDTH_2);
+			break;
+		case 2: createNewWire(variableName, 1, DATAWIDTH_8);
+			break;
+		case 3: createNewWire(variableName, 1, DATAWIDTH_16);
+			break;
+		case 4: createNewWire(variableName, 1, DATAWIDTH_32);
+			break;
+		case 5: createNewWire(variableName, 1, DATAWIDTH_64);
+			break;
+		case 6: createNewWire(variableName, 0, DATAWIDTH_1);
+			break;
+		case 7: createNewWire(variableName, 0, DATAWIDTH_2);
+			break;
+		case 8: createNewWire(variableName, 0, DATAWIDTH_8);
+			break;
+		case 9: createNewWire(variableName, 0, DATAWIDTH_16);
+			break;
+		case 10: createNewWire(variableName, 0, DATAWIDTH_32);
+			break;
+		case 11: createNewWire(variableName, 0, DATAWIDTH_64);
+			break;
 		}
 	}
 }
@@ -1430,7 +1139,7 @@ bool Circuit::determineComponent(std::string line, DataType* output)
 
 	for (i = line.size() - 1; i >= 0; --i) {
 		if (line.at(i) == ' ') {
-			line.pop_back();
+			line.erase(line.end() - 1);
 		}
 		else {
 			break;
