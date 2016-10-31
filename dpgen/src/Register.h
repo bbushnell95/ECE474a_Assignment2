@@ -10,10 +10,11 @@
 
 class Register : public DataType {
 
-	//private:
+//private:
 	//	std::string name;
 	//	bool sign;
 	//	int dataWidth;
+
 public:
 	/*Constructors*/
 	Register();
@@ -26,4 +27,4 @@ public:
 	//void setDataWidth(int dW);
 };
 
-#endif //REGISTER_H
+#endif //vREGISTER_H

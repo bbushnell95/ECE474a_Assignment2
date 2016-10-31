@@ -62,20 +62,17 @@ public:
 	void createNewInputVariable(std::string checkString, int dataWidthIndex);
 	void createNewOutputVariable(std::string checkString, int dataWidthIndex);
 	void createNewWireVariable(std::string checkString, int dataWidthIndex);
-	void createNewRegisterVariable(std::string checkString, int dataWidthIndex);
+	// void createNewRegisterVariable(std::string checkString, int dataWidthIndex);
 	void createNewInput(std::string name, bool sign, int dataWidth);
 	void createNewOutput(std::string name, bool sign, int dataWidth);
 	void createNewWire(std::string name, bool sign, int dataWidth);
-	void createNewRegister(std::string name, bool sign, int dataWidth);
+	// void createNewRegister(std::string name, bool sign, int dataWidth);
 	bool checkVariable(std::string checkName, int* outputIndex, int* inputIndex, int* wireIndex);
 	bool determineComponent(std::string line, DataType* output);
 	void createNewDatapathComponent(std::string name, std::vector<DataType*> _inputs, std::vector<DataType*> _outputs);
 	bool checkValidSymbol(std::string checkSymbol, std::string* dPType);
 	bool writeInputsToFile(std::ofstream *outputFile, int i, int j);
-	// bool addNewDPIn(std::string name);
-	// bool addNewDPout(/* TODO */);
-	// bool checkValidDPout(std::string name);
 
 };
 
-#endif //CIRCUIT_H
+#endif // CIRCUIT_H

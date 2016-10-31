@@ -35,4 +35,4 @@ public:
 	//void setDataWidth(int dW);
 };
 
-#endif //INPUT_H
+#endif // INPUT_H

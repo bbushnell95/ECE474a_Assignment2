@@ -13,7 +13,6 @@ DatapathComponent::DatapathComponent()
 	name = "Unknown";
 	dataWidth = 0;
 	visited = 'w';
-	/* TODO: FINISH THIS */
 }
 
 DatapathComponent::DatapathComponent(std::string n, std::vector<DataType*> _inputs, std::vector<DataType*> _outputs)
@@ -102,23 +101,12 @@ void DatapathComponent::checkIfSigned()
 	int countSigned = 0;
 	int i = 0;
 
+	/* Counts the number of signed variables. */
 	for (i = 0; i < _componentInputs.size(); ++i) {
 		if ((*_componentInputs.at(i)).getSignUnsigned()) {
 			++countSigned;
 		}
 	}
-	
-	/*if (_componentInputs.size() == 3) {
-		if (_componentInputs.at(1).getSignUnsigned() && _componentInputs.at(2).getSignUnsigned()) {
-			name.insert(0, "S");
-		}
-	}
-	else {
-		if (countSigned == _componentInputs.size()) {
-			name.insert(0, "S");
-		}
-	}
-	*/
 
 	/* Change the name for components that have signed versions. */
 	if (countSigned == _componentInputs.size()) {
@@ -132,11 +120,6 @@ void DatapathComponent::checkIfSigned()
 		}
 	}
 
-	/* OLD: 
-	if (countSigned == _componentInputs.size()) {
-		name.insert(0, "S");
-	}
-	*/
 }
 
 void DatapathComponent::determineDataWidth()
@@ -144,6 +127,7 @@ void DatapathComponent::determineDataWidth()
 	int i = 0;
 	int largestDW = -99;
 
+	/* This will determine what the datawidth of the component is. */
 	if ((name == "COMP_lt")
 		|| (name == "SCOMP_lt")
 		|| (name == "COMP_gt")
@@ -164,6 +148,7 @@ void DatapathComponent::determineDataWidth()
 
 void DatapathComponent::assignDelay()
 {
+	/* This is the provided delays of each datapath component with specific widths. */
 	double delayTimes[12][6] = { {2.616, 2.644, 2.879, 3.061, 3.602, 3.966},
 								 {2.704, 3.713, 4.924, 5.638, 7.270, 9.566},
 								 {3.024, 3.412, 4.890, 5.569, 7.253, 9.566},
@@ -177,6 +162,7 @@ void DatapathComponent::assignDelay()
 								 {1.792, 2.218, 3.111, 3.471, 4.347, 6.200},
 								 {1.792, 2.218, 3.108, 3.701, 4.685, 6.503}};
 
+	/* Assigns a delay to the datapath component based on type and width. */
 	if (!name.compare("REG")) {
 		switch (dataWidth){
 			case 1: delay = delayTimes[0][0];

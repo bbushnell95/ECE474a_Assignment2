@@ -59,6 +59,7 @@ public:
 	/*Constructors*/
 	DatapathComponent();
 	DatapathComponent(std::string n, std::vector<DataType*> _inputs, std::vector<DataType*> _outputs);
+	
 	/*Methods*/
 	std::string getName();
 	void setName(std::string n);
@@ -80,4 +81,4 @@ public:
 
 };
 
-#endif //DATAPATHCOMPONENT_H
+#endif // DATAPATHCOMPONENT_H

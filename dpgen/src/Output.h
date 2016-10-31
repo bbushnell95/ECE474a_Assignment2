@@ -19,9 +19,9 @@ Description: output Class for dpgen program
 class Output: public DataType {
 
 //private:
-//	std::string name;
-//	bool sign;
-//	int dataWidth;
+	//	std::string name;
+	//	bool sign;
+	//	int dataWidth;
 public:
 	/*Constructors*/
 	Output();
@@ -34,4 +34,4 @@ public:
 	//void setDataWidth(int dW);
 };
 
-#endif //OUTPUT_H
+#endif // OUTPUT_H

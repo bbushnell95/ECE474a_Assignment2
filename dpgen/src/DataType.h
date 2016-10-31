@@ -1,3 +1,11 @@
+/*
+Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
+Date Create: 10/17/2016
+Assignment: 2
+File: DataType.h
+Description: Data Type class for dpgen program
+*/
+
 #ifndef DATATYPE_H
 #define DATATYPE_H
 
@@ -33,4 +41,4 @@ public:
 	void addToComingFrom(DatapathComponent* newComponent);
 
 };
-#endif 
+#endif // DATATYPE_H

@@ -19,9 +19,10 @@ Description: output Class for dpgen program
 class Wire: public DataType{
 
 //private:
-//	std::string name;
-//	bool sign;
-//	int dataWidth;
+	//	std::string name;
+	//	bool sign;
+	//	int dataWidth;
+
 public:
 	/*constructors*/
 	Wire();
@@ -34,4 +35,4 @@ public:
 	void setDataWidth(int dW);*/
 };
 
-#endif //WIRE_H
+#endif // WIRE_H
