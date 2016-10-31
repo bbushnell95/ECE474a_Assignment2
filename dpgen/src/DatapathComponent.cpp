@@ -119,9 +119,24 @@ void DatapathComponent::checkIfSigned()
 		}
 	}
 	*/
+
+	/* Change the name for components that have signed versions. */
+	if (countSigned == _componentInputs.size()) {
+		if ((name == "COMP_lt")
+			|| (name == "COMP_gt")
+			|| (name == "COMP_eq")
+			|| (name == "DIV")
+			|| (name == "MOD")
+			|| (name == "SHR")) {
+			name.insert(0, "S");
+		}
+	}
+
+	/* OLD: 
 	if (countSigned == _componentInputs.size()) {
 		name.insert(0, "S");
 	}
+	*/
 }
 
 void DatapathComponent::determineDataWidth()
