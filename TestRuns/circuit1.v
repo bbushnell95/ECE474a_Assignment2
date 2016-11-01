@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
-//Date Created: Sun Oct 30 19:07:32 2016
+//Date Created: Mon Oct 31 22:48:49 2016
 //Assignment: 2
 //File: circuit1.v
 //Description: A netlist behavior circuit implementation
@@ -11,13 +11,13 @@
 
 module circuit1(clk, rst, a, b, c, z, x);
 	input clk, rst;
-	input [7:0] a, b, c;
+	input signed [7:0] a, b, c;
 
-	output [7:0] z;
-	output [15:0] x;
+	output signed [7:0] z;
+	output signed [15:0] x;
 
-	wire [7:0] d, e;
-	wire [15:0] f, g, xwire;
+	wire signed [7:0] d, e;
+	wire signed [15:0] f, g, xwire;
 
 	wire na0, na1;
 

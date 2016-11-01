@@ -184,12 +184,6 @@ bool Circuit::writeToFile(char* fileName)
 	int i = 0;
 	int j = 0;
 	int k = 0;
-	bool ind1 = false;
-	bool ind2 = false;
-	bool ind8 = false;
-	bool ind16 = false;
-	bool ind32 = false;
-	bool ind64 = false;
 
 	/* Staging file name. */
 	tempFileName = fileName;
@@ -254,418 +248,8 @@ bool Circuit::writeToFile(char* fileName)
 	/* Print clk, rst. */
 	outputFile << "\t" << "input clk, rst;" << endl;
 
-	/* Print Inputs. */
-	ind1 = false;
-	ind2 = false;
-	ind8 = false;
-	ind16 = false;
-	ind32 = false;
-	ind64 = false;
-		/* Categorize if there are certain datawidths. */
-	for (i = 0; i < (int)_inputs.size(); i++) {
-		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_1) {
-			ind1 = true;
-		}
-		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_2) {
-			ind2 = true;
-		}
-		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_8) {
-			ind8 = true;
-		}
-		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_16) {
-			ind16 = true;
-		}
-		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_32) {
-			ind32 = true;
-		}
-		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_64) {
-			ind64 = true;
-		}
-	}
-		/* Check for each datawidth. */
-	if (ind1) {
-		k = 0;
-		outputFile << "\t" << "input ";
-		for (i = 0; i < (int)_inputs.size(); i++) {
-			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_1) {
-				if (k) {
-					outputFile << ", ";
-				}
-				outputFile << (*_inputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind2) {
-		k = 0;
-		outputFile << "\t" << "input ";
-		for (i = 0; i < (int)_inputs.size(); i++) {
-			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_2) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[1:0] ";
-				}
-				outputFile << (*_inputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind8) {
-		k = 0;
-		outputFile << "\t" << "input ";
-		for (i = 0; i < (int)_inputs.size(); i++) {
-			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_8) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[7:0] ";
-				}
-				outputFile << (*_inputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind16) {
-		k = 0;
-		outputFile << "\t" << "input ";
-		for (i = 0; i < (int)_inputs.size(); i++) {
-			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_16) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[15:0] ";
-				}
-				outputFile << (*_inputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind32) {
-		k = 0;
-		outputFile << "\t" << "input ";
-		for (i = 0; i < (int)_inputs.size(); i++) {
-			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_32) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[31:0] ";
-				}
-				outputFile << (*_inputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind64) {
-		k = 0;
-		outputFile << "\t" << "input ";
-		for (i = 0; i < (int)_inputs.size(); i++) {
-			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_64) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[63:0] ";
-				}
-				outputFile << (*_inputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	outputFile << endl;
-
-	/* Print Outputs. */
-	ind1 = false;
-	ind2 = false;
-	ind8 = false;
-	ind16 = false;
-	ind32 = false;
-	ind64 = false;
-		/* Categorize if there are certain datawidths. */
-	for (i = 0; i < (int)_outputs.size(); i++) {
-		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_1) {
-			ind1 = true;
-		}
-		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_2) {
-			ind2 = true;
-		}
-		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_8) {
-			ind8 = true;
-		}
-		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_16) {
-			ind16 = true;
-		}
-		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_32) {
-			ind32 = true;
-		}
-		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_64) {
-			ind64 = true;
-		}
-	}
-		/* Check for each datawidth. */
-	if (ind1) {
-		k = 0;
-		outputFile << "\t" << "output ";
-		for (i = 0; i < (int)_outputs.size(); i++) {
-			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_1) {
-				if (k) {
-					outputFile << ", ";
-				}
-				outputFile << (*_outputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind2) {
-		k = 0;
-		outputFile << "\t" << "output ";
-		for (i = 0; i < (int)_outputs.size(); i++) {
-			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_2) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[1:0] ";
-				}
-				outputFile << (*_outputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind8) {
-		k = 0;
-		outputFile << "\t" << "output ";
-		for (i = 0; i < (int)_outputs.size(); i++) {
-			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_8) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[7:0] ";
-				}
-				outputFile << (*_outputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind16) {
-		k = 0;
-		outputFile << "\t" << "output ";
-		for (i = 0; i < (int)_outputs.size(); i++) {
-			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_16) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[15:0] ";
-				}
-				outputFile << (*_outputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind32) {
-		k = 0;
-		outputFile << "\t" << "output ";
-		for (i = 0; i < (int)_outputs.size(); i++) {
-			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_32) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[31:0] ";
-				}
-				outputFile << (*_outputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind64) {
-		k = 0;
-		outputFile << "\t" << "output ";
-		for (i = 0; i < (int)_outputs.size(); i++) {
-			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_64) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[63:0] ";
-				}
-				outputFile << (*_outputs.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	outputFile << endl;
-
-	/* Print Wires. */
-	ind1 = false;
-	ind2 = false;
-	ind8 = false;
-	ind16 = false;
-	ind32 = false;
-	ind64 = false;
-		/* Categorize if there are certain datawidths. */
-	for (i = 0; i < (int)_wires.size(); i++) {
-		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_1) {
-			ind1 = true;
-		}
-		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_2) {
-			ind2 = true;
-		}
-		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_8) {
-			ind8 = true;
-		}
-		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_16) {
-			ind16 = true;
-		}
-		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_32) {
-			ind32 = true;
-		}
-		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_64) {
-			ind64 = true;
-		}
-	}
-		/* Check for each datawidth. */
-	if (ind1) {
-		k = 0;
-		outputFile << "\t" << "wire ";
-		for (i = 0; i < (int)_wires.size(); i++) {
-			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_1) {
-				if (k) {
-					outputFile << ", ";
-				}
-				outputFile << (*_wires.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind2) {
-		k = 0;
-		outputFile << "\t" << "wire ";
-		for (i = 0; i < (int)_wires.size(); i++) {
-			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_2) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[1:0] ";
-				}
-				outputFile << (*_wires.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind8) {
-		k = 0;
-		outputFile << "\t" << "wire ";
-		for (i = 0; i < (int)_wires.size(); i++) {
-			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_8) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[7:0] ";
-				}
-				outputFile << (*_wires.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind16) {
-		k = 0;
-		outputFile << "\t" << "wire ";
-		for (i = 0; i < (int)_wires.size(); i++) {
-			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_16) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[15:0] ";
-				}
-				outputFile << (*_wires.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind32) {
-		k = 0;
-		outputFile << "\t" << "wire ";
-		for (i = 0; i < (int)_wires.size(); i++) {
-			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_32) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[31:0] ";
-				}
-				outputFile << (*_wires.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	if (ind64) {
-		k = 0;
-		outputFile << "\t" << "wire ";
-		for (i = 0; i < (int)_wires.size(); i++) {
-			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_64) {
-				if (k) {
-					outputFile << ", ";
-				}
-				else {
-					outputFile << "[63:0] ";
-				}
-				outputFile << (*_wires.at(i)).getName();
-				k = 1;
-			}
-		}
-		outputFile << ";" << endl;
-	}
-	outputFile << endl;
-
-	/* Check for all N/A wires are necessary. */
-	k = 0;
-	j = 0;
-	for (i = 0; i < (int)_datapathComponents.size(); i++) {
-		if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
-			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))
-			|| (!_datapathComponents.at(i).getName().compare("COMP_gt"))
-			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))
-			|| (!_datapathComponents.at(i).getName().compare("COMP_eq"))
-			|| (!_datapathComponents.at(i).getName().compare("SCOMP_eq"))) {
-			j = 1;
-			outputFile << "\t" << "wire ";
-			outputFile << "na" << k << ", ";
-			k++;
-			outputFile << "na" << k << ";" << endl;
-			k++;
-		}
-	}
-	/* Spacing */
-	if (j == 1) {
-		outputFile << endl;
-	}
+	/* Print Inputs, Outputs, Wires. */
+	writeVarsToFile(&outputFile);
 
 	/* WRITE THE DATAPATH COMPONENTS. */
 	k = 0;
@@ -1289,8 +873,10 @@ bool Circuit::checkValidSymbol(std::string checkSymbol, std::string* dPType)
 	return true;
 }
 
-bool Circuit::writeInputsToFile(ofstream *outputFile, int i, int j) {
+bool Circuit::writeInputsToFile(ofstream *outputFile, int i, int j) 
+{
 
+	/* Make sure it is still open. */
 	if (!(*outputFile).is_open()) {
 		return false;
 	}
@@ -1355,6 +941,905 @@ bool Circuit::writeInputsToFile(ofstream *outputFile, int i, int j) {
 	}
 
 	return true;
+}
+
+bool Circuit::writeVarsToFile(std::ofstream *outputFile)
+{
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	bool ind1 = false;
+	bool sind1 = false;
+	bool ind2 = false;
+	bool sind2 = false;
+	bool ind8 = false;
+	bool sind8 = false;
+	bool ind16 = false;
+	bool sind16 = false;
+	bool ind32 = false;
+	bool sind32 = false;
+	bool ind64 = false;
+	bool sind64 = false;
+
+	/* Make sure it is still open. */
+	if (!(*outputFile).is_open()) {
+		return false;
+	}
+
+	/* Print Inputs. */
+	ind1 = false;
+	sind1 = false;
+	ind2 = false;
+	sind2 = false;
+	ind8 = false;
+	sind8 = false;
+	ind16 = false;
+	sind16 = false;
+	ind32 = false;
+	sind32 = false;
+	ind64 = false;
+	sind64 = false;
+
+	/* Categorize if there are certain datawidths. */
+	for (i = 0; i < (int)_inputs.size(); i++) {
+		if (!(*_inputs.at(i)).getSignUnsigned()) {
+			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+				ind1 = true;
+			}
+			else if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+				ind2 = true;
+			}
+			else if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+				ind8 = true;
+			}
+			else if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+				ind16 = true;
+			}
+			else if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+				ind32 = true;
+			}
+			else if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+				ind64 = true;
+			}
+		}
+		else {
+			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+				sind1 = true;
+			}
+			else if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+				sind2 = true;
+			}
+			else if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+				sind8 = true;
+			}
+			else if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+				sind16 = true;
+			}
+			else if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+				sind32 = true;
+			}
+			else if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+				sind64 = true;
+			}
+		}
+	}
+
+	/* Check for each datawidth. */
+	if (ind1) {
+		k = 0;
+		*outputFile << "\t" << "input ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if (!(*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind1) {
+		k = 0;
+		*outputFile << "\t" << "input signed ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if ((*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind2) {
+		k = 0;
+		*outputFile << "\t" << "input ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if (!(*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[1:0] ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind2) {
+		k = 0;
+		*outputFile << "\t" << "input signed ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if ((*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[1:0] ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind8) {
+		k = 0;
+		*outputFile << "\t" << "input ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if (!(*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[7:0] ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind8) {
+		k = 0;
+		*outputFile << "\t" << "input signed ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if ((*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[7:0] ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind16) {
+		k = 0;
+		*outputFile << "\t" << "input ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if (!(*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[15:0] ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind16) {
+		k = 0;
+		*outputFile << "\t" << "input signed ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if ((*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[15:0] ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind32) {
+		k = 0;
+		*outputFile << "\t" << "input ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if (!(*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[31:0] ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind32) {
+		k = 0;
+		*outputFile << "\t" << "input signed ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if ((*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[31:0] ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind64) {
+		k = 0;
+		*outputFile << "\t" << "input ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if (!(*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[63:0] ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind64) {
+		k = 0;
+		*outputFile << "\t" << "input signed ";
+		for (i = 0; i < (int)_inputs.size(); i++) {
+			if ((*_inputs.at(i)).getSignUnsigned()) {
+				if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[63:0] ";
+					}
+					*outputFile << (*_inputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	*outputFile << endl;
+
+	/* Print Outputs. */
+	ind1 = false;
+	sind1 = false;
+	ind2 = false;
+	sind2 = false;
+	ind8 = false;
+	sind8 = false;
+	ind16 = false;
+	sind16 = false;
+	ind32 = false;
+	sind32 = false;
+	ind64 = false;
+	sind64 = false;
+
+	/* Categorize if there are certain datawidths. */
+	for (i = 0; i < (int)_outputs.size(); i++) {
+		if (!(*_outputs.at(i)).getSignUnsigned()) {
+			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+				ind1 = true;
+			}
+			else if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+				ind2 = true;
+			}
+			else if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+				ind8 = true;
+			}
+			else if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+				ind16 = true;
+			}
+			else if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+				ind32 = true;
+			}
+			else if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+				ind64 = true;
+			}
+		}
+		else {
+			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+				sind1 = true;
+			}
+			else if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+				sind2 = true;
+			}
+			else if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+				sind8 = true;
+			}
+			else if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+				sind16 = true;
+			}
+			else if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+				sind32 = true;
+			}
+			else if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+				sind64 = true;
+			}
+		}
+	}
+
+	/* Check for each datawidth. */
+	if (ind1) {
+		k = 0;
+		*outputFile << "\t" << "output ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if (!(*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind1) {
+		k = 0;
+		*outputFile << "\t" << "output signed ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if ((*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_1) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind2) {
+		k = 0;
+		*outputFile << "\t" << "output ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if (!(*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[1:0] ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind2) {
+		k = 0;
+		*outputFile << "\t" << "output signed ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if ((*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_2) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[1:0] ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind8) {
+		k = 0;
+		*outputFile << "\t" << "output ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if (!(*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[7:0] ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind8) {
+		k = 0;
+		*outputFile << "\t" << "output signed ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if ((*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_8) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[7:0] ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind16) {
+		k = 0;
+		*outputFile << "\t" << "output ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if (!(*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[15:0] ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind16) {
+		k = 0;
+		*outputFile << "\t" << "output signed ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if ((*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_16) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[15:0] ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind32) {
+		k = 0;
+		*outputFile << "\t" << "output ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if (!(*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[31:0] ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind32) {
+		k = 0;
+		*outputFile << "\t" << "output signed ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if ((*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_32) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[31:0] ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind64) {
+		k = 0;
+		*outputFile << "\t" << "output ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if (!(*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[63:0] ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind64) {
+		k = 0;
+		*outputFile << "\t" << "output signed ";
+		for (i = 0; i < (int)_outputs.size(); i++) {
+			if ((*_outputs.at(i)).getSignUnsigned()) {
+				if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_64) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[63:0] ";
+					}
+					*outputFile << (*_outputs.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	*outputFile << endl;
+
+	/* Print Wires. */
+	ind1 = false;
+	sind1 = false;
+	ind2 = false;
+	sind2 = false;
+	ind8 = false;
+	sind8 = false;
+	ind16 = false;
+	sind16 = false;
+	ind32 = false;
+	sind32 = false;
+	ind64 = false;
+	sind64 = false;
+
+	/* Categorize if there are certain datawidths. */
+	for (i = 0; i < (int)_wires.size(); i++) {
+		if (!(*_wires.at(i)).getSignUnsigned()) {
+			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_1) {
+				ind1 = true;
+			}
+			else if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_2) {
+				ind2 = true;
+			}
+			else if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_8) {
+				ind8 = true;
+			}
+			else if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_16) {
+				ind16 = true;
+			}
+			else if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_32) {
+				ind32 = true;
+			}
+			else if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_64) {
+				ind64 = true;
+			}
+		}
+		else {
+			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_1) {
+				sind1 = true;
+			}
+			else if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_2) {
+				sind2 = true;
+			}
+			else if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_8) {
+				sind8 = true;
+			}
+			else if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_16) {
+				sind16 = true;
+			}
+			else if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_32) {
+				sind32 = true;
+			}
+			else if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_64) {
+				sind64 = true;
+			}
+		}
+	}
+
+	/* Check for each datawidth. */
+	if (ind1) {
+		k = 0;
+		*outputFile << "\t" << "wire ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if (!(*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_1) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind1) {
+		k = 0;
+		*outputFile << "\t" << "wire signed ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if ((*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_1) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind2) {
+		k = 0;
+		*outputFile << "\t" << "wire ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if (!(*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_2) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[1:0] ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind2) {
+		k = 0;
+		*outputFile << "\t" << "wire signed ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if ((*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_2) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[1:0] ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind8) {
+		k = 0;
+		*outputFile << "\t" << "wire ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if (!(*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_8) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[7:0] ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind8) {
+		k = 0;
+		*outputFile << "\t" << "wire signed ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if ((*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_8) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[7:0] ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind16) {
+		k = 0;
+		*outputFile << "\t" << "wire ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if (!(*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_16) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[15:0] ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind16) {
+		k = 0;
+		*outputFile << "\t" << "wire signed ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if ((*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_16) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[15:0] ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind32) {
+		k = 0;
+		*outputFile << "\t" << "wire ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if (!(*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_32) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[31:0] ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind32) {
+		k = 0;
+		*outputFile << "\t" << "wire signed ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if ((*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_32) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[31:0] ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (ind64) {
+		k = 0;
+		*outputFile << "\t" << "wire ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if (!(*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_64) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[63:0] ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	if (sind64) {
+		k = 0;
+		*outputFile << "\t" << "wire signed ";
+		for (i = 0; i < (int)_wires.size(); i++) {
+			if ((*_wires.at(i)).getSignUnsigned()) {
+				if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_64) {
+					if (k) {
+						*outputFile << ", ";
+					}
+					else {
+						*outputFile << "[63:0] ";
+					}
+					*outputFile << (*_wires.at(i)).getName();
+					k = 1;
+				}
+			}
+		}
+		*outputFile << ";" << endl;
+	}
+	*outputFile << endl;
+
+	/* Check for all N/A wires are necessary. */
+	k = 0;
+	j = 0;
+	for (i = 0; i < (int)_datapathComponents.size(); i++) {
+		if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))
+			|| (!_datapathComponents.at(i).getName().compare("COMP_gt"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))
+			|| (!_datapathComponents.at(i).getName().compare("COMP_eq"))
+			|| (!_datapathComponents.at(i).getName().compare("SCOMP_eq"))) {
+			j = 1;
+			*outputFile << "\t" << "wire ";
+			*outputFile << "na" << k << ", ";
+			k++;
+			*outputFile << "na" << k << ";" << endl;
+			k++;
+		}
+	}
+	/* Spacing */
+	if (j == 1) {
+		*outputFile << endl;
+	}
+
+	return true;
+
 }
 
 bool Circuit::checkIfComment(std::string checkString)
