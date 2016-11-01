@@ -892,7 +892,7 @@ void Circuit::visitComponent(DatapathComponent* compoenent, double currTime, dou
 				return;
 			}
 		}
-		else if ((*compoenent).getOutputs().at(i)->getGoingTo().size() == 0 && !(*compoenent).getName().compare("REG")) {
+		else if (!(*compoenent).getName().compare("REG")) {
 			if (currTime > *cP) {
 				*cP = currTime;
 				return;
