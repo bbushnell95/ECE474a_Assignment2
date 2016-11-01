@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
-//Date Created: Mon Oct 31 23:03:33 2016
+//Date Created: Tue Nov  1 15:26:15 2016
 //Assignment: 2
 //File: circuit8.v
 //Description: A netlist behavior circuit implementation
@@ -15,15 +15,15 @@ module circuit8(clk, rst, a, b, c, zero, z);
 
 	output signed [63:0] z;
 
-	wire gEQz;
-	wire [63:0] e, f, g, zwire;
+	wire signed gEQz;
+	wire signed [63:0] e, f, g, zwire;
 
 	wire na0, na1;
 
 	DEC #(64) DEC_0(a, e);
 	INC #(64) INC_1(c, f);
 	SMOD #(64) SMOD_2(a, c, g);
-	COMP #(64) COMP_3(g, zero, na0, na1, gEQz);
+	SCOMP #(64) SCOMP_3(g, zero, na0, na1, gEQz);
 	MUX2x1 #(64) MUX2x1_4(e, f, gEQz, zwire);
 	REG #(64) REG_5(zwire, clk, rst, z);
 
