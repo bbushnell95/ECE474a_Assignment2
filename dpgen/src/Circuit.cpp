@@ -909,7 +909,7 @@ bool Circuit::writeInputsToFile(ofstream *outputFile, int i, int j)
 			*/
 
 			/* Sign extensions for 2's compliment. */
-			(*outputFile) << "{";
+			(*outputFile) << "{{";
 			(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
 			(*outputFile) << "{";
 			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
