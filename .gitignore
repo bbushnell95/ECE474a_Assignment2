@@ -10,5 +10,8 @@
 **/vivado.jou
 **/vivado.log
 
-#C/C++ builf files
+#C/C++ build files
 **/build/**
+
+#extra .v files
+**/currSources/**
