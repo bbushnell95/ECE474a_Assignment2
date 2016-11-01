@@ -72,6 +72,7 @@ public:
 	void createNewDatapathComponent(std::string name, std::vector<DataType*> _inputs, std::vector<DataType*> _outputs);
 	bool checkValidSymbol(std::string checkSymbol, std::string* dPType);
 	bool writeInputsToFile(std::ofstream *outputFile, int i, int j);
+	bool checkIfComment(std::string checkString);
 
 };
 

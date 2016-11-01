@@ -1,4 +1,4 @@
-input Int8 a, b, c
+input Int8 a, b, c   //this is a test
 
 output Int8 z
 output Int16 x
@@ -7,7 +7,7 @@ wire Int8 d, e
 wire Int16 f, g
 wire Int16 xwire
 
-d = a + b
+d = a + b            //this is another test
 e = a + c
 g = d > e
 z = g ? d : e

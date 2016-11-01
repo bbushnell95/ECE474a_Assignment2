@@ -935,6 +935,10 @@ void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex
 		if (variableName.at(variableName.size() - 1) == ',') {
 			variableName.erase(variableName.size() - 1);
 		}
+		
+		if (checkIfComment(variableName)) {
+			break;
+		}
 
 		switch (dataWidthIndex) {
 		case 0: createNewInput(variableName, 1, DATAWIDTH_1);
@@ -982,6 +986,7 @@ void Circuit::createNewOutputVariable(std::string checkString, int dataWidthInde
 		}
 	}
 
+
 	std::istringstream iss(checkString);
 	//checkString += '\n';
 
@@ -990,6 +995,10 @@ void Circuit::createNewOutputVariable(std::string checkString, int dataWidthInde
 
 		if (variableName.at(variableName.size() - 1) == ',') {
 			variableName.erase(variableName.size() - 1);
+		}
+
+		if (checkIfComment(variableName)) {
+			break;
 		}
 
 		switch (dataWidthIndex) {
@@ -1036,6 +1045,7 @@ void Circuit::createNewWireVariable(std::string checkString, int dataWidthIndex)
 			break;
 		}
 	}
+
 	std::istringstream iss(checkString);
 
 	//checkString += '\n';
@@ -1044,6 +1054,10 @@ void Circuit::createNewWireVariable(std::string checkString, int dataWidthIndex)
 
 		if (variableName.at(variableName.size() - 1) == ',') {
 			variableName.erase(variableName.size()-1);
+		}
+
+		if (checkIfComment(variableName)) {
+			break;
 		}
 
 		switch (dataWidthIndex) {
@@ -1167,6 +1181,11 @@ bool Circuit::determineComponent(std::string line, DataType* output)
 		if (!checkString.compare("=")) {
 			++equalCount;
 		}
+
+		if (checkIfComment(checkString)) {
+			break;
+		}
+
 		else if (!checkString.compare("1")) {
 			if (!componentType.compare("ADD")) {
 				componentType = "INC";
@@ -1333,4 +1352,17 @@ bool Circuit::writeInputsToFile(ofstream *outputFile, int i, int j) {
 	}
 
 	return true;
+}
+
+bool Circuit::checkIfComment(std::string checkString)
+{
+	bool result = false;
+
+	if (checkString.size() >= 2) {
+		if (checkString.at(0) == '/' && checkString.at(1) == '/') {
+			result = true;
+		}
+	}
+
+	return result;
 }
