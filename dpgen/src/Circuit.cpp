@@ -141,10 +141,14 @@ bool Circuit::readFile(char* fileName)
 				/* Create some datapath components. */
 				getline(inputFile, checkString);
 				if (componentOutputIndex != -1) {
-					determineComponent(checkString, _outputs.at(componentOutputIndex));
+					if (!determineComponent(checkString, _outputs.at(componentOutputIndex))) {
+						return false;
+					}
 				}
 				else if (componentWireIndex != -1) {
-					determineComponent(checkString, _wires.at(componentWireIndex));
+					if (!determineComponent(checkString, _wires.at(componentWireIndex))) {
+						return false;
+					}
 				}
 			}
 
@@ -919,8 +923,8 @@ void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex
 	int i = 0;
 
 	for (i = checkString.size() - 1; i >= 0; --i) {
-		if (checkString.at(i) == ' ') {
-			checkString.erase(checkString.end());
+		if (checkString.at(i) == ' ' || checkString.at(i) == '\r') {
+			checkString.erase(checkString.end() - 1);
 		}
 		else {
 			break;
@@ -977,8 +981,8 @@ void Circuit::createNewOutputVariable(std::string checkString, int dataWidthInde
 	int i = 0;
 
 	for (i = checkString.size() - 1; i >= 0; --i) {
-		if (checkString.at(i) == ' ') {
-			checkString.erase(checkString.end());
+		if (checkString.at(i) == ' ' || checkString.at(i) == '\r') {
+			checkString.erase(checkString.end() - 1);
 		}
 		else {
 			break;
@@ -1036,8 +1040,8 @@ void Circuit::createNewWireVariable(std::string checkString, int dataWidthIndex)
 	int i = 0;
 
 	for (i = checkString.size() - 1; i >= 0; --i) {
-		if (checkString.at(i) == ' ') {
-			checkString.erase(checkString.end());
+		if (checkString.at(i) == ' ' || checkString.at(i) == '\r') {
+			checkString.erase(checkString.end() - 1);
 		}
 		else {
 			break;
@@ -1159,7 +1163,7 @@ bool Circuit::determineComponent(std::string line, DataType* output)
 	std::vector<DataType*> componentOutputs;
 
 	for (i = line.size() - 1; i >= 0; --i) {
-		if (line.at(i) == ' ') {
+		if (line.at(i) == ' ' || line.at(i) == '\r') {
 			line.erase(line.end() - 1);
 		}
 		else {
@@ -1208,6 +1212,7 @@ bool Circuit::determineComponent(std::string line, DataType* output)
 				else {
 					cout << checkString << " is not a valid variable or symbol" << endl;
 					result = false;
+					break;
 				}
 			}
 
