@@ -895,10 +895,12 @@ void Circuit::visitComponent(DatapathComponent* compoenent, double currTime, dou
 		else if (!(*compoenent).getName().compare("REG")) {
 			if (currTime > *cP) {
 				*cP = currTime;
-				return;
 			}
-			else {
-				return;
+			leaveTime = (*compoenent).getDelay();
+				
+			for (j = 0; j < (int)(*compoenent).getOutputs().at(i)->getGoingTo().size(); ++j) {
+				visitComponent((*compoenent).getOutputs().at(i)->getGoingTo().at(j), leaveTime, cP);
+
 			}
 		}
 		else {
