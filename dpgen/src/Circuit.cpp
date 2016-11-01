@@ -880,13 +880,15 @@ bool Circuit::writeInputsToFile(ofstream *outputFile, int i, int j)
 	if (!(*outputFile).is_open()) {
 		return false;
 	}
-	
+
+	/* Width Matching. */
 	if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == _datapathComponents.at(i).getDataWidth()) {
 		(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
 	}
 	else if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() < _datapathComponents.at(i).getDataWidth()) { // Datapath width is larger than input.
 		if ((*_datapathComponents.at(i).getInputs().at(j)).getSignUnsigned()) { // Signed
 																				// outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
+			/* Old way doesn't seem to work well with 2's compliment.
 			if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == 1) {
 				(*outputFile) << "{";
 				(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
@@ -904,6 +906,19 @@ bool Circuit::writeInputsToFile(ofstream *outputFile, int i, int j)
 				(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
 				(*outputFile) << "[" << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 2 << ":0]}, ";
 			}
+			*/
+
+			/* Sign extensions for 2's compliment. */
+			(*outputFile) << "{";
+			(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+			(*outputFile) << "{";
+			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+			(*outputFile) << "[";
+			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 1;
+			(*outputFile) << "]}},";
+			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+			(*outputFile) << "}, ";
+
 		}
 		else { // Unsigned
 			if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == 1) {
