@@ -102,14 +102,14 @@ void DatapathComponent::checkIfSigned()
 	int i = 0;
 
 	/* Counts the number of signed variables. */
-	for (i = 0; i < _componentInputs.size(); ++i) {
+	for (i = 0; i < (int)_componentInputs.size(); ++i) {
 		if ((*_componentInputs.at(i)).getSignUnsigned()) {
 			++countSigned;
 		}
 	}
 
 	/* Change the name for components that have signed versions. */
-	if (countSigned == _componentInputs.size()) {
+	if (countSigned == (int)_componentInputs.size()) {
 		if ((name == "COMP_lt")
 			|| (name == "COMP_gt")
 			|| (name == "COMP_eq")

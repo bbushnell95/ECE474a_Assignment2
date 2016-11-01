@@ -1,5 +1,4 @@
 /*
-/*
 Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
 Date Create: 10/3/2016
 Assignment: 2
