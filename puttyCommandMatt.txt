@@ -1,1 +1,1 @@
-./src/dpgen ~/ECE474a/assignment_2_circuits/474a_circuit1.txt ~/ECE474a/assignment_2_circuits/circuit1.v
+./src/dpgen ~/ECE/574/assignment_2_circuits/474a_circuit1.txt ~/ECE/574/assignment_2_circuits/circuit1.v

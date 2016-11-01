@@ -34,7 +34,6 @@ bool Circuit::readFile(char* fileName)
 	bool foundDataType;
 	const std::string validDataTypes[12] = { "Int1", "Int2", "Int8", "Int16", "Int32", "Int64",
 									  "UInt1", "UInt2", "UInt8", "UInt16", "UInt32","UInt64" };
-	const std::string validSymbols[13] = { "=","+" ,"-", "*", ">", "<","==", "?", ":", ">>", "<<", "/", "%"};
 	int i = 0;
 	int j = 0;
 	int componentOutputIndex = -1;
