@@ -32,7 +32,6 @@ bool Circuit::readFile(char* fileName)
 	string checkString;
 	string checkChar;
 	bool foundDataType;
-	bool foundSymbol;
 	const std::string validDataTypes[12] = { "Int1", "Int2", "Int8", "Int16", "Int32", "Int64",
 									  "UInt1", "UInt2", "UInt8", "UInt16", "UInt32","UInt64" };
 	const std::string validSymbols[13] = { "=","+" ,"-", "*", ">", "<","==", "?", ":", ">>", "<<", "/", "%"};
@@ -153,16 +152,16 @@ bool Circuit::readFile(char* fileName)
 		}
 		checkString = "";
 	}
-	for (i = 0; i < _datapathComponents.size(); ++i) {
+	for (i = 0; i < (int)_datapathComponents.size(); ++i) {
 		_datapathComponents.at(i).determineDataWidth();
 		_datapathComponents.at(i).assignDelay();
 		_datapathComponents.at(i).checkIfSigned();
 		//set going to for inputs
-		for (j = 0; j < _datapathComponents.at(i).getInputs().size(); ++j) {
+		for (j = 0; j < (int)_datapathComponents.at(i).getInputs().size(); ++j) {
 			(*_datapathComponents.at(i).getInputs().at(j)).addToGoingTo(&_datapathComponents.at(i));
 		}
 		//sets coming from for outputs
-		for (j = 0; j < _datapathComponents.at(i).getOutputs().size(); ++j) {
+		for (j = 0; j < (int)_datapathComponents.at(i).getOutputs().size(); ++j) {
 			(*_datapathComponents.at(i).getOutputs().at(j)).addToComingFrom(&_datapathComponents.at(i));
 		}
 	}
@@ -196,7 +195,7 @@ bool Circuit::writeToFile(char* fileName)
 			break;
 		}
 	}
-	for (i = i + 1; i < tempFileName.size() - 1; i++) {
+	for (i = i + 1; i < (int)tempFileName.size() - 1; i++) {
 		if (tempFileName.at(i) == '.') {
 			break;
 		}
@@ -237,13 +236,13 @@ bool Circuit::writeToFile(char* fileName)
 
 	/* Start of Module. */
 	outputFile << "module " << moduleName << "(clk, rst, ";
-	for (i = 0; i < _inputs.size(); i++) {
+	for (i = 0; i < (int)_inputs.size(); i++) {
 		outputFile << (*_inputs.at(i)).getName();
 		outputFile << ", ";
 	}
-	for (i = 0; i < _outputs.size(); i++) {
+	for (i = 0; i < (int)_outputs.size(); i++) {
 		outputFile << (*_outputs.at(i)).getName();
-		if (i != _outputs.size() - 1) {
+		if (i != (int)_outputs.size() - 1) {
 			outputFile << ", ";
 		}
 	}
@@ -260,7 +259,7 @@ bool Circuit::writeToFile(char* fileName)
 	ind32 = false;
 	ind64 = false;
 		/* Categorize if there are certain datawidths. */
-	for (i = 0; i < _inputs.size(); i++) {
+	for (i = 0; i < (int)_inputs.size(); i++) {
 		if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_1) {
 			ind1 = true;
 		}
@@ -284,7 +283,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind1) {
 		k = 0;
 		outputFile << "\t" << "input ";
-		for (i = 0; i < _inputs.size(); i++) {
+		for (i = 0; i < (int)_inputs.size(); i++) {
 			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_1) {
 				if (k) {
 					outputFile << ", ";
@@ -298,7 +297,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind2) {
 		k = 0;
 		outputFile << "\t" << "input ";
-		for (i = 0; i < _inputs.size(); i++) {
+		for (i = 0; i < (int)_inputs.size(); i++) {
 			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_2) {
 				if (k) {
 					outputFile << ", ";
@@ -315,7 +314,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind8) {
 		k = 0;
 		outputFile << "\t" << "input ";
-		for (i = 0; i < _inputs.size(); i++) {
+		for (i = 0; i < (int)_inputs.size(); i++) {
 			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_8) {
 				if (k) {
 					outputFile << ", ";
@@ -332,7 +331,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind16) {
 		k = 0;
 		outputFile << "\t" << "input ";
-		for (i = 0; i < _inputs.size(); i++) {
+		for (i = 0; i < (int)_inputs.size(); i++) {
 			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_16) {
 				if (k) {
 					outputFile << ", ";
@@ -349,7 +348,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind32) {
 		k = 0;
 		outputFile << "\t" << "input ";
-		for (i = 0; i < _inputs.size(); i++) {
+		for (i = 0; i < (int)_inputs.size(); i++) {
 			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_32) {
 				if (k) {
 					outputFile << ", ";
@@ -366,7 +365,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind64) {
 		k = 0;
 		outputFile << "\t" << "input ";
-		for (i = 0; i < _inputs.size(); i++) {
+		for (i = 0; i < (int)_inputs.size(); i++) {
 			if ((*_inputs.at(i)).getDataWidth() == DATAWIDTH_64) {
 				if (k) {
 					outputFile << ", ";
@@ -390,7 +389,7 @@ bool Circuit::writeToFile(char* fileName)
 	ind32 = false;
 	ind64 = false;
 		/* Categorize if there are certain datawidths. */
-	for (i = 0; i < _outputs.size(); i++) {
+	for (i = 0; i < (int)_outputs.size(); i++) {
 		if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_1) {
 			ind1 = true;
 		}
@@ -414,7 +413,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind1) {
 		k = 0;
 		outputFile << "\t" << "output ";
-		for (i = 0; i < _outputs.size(); i++) {
+		for (i = 0; i < (int)_outputs.size(); i++) {
 			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_1) {
 				if (k) {
 					outputFile << ", ";
@@ -428,7 +427,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind2) {
 		k = 0;
 		outputFile << "\t" << "output ";
-		for (i = 0; i < _outputs.size(); i++) {
+		for (i = 0; i < (int)_outputs.size(); i++) {
 			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_2) {
 				if (k) {
 					outputFile << ", ";
@@ -445,7 +444,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind8) {
 		k = 0;
 		outputFile << "\t" << "output ";
-		for (i = 0; i < _outputs.size(); i++) {
+		for (i = 0; i < (int)_outputs.size(); i++) {
 			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_8) {
 				if (k) {
 					outputFile << ", ";
@@ -462,7 +461,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind16) {
 		k = 0;
 		outputFile << "\t" << "output ";
-		for (i = 0; i < _outputs.size(); i++) {
+		for (i = 0; i < (int)_outputs.size(); i++) {
 			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_16) {
 				if (k) {
 					outputFile << ", ";
@@ -479,7 +478,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind32) {
 		k = 0;
 		outputFile << "\t" << "output ";
-		for (i = 0; i < _outputs.size(); i++) {
+		for (i = 0; i < (int)_outputs.size(); i++) {
 			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_32) {
 				if (k) {
 					outputFile << ", ";
@@ -496,7 +495,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind64) {
 		k = 0;
 		outputFile << "\t" << "output ";
-		for (i = 0; i < _outputs.size(); i++) {
+		for (i = 0; i < (int)_outputs.size(); i++) {
 			if ((*_outputs.at(i)).getDataWidth() == DATAWIDTH_64) {
 				if (k) {
 					outputFile << ", ";
@@ -520,7 +519,7 @@ bool Circuit::writeToFile(char* fileName)
 	ind32 = false;
 	ind64 = false;
 		/* Categorize if there are certain datawidths. */
-	for (i = 0; i < _wires.size(); i++) {
+	for (i = 0; i < (int)_wires.size(); i++) {
 		if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_1) {
 			ind1 = true;
 		}
@@ -544,7 +543,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind1) {
 		k = 0;
 		outputFile << "\t" << "wire ";
-		for (i = 0; i < _wires.size(); i++) {
+		for (i = 0; i < (int)_wires.size(); i++) {
 			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_1) {
 				if (k) {
 					outputFile << ", ";
@@ -558,7 +557,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind2) {
 		k = 0;
 		outputFile << "\t" << "wire ";
-		for (i = 0; i < _wires.size(); i++) {
+		for (i = 0; i < (int)_wires.size(); i++) {
 			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_2) {
 				if (k) {
 					outputFile << ", ";
@@ -575,7 +574,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind8) {
 		k = 0;
 		outputFile << "\t" << "wire ";
-		for (i = 0; i < _wires.size(); i++) {
+		for (i = 0; i < (int)_wires.size(); i++) {
 			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_8) {
 				if (k) {
 					outputFile << ", ";
@@ -592,7 +591,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind16) {
 		k = 0;
 		outputFile << "\t" << "wire ";
-		for (i = 0; i < _wires.size(); i++) {
+		for (i = 0; i < (int)_wires.size(); i++) {
 			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_16) {
 				if (k) {
 					outputFile << ", ";
@@ -609,7 +608,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind32) {
 		k = 0;
 		outputFile << "\t" << "wire ";
-		for (i = 0; i < _wires.size(); i++) {
+		for (i = 0; i < (int)_wires.size(); i++) {
 			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_32) {
 				if (k) {
 					outputFile << ", ";
@@ -626,7 +625,7 @@ bool Circuit::writeToFile(char* fileName)
 	if (ind64) {
 		k = 0;
 		outputFile << "\t" << "wire ";
-		for (i = 0; i < _wires.size(); i++) {
+		for (i = 0; i < (int)_wires.size(); i++) {
 			if ((*_wires.at(i)).getDataWidth() == DATAWIDTH_64) {
 				if (k) {
 					outputFile << ", ";
@@ -645,7 +644,7 @@ bool Circuit::writeToFile(char* fileName)
 	/* Check for all N/A wires are necessary. */
 	k = 0;
 	j = 0;
-	for (i = 0; i < _datapathComponents.size(); i++) {
+	for (i = 0; i < (int)_datapathComponents.size(); i++) {
 		if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))
 			|| (!_datapathComponents.at(i).getName().compare("COMP_gt"))
@@ -667,7 +666,7 @@ bool Circuit::writeToFile(char* fileName)
 
 	/* WRITE THE DATAPATH COMPONENTS. */
 	k = 0;
-	for (i = 0; i < _datapathComponents.size(); i++) {
+	for (i = 0; i < (int)_datapathComponents.size(); i++) {
 		outputFile << "\t";
 		/* Which module is it? */
 		if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
@@ -731,7 +730,7 @@ bool Circuit::writeToFile(char* fileName)
 			|| (!_datapathComponents.at(i).getName().compare("SINC"))
 			|| (!_datapathComponents.at(i).getName().compare("DEC"))
 			|| (!_datapathComponents.at(i).getName().compare("SDEC"))) {
-			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+			for (j = 0; j < (int)_datapathComponents.at(i).getInputs().size(); j++) {
 				writeInputsToFile(&outputFile, i, j);
 			}
 			
@@ -756,7 +755,7 @@ bool Circuit::writeToFile(char* fileName)
 		/* COMP_gt */
 		else if ((!_datapathComponents.at(i).getName().compare("COMP_gt"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_gt"))) {
-			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+			for (j = 0; j < (int)_datapathComponents.at(i).getInputs().size(); j++) {
 				writeInputsToFile(&outputFile, i, j);
 			}
 			if ((*_datapathComponents.at(i).getOutputs().at(0)).getDataWidth() != 1) {
@@ -776,7 +775,7 @@ bool Circuit::writeToFile(char* fileName)
 		/* COMP_lt */
 		else if ((!_datapathComponents.at(i).getName().compare("COMP_lt"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_lt"))) {
-			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+			for (j = 0; j < (int)_datapathComponents.at(i).getInputs().size(); j++) {
 				writeInputsToFile(&outputFile, i, j);
 			}
 			outputFile << "na" << k << ", ";
@@ -793,7 +792,7 @@ bool Circuit::writeToFile(char* fileName)
 		/* COMP_eq */
 		else if ((!_datapathComponents.at(i).getName().compare("COMP_eq"))
 			|| (!_datapathComponents.at(i).getName().compare("SCOMP_eq"))) {
-			for (j = 0; j < _datapathComponents.at(i).getInputs().size(); j++) {
+			for (j = 0; j < (int)_datapathComponents.at(i).getInputs().size(); j++) {
 				writeInputsToFile(&outputFile, i, j);
 			}
 			outputFile << "na" << k << ", ";
@@ -855,17 +854,17 @@ LongestPathDAG (Graph ?G?)
 		a. if u­>dist > max
 			i. max = u­>dist
 */
+
 void Circuit::determineCriticalPath()
 {
 	int i = 0;
 	int j = 0;
 	double currTime = 0.0;
-	DatapathComponent* tempComp = NULL;
 	std::vector<double> pathDelays;
 	std::vector<DatapathComponent*> queue;
 
-	for (i = 0; i < _inputs.size(); ++i) {
-		for (j = 0; j < (*_inputs.at(i)).getGoingTo().size(); ++j) {
+	for (i = 0; i < (int)_inputs.size(); ++i) {
+		for (j = 0; j < (int)(*_inputs.at(i)).getGoingTo().size(); ++j) {
 			if ((*(*_inputs.at(i)).getGoingTo().at(j)).getVisted() == 'w') {
 				(*(*_inputs.at(i)).getGoingTo().at(j)).setVisted('g');
 				queue.push_back((*_inputs.at(i)).getGoingTo().at(j));
@@ -873,17 +872,18 @@ void Circuit::determineCriticalPath()
 		}
 	}
 
-	for (i = 0; i < queue.size(); ++i) {
+	for (i = 0; i < (int)queue.size(); ++i) {
 		visitComponent(queue.at(i), currTime, &criticalPath);
 	}
 
 }
+
 void Circuit::visitComponent(DatapathComponent* compoenent, double currTime, double* cP ) {
 	double leaveTime = currTime + (*compoenent).getDelay();
 	int i = 0; 
 	int j = 0;
 	
-	for (i = 0; i < (*compoenent).getOutputs().size(); ++i) {
+	for (i = 0; i < (int)(*compoenent).getOutputs().size(); ++i) {
 		if ((*compoenent).getOutputs().at(i)->getGoingTo().size() == 0 && (*compoenent).getName().compare("REG")){
 			if (leaveTime > *cP) {
 				*cP = leaveTime;
@@ -903,7 +903,7 @@ void Circuit::visitComponent(DatapathComponent* compoenent, double currTime, dou
 			}
 		}
 		else {
-			for (j = 0; j < (*compoenent).getOutputs().at(i)->getGoingTo().size(); ++j) {
+			for (j = 0; j < (int)(*compoenent).getOutputs().at(i)->getGoingTo().size(); ++j) {
 				visitComponent((*compoenent).getOutputs().at(i)->getGoingTo().at(j), leaveTime, cP);
 			}
 		}
@@ -915,7 +915,6 @@ void Circuit::createNewInputVariable(std::string checkString, int dataWidthIndex
 {
 	string checkChar = "";
 	string variableName = "";
-	int j = 0;
 	int i = 0;
 
 	for (i = checkString.size() - 1; i >= 0; --i) {
@@ -974,7 +973,6 @@ void Circuit::createNewOutputVariable(std::string checkString, int dataWidthInde
 {
 	string checkChar = "";
 	string variableName = "";
-	int j = 0;
 	int i = 0;
 
 	for (i = checkString.size() - 1; i >= 0; --i) {
@@ -1034,7 +1032,6 @@ void Circuit::createNewWireVariable(std::string checkString, int dataWidthIndex)
 {
 	string checkChar = "";
 	string variableName = "";
-	int j = 0;
 	int i = 0;
 
 	for (i = checkString.size() - 1; i >= 0; --i) {
@@ -1118,7 +1115,7 @@ bool Circuit::checkVariable(std::string checkName, int* outputIndex, int* inputI
 	int i = 0;
 
 	/*check if in inputs*/
-	for (i = 0; i < _inputs.size(); ++i) {
+	for (i = 0; i < (int)_inputs.size(); ++i) {
 		if (!(*_inputs.at(i)).getName().compare(checkName)) {
 			variableFound = true;
 			*inputIndex = i;
@@ -1127,7 +1124,7 @@ bool Circuit::checkVariable(std::string checkName, int* outputIndex, int* inputI
 	}
 
 	/*check if in wires*/
-	for (i = 0; i < _wires.size(); ++i) {
+	for (i = 0; i < (int)_wires.size(); ++i) {
 		if (!(*_wires.at(i)).getName().compare(checkName)) {
 			variableFound = true;
 			*wireIndex = i;
@@ -1136,7 +1133,7 @@ bool Circuit::checkVariable(std::string checkName, int* outputIndex, int* inputI
 	}
 
 	/*check if in outputs*/
-	for (i = 0; i < _outputs.size(); ++i) {
+	for (i = 0; i < (int)_outputs.size(); ++i) {
 		if (!(*_outputs.at(i)).getName().compare(checkName)) {
 			variableFound = true;
 			*outputIndex = i;
