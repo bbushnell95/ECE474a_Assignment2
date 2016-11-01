@@ -1224,9 +1224,9 @@ bool Circuit::determineComponent(std::string line, DataType* output)
 
 }
 
-void Circuit::createNewDatapathComponent(std::string name, std::vector<DataType*> _inputs, std::vector<DataType*> _outputs) 
+void Circuit::createNewDatapathComponent(std::string name, std::vector<DataType*> _Cinputs, std::vector<DataType*> _Coutputs) 
 {
-	DatapathComponent* newComponent = new DatapathComponent(name, _inputs, _outputs);
+	DatapathComponent* newComponent = new DatapathComponent(name, _Cinputs, _Coutputs);
 
 	_datapathComponents.push_back(*newComponent);
 
