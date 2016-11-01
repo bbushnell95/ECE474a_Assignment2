@@ -881,34 +881,13 @@ bool Circuit::writeInputsToFile(ofstream *outputFile, int i, int j)
 		return false;
 	}
 
-	/* Width Matching. */
+	/* Bit-width Matching. */
 	if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == _datapathComponents.at(i).getDataWidth()) {
 		(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
 	}
 	else if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() < _datapathComponents.at(i).getDataWidth()) { // Datapath width is larger than input.
 		if ((*_datapathComponents.at(i).getInputs().at(j)).getSignUnsigned()) { // Signed
-																				// outputFile << (*_datapathComponents.at(i).getInputs().at(j)).getName() << ", ";
-			/* Old way doesn't seem to work well with 2's compliment.
-			if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == 1) {
-				(*outputFile) << "{";
-				(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
-				(*outputFile) << "'b0,";
-				(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
-				(*outputFile) << "}, ";
-			}
-			else {
-				(*outputFile) << "{";
-				(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName() << "[";
-				(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 1;
-				(*outputFile) << "],";
-				(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
-				(*outputFile) << "'b0,";
-				(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
-				(*outputFile) << "[" << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 2 << ":0]}, ";
-			}
-			*/
-
-			/* Sign extensions for 2's compliment. */
+			// Sign extensions for 2's complement. 
 			(*outputFile) << "{{";
 			(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
 			(*outputFile) << "{";
@@ -921,40 +900,20 @@ bool Circuit::writeInputsToFile(ofstream *outputFile, int i, int j)
 
 		}
 		else { // Unsigned
-			if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == 1) {
-				(*outputFile) << "{";
-				(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
-				(*outputFile) << "'b0,";
-				(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
-				(*outputFile) << "}, ";
-			}
-			else {
-				(*outputFile) << "{";
-				(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
-				(*outputFile) << "'b0,";
-				(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
-				(*outputFile) << "}, ";
-			}
+			(*outputFile) << "{";
+			(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+			(*outputFile) << "'b0,";
+			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+			(*outputFile) << "}, ";
 		}
 	}
 	else { // Datapath width is smaller than input.
-		if ((*_datapathComponents.at(i).getInputs().at(j)).getSignUnsigned()) { // Signed
-			(*outputFile) << "{";
-			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName() << "[";
-			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 1;
-			(*outputFile) << "],";
-			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName() << "[";
-			(*outputFile) << _datapathComponents.at(i).getDataWidth() - 1;
-			// (*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - _datapathComponents.at(i).getDataWidth() - 1;
-			(*outputFile) << ":0]}, ";
-		}
-		else { // Unsigned
-			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
-			(*outputFile) << "[";
-			(*outputFile) << _datapathComponents.at(i).getDataWidth() - 1;
-			// (*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - _datapathComponents.at(i).getDataWidth() - 1;
-			(*outputFile) << ":0], ";
-		}
+
+		/* This way chops the last bits and uses those. */
+		(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+		(*outputFile) << "[";
+		(*outputFile) << _datapathComponents.at(i).getDataWidth() - 1;
+		(*outputFile) << ":0], ";
 	}
 
 	return true;
