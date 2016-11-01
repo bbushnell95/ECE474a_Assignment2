@@ -192,7 +192,7 @@ bool Circuit::writeToFile(char* fileName)
 	/* Staging file name. */
 	tempFileName = fileName;
 	for (i = tempFileName.size() - 1; i > 0; i--) {
-		if (tempFileName.at(i) == '\\') {
+		if (tempFileName.at(i) == '\\' || tempFileName.at(i) == '/') {
 			break;
 		}
 	}
@@ -884,9 +884,18 @@ void Circuit::visitComponent(DatapathComponent* compoenent, double currTime, dou
 	int j = 0;
 	
 	for (i = 0; i < (*compoenent).getOutputs().size(); ++i) {
-		if ((*compoenent).getOutputs().at(i)->getGoingTo().size() == 0) {
+		if ((*compoenent).getOutputs().at(i)->getGoingTo().size() == 0 && (*compoenent).getName().compare("REG")){
 			if (leaveTime > *cP) {
 				*cP = leaveTime;
+				return;
+			}
+			else {
+				return;
+			}
+		}
+		else if ((*compoenent).getOutputs().at(i)->getGoingTo().size() == 0 && !(*compoenent).getName().compare("REG")) {
+			if (currTime > *cP) {
+				*cP = currTime;
 				return;
 			}
 			else {
