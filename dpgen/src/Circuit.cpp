@@ -944,14 +944,16 @@ bool Circuit::writeInputsToFile(ofstream *outputFile, int i, int j)
 			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 1;
 			(*outputFile) << "],";
 			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName() << "[";
-			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - _datapathComponents.at(i).getDataWidth() - 1;
+			(*outputFile) << _datapathComponents.at(i).getDataWidth() - 1;
+			// (*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - _datapathComponents.at(i).getDataWidth() - 1;
 			(*outputFile) << ":0]}, ";
 		}
 		else { // Unsigned
 			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
 			(*outputFile) << "[";
-			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - _datapathComponents.at(i).getDataWidth() - 1;
-			(*outputFile) << "0], ";
+			(*outputFile) << _datapathComponents.at(i).getDataWidth() - 1;
+			// (*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - _datapathComponents.at(i).getDataWidth() - 1;
+			(*outputFile) << ":0], ";
 		}
 	}
 
