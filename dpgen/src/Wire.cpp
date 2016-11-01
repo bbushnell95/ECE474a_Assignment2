@@ -17,6 +17,7 @@ Wire::Wire()
 Wire::Wire(std::string n, bool s, int dW)
 {
 	name = n;
+	signUnsigned = s;
 	dataWidth = dW;
 }
 
