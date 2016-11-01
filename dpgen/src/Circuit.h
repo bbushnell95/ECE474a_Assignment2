@@ -23,7 +23,6 @@ Description: Circuit Class for dpgen program
 #include "Input.h"
 #include "Output.h"
 #include "Wire.h"
-#include "Register.h"
 
 
 #define DATAWIDTH_1 1
@@ -41,7 +40,6 @@ private:
 	std::vector<Input*> _inputs;
 	std::vector<Output*> _outputs;
 	std::vector<Wire*> _wires;
-	std::vector<Register*> _registers;
 	std::vector<DatapathComponent> _datapathComponents;
 	double criticalPath;
 
