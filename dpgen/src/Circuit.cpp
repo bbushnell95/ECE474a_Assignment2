@@ -888,19 +888,25 @@ bool Circuit::writeInputsToFile(ofstream *outputFile, int i, int j)
 	else if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() < _datapathComponents.at(i).getDataWidth()) { // Datapath width is larger than input.
 		if ((*_datapathComponents.at(i).getInputs().at(j)).getSignUnsigned()) { // Signed
 			// Sign extensions for 2's complement. 
-			(*outputFile) << "{{";
-			(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
-			(*outputFile) << "{";
-			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
-			if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() != DATAWIDTH_1) {
+			if ((*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() == DATAWIDTH_1) {
+				(*outputFile) << "{";
+				(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+				(*outputFile) << "'b0,";
+				(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+				(*outputFile) << "}, ";
+			}
+			else {
+				(*outputFile) << "{{";
+				(*outputFile) << _datapathComponents.at(i).getDataWidth() - (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth();
+				(*outputFile) << "{";
+				(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
 				(*outputFile) << "[";
 				(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getDataWidth() - 1;
 				(*outputFile) << "]";
+				(*outputFile) << "}},";
+				(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
+				(*outputFile) << "}, ";
 			}
-			(*outputFile) << "}},";
-			(*outputFile) << (*_datapathComponents.at(i).getInputs().at(j)).getName();
-			(*outputFile) << "}, ";
-
 		}
 		else { // Unsigned
 			(*outputFile) << "{";

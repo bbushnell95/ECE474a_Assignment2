@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
-//Date Created: Tue Nov  1 16:04:32 2016
+//Date Created: Tue Nov  1 17:07:01 2016
 //Assignment: 2
 //File: circuit2.v
 //Description: A netlist behavior circuit implementation
@@ -28,8 +28,8 @@ module circuit2(clk, rst, a, b, c, z, x);
 	SCOMP #(32) SCOMP_4(d, e, na2, dLTe, na3);
 	MUX2x1 #(32) MUX2x1_5(d, e, dLTe, g);
 	MUX2x1 #(32) MUX2x1_6(g, f, dEQe, h);
-	SHL #(32) SHL_7(g, {{31{dLTe}},dLTe}, xwire);
-	SSHR #(32) SSHR_8(h, {{31{dEQe}},dEQe}, zwire);
+	SHL #(32) SHL_7(g, {31'b0,dLTe}, xwire);
+	SSHR #(32) SSHR_8(h, {31'b0,dEQe}, zwire);
 	REG #(32) REG_9(xwire, clk, rst, x);
 	REG #(32) REG_10(zwire, clk, rst, z);
 

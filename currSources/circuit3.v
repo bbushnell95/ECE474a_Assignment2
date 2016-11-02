@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 //
 //Students: Brett Bushnell (Undergrad), Matt Dzurick (Grad)
-//Date Created: Tue Nov  1 15:25:23 2016
+//Date Created: Tue Nov  1 16:09:10 2016
 //Assignment: 2
 //File: circuit3.v
 //Description: A netlist behavior circuit implementation
